@@ -7,6 +7,10 @@
 
 namespace nnxx {
 
+  class termination : public std::exception {
+    const char *what() const noexcept;
+  };
+
   namespace this_thread {
 
   int get_errno() noexcept;

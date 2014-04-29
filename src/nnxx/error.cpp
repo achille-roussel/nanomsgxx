@@ -1,15 +1,20 @@
 #include <nnxx/error.h>
 #include <nnxx/nn.h>
 
+using namespace std;
+
 namespace nnxx {
+
+  const char *termination::what() const noexcept
+  { return strerror(ETERM); }
 
   namespace this_thread {
 
   int get_errno() noexcept
   { return nn_errno(); }
 
-  std::errc get_errc() noexcept
-  { return std::errc(get_errno()); }
+  errc get_errc() noexcept
+  { return errc(get_errno()); }
 
   }
 
@@ -26,9 +31,11 @@ namespace nnxx {
   {
     switch (code) {
     case ENOMEM:
-      throw std::bad_alloc{ };
+      throw bad_alloc{ };
+    case ETERM:
+      throw termination{ };
     default:
-      throw std::system_error{ std::make_error_code(std::errc(code)), strerror() };
+      throw system_error{ make_error_code(errc(code)), strerror() };
     }
   }
 
