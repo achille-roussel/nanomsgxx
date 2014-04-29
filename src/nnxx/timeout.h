@@ -48,8 +48,6 @@ namespace nnxx {
   private:
     socket &     m_socket;
     milliseconds m_old_timeout;
-
-    void set(milliseconds);
   };
 
   class with_recv_timeout {
@@ -73,8 +71,6 @@ namespace nnxx {
   private:
     socket &     m_socket;
     milliseconds m_old_timeout;
-
-    void set(milliseconds);
   };
 
   class with_send_timeout {
@@ -83,8 +79,9 @@ namespace nnxx {
 
     template < typename Rep, typename Period >
     with_send_timeout(socket &s, const std::chrono::duration<Rep, Period> &t):
-      m_socket(s)
-    { set(std::chrono::duration_cast<milliseconds>(t)); }
+      m_socket(s),
+      m_old_timeout(get_send_timeout(s))
+    { set_send_timeout(s, t); }
 
     with_send_timeout(with_send_timeout      &&) = delete;
     with_send_timeout(with_send_timeout const &) = delete;
@@ -97,8 +94,6 @@ namespace nnxx {
   private:
     socket &     m_socket;
     milliseconds m_old_timeout;
-
-    void set(milliseconds);
   };
 
 }
