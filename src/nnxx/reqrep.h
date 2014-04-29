@@ -19,6 +19,10 @@ namespace nnxx {
 
   milliseconds get_resend_interval(const socket &s);
 
+  template < typename Duration >
+  Duration get_resend_interval(const socket &s)
+  { return std::chrono::duration_cast<Duration>(get_resend_interval(s)); }
+
   void set_resend_interval(socket &s, milliseconds i);
 
   template < typename Rep, typename Period >

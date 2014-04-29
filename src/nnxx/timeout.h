@@ -11,6 +11,18 @@ namespace nnxx {
   milliseconds get_recv_timeout(const socket &s);
   milliseconds get_send_timeout(const socket &s);
 
+  template < typename Duration >
+  Duration get_linger(const socket &s)
+  { return std::chrono::duration_cast<Duration>(get_linger(s)); }
+
+  template < typename Duration >
+  Duration get_recv_timeout(const socket &s)
+  { return std::chrono::duration_cast<Duration>(get_recv_timeout(s)); }
+
+  template < typename Duration >
+  Duration get_send_timeout(const socket &s)
+  { return std::chrono::duration_cast<Duration>(get_send_timeout(s)); }
+
   void set_linger(socket &s, milliseconds t);
   void set_recv_timeout(socket &s, milliseconds t);
   void set_send_timeout(socket &s, milliseconds t);
