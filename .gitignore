@@ -19,3 +19,11 @@
 *.exe
 *.out
 *.app
+
+# Waf
+.waf*
+.lock*
+build/*
+
+# Emacs
+*~
