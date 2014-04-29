@@ -47,6 +47,10 @@ namespace nnxx {
 
   void term();
 
+  void device(class socket &s);
+
+  void device(class socket &s1, class socket &s2);
+
   inline const char *c_str(const char *s) noexcept
   { return s; }
 
