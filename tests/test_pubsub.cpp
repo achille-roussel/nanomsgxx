@@ -12,8 +12,8 @@ int main() {
   s2.connect("inproc://test");
   s3.connect("inproc://test");
 
-  s2.setopt(nnxx::SUB, nnxx::SUB_SUBSCRIBE, "", 0);
-  s3.setopt(nnxx::SUB, nnxx::SUB_SUBSCRIBE, "", 0);
+  nnxx::subscribe(s2);
+  nnxx::subscribe(s3);
 
   nnxx_check(s1.send("Hello World!") == 12);
 
