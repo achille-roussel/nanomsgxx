@@ -2,8 +2,11 @@
 #define NNXX_SURVEY_H
 
 #include <nanomsg/survey.h>
+#include <nnxx/chrono.h>
 
 namespace nnxx {
+
+  class socket;
 
   enum {
     SURVEYOR   = NN_SURVEYOR,
@@ -13,6 +16,14 @@ namespace nnxx {
   enum {
     SURVEYOR_DEADLINE = NN_SURVEYOR_DEADLINE,
   };
+
+  milliseconds get_surveyor_deadline(const socket &s);
+
+  void set_surveyor_deadline(socket &s, milliseconds t);
+
+  template < typename Rep, typename Period >
+  void set_surveyor_deadline(socket &s, const std::chrono::duration<Rep, Period> &t)
+  { set_deadline(s, std::chrono::duration_cast<milliseconds>(t)); }
 
 }
 
