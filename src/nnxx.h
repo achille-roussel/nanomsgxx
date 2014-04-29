@@ -2,6 +2,8 @@
 #define NNXX_H
 
 #include <nnxx/bus.h>
+#include <nnxx/inproc.h>
+#include <nnxx/ipc.h>
 #include <nnxx/message.h>
 #include <nnxx/message_istream.h>
 #include <nnxx/message_ostream.h>
@@ -12,5 +14,6 @@
 #include <nnxx/reqrep.h>
 #include <nnxx/socket.h>
 #include <nnxx/survey.h>
+#include <nnxx/tcp.h>
 
 #endif // NNXX_H
