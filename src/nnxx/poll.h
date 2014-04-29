@@ -1,10 +1,10 @@
 #ifndef NNXX_POLL_H
 #define NNXX_POLL_H
 
-#include <chrono>
 #include <iterator>
 #include <utility>
 #include <vector>
+#include <nnxx/chrono.h>
 #include <nnxx/nn.h>
 
 namespace nnxx {
@@ -25,15 +25,12 @@ namespace nnxx {
     bool send_ready() const noexcept;
   };
 
+  typedef std::vector<poll_entry> poll_vector;
+
   bool operator==(const poll_entry &e, const socket &s) noexcept;
   bool operator!=(const poll_entry &e, const socket &s) noexcept;
   bool operator==(const socket &s, const poll_entry &e) noexcept;
   bool operator!=(const socket &s, const poll_entry &e) noexcept;
-
-  typedef std::chrono::system_clock clock;
-  typedef clock::duration           duration;
-  typedef clock::time_point         time_point;
-  typedef std::vector<poll_entry>   poll_vector;
 
   template < int Event, typename Iterator >
   class ready_iterator :

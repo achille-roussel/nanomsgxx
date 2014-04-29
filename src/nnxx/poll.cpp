@@ -142,7 +142,7 @@ namespace nnxx {
   {
     const int t = (timeout == duration::max())
       ? -1
-      : std::chrono::duration_cast<std::chrono::milliseconds>(timeout).count(); 
+      : std::chrono::duration_cast<milliseconds>(timeout).count(); 
 
     const int n = poll(entries.data(), entries.size(), t);
 

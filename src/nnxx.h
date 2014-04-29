@@ -1,6 +1,7 @@
 #ifndef NNXX_H
 #define NNXX_H
 
+#include <nnxx/chrono.h>
 #include <nnxx/bus.h>
 #include <nnxx/inproc.h>
 #include <nnxx/ipc.h>
@@ -16,5 +17,6 @@
 #include <nnxx/socket.h>
 #include <nnxx/survey.h>
 #include <nnxx/tcp.h>
+#include <nnxx/timeout.h>
 
 #endif // NNXX_H

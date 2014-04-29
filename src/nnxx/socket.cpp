@@ -1,5 +1,4 @@
 #include <cstring>
-#include <system_error>
 #include <nnxx/error.h>
 #include <nnxx/message.h>
 #include <nnxx/socket.h>
@@ -101,6 +100,9 @@ namespace nnxx {
 
     if ((n = nn_send(m_fd, buf, len, flags)) < 0) {
       if (this_thread::get_errc() == std::errc::resource_unavailable_try_again) {
+        if (!(flags & DONTWAIT)) {
+          throw timeout_error{ };
+        }
         return -1;
       }
       throw_error();
@@ -118,6 +120,9 @@ namespace nnxx {
 
     if ((n = nn_send(m_fd, msg.data(), MSG, flags)) < 0) {
       if (this_thread::get_errc() == std::errc::resource_unavailable_try_again) {
+        if (!(flags & DONTWAIT)) {
+          throw timeout_error{ };
+        }
         return -1;
       }
       throw_error();
@@ -133,6 +138,9 @@ namespace nnxx {
 
     if ((n = nn_recv(m_fd, buf, len, flags)) < 0) {
       if (this_thread::get_errc() == std::errc::resource_unavailable_try_again) {
+        if (!(flags & DONTWAIT)) {
+          throw timeout_error{ };
+        }
         return -1;
       }
       throw_error();
@@ -148,6 +156,9 @@ namespace nnxx {
 
     if ((n = nn_recv(m_fd, &p, MSG, flags)) < 0) {
       if (this_thread::get_errc() == std::errc::resource_unavailable_try_again) {
+        if (!(flags & DONTWAIT)) {
+          throw timeout_error{ };
+        }
         return { };
       }
       throw_error();

@@ -122,7 +122,7 @@ namespace nnxx {
   { s.setopt(level, option, val); }
 
   template < typename T >
-  void getsockopt(const socket &s, int level, int option)
+  T getsockopt(const socket &s, int level, int option)
   {
     T val;
     s.getopt(level, option, val);
