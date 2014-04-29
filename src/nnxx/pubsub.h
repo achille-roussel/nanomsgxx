@@ -1,7 +1,7 @@
 #ifndef NNXX_PUBSUB_H
 #define NNXX_PUBSUB_H
 
-#include <nn/pubsub.h>
+#include <nanomsg/pubsub.h>
 
 namespace nnxx {
 

@@ -1,7 +1,7 @@
 #ifndef NNXX_SURVEY_H
 #define NNXX_SURVEY_H
 
-#include <nn/survey.h>
+#include <nanomsg/survey.h>
 
 namespace nnxx {
 

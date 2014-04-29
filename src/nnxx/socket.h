@@ -96,6 +96,10 @@ namespace nnxx {
 
     int send(message &&msg, int flags = 0);
 
+    template < typename String >
+    int send(const String &s, int flags = 0)
+    { return send(c_str(s), flags); }
+
     int recv(void *buf, size_t len, int flags = 0);
 
     message recv(int flags = 0);

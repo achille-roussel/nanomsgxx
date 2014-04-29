@@ -28,7 +28,7 @@ namespace nnxx {
     case ENOMEM:
       throw std::bad_alloc{ };
     default:
-      throw std::system_error{ std::make_error_code(std::errc(code)) };
+      throw std::system_error{ std::make_error_code(std::errc(code)), strerror() };
     }
   }
 

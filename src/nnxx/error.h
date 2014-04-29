@@ -33,7 +33,7 @@ namespace nnxx {
 
   inline int check_error(int code)
   {
-    if (code != 0) {
+    if (code < 0) {
       throw_error();
     }
     return code;

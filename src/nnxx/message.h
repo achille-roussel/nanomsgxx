@@ -1,6 +1,7 @@
 #ifndef NNXX_MESSAGE_H
 #define NNXX_MESSAGE_H
 
+#include <string>
 #include <nnxx/nn.h>
 
 namespace nnxx {
@@ -56,6 +57,8 @@ namespace nnxx {
                           message::size_type from_offset,
                           message::size_type to_offset,
                           message::size_type size) noexcept;
+
+  std::string to_string(const message &msg);
 
 }
 

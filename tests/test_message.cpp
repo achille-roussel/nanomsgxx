@@ -22,6 +22,6 @@ int main() {
 
   std::strcpy(reinterpret_cast<char *>(m1.data()), "Hello World!");
   m2 = copy(m1);
-  nnxx_check(std::strcmp(reinterpret_cast<char *>(m2.data()), "Hello World!") == 0);
+  nnxx_check(to_string(m2) == "Hello World!");
   return nnxx::unittest::result;
 }

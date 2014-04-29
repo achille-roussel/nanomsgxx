@@ -1,7 +1,7 @@
 #ifndef NNXX_PIPELINE_H
 #define NNXX_PIPELINE_H
 
-#include <nn/pipeline.h>
+#include <nanomsg/pipeline.h>
 
 namespace nnxx {
 

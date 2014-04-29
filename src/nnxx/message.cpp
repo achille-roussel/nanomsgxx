@@ -116,4 +116,17 @@ namespace nnxx {
   message make_message(message::pointer data, message::size_type size) noexcept
   { return message{ data, size }; }
 
+  std::string to_string(const message &msg)
+  {
+    auto s = reinterpret_cast<const char *>(msg.data());
+    auto t = s + msg.size();
+    auto p = s;
+
+    while ((p != t) && ((*p) != '\0')) {
+      ++p;
+    }
+
+    return { s, p };
+  }
+
 }
