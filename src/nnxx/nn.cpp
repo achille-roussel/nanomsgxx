@@ -34,4 +34,7 @@ namespace nnxx {
     }
   }
 
+  int poll(pollfd *fds, int nfds, int timeout)
+  { printf("poll: timeout = %d\n", timeout); return check_error(nn_poll(fds, nfds, timeout)); }
+
 }

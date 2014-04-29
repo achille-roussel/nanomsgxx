@@ -10,6 +10,7 @@
 #include <nnxx/nn.h>
 #include <nnxx/pair.h>
 #include <nnxx/pipeline.h>
+#include <nnxx/poll.h>
 #include <nnxx/pubsub.h>
 #include <nnxx/reqrep.h>
 #include <nnxx/socket.h>

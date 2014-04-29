@@ -5,6 +5,8 @@
 
 namespace nnxx {
 
+  typedef struct nn_pollfd pollfd;
+
   enum {
     SP     = AF_SP,
     SP_RAW = AF_SP_RAW,
@@ -39,6 +41,12 @@ namespace nnxx {
     UNIT_BOOLEAN      = NN_UNIT_BOOLEAN,
   };
 
+  enum {
+    // POLLIN and POLLOUT may already be defined for the standard poll function
+    EV_POLLIN  = NN_POLLIN,
+    EV_POLLOUT = NN_POLLOUT,
+  };
+
   struct symbol_properties : public nn_symbol_properties {
     operator bool () const noexcept { return name != nullptr; }
   };
@@ -50,6 +58,8 @@ namespace nnxx {
   void device(class socket &s);
 
   void device(class socket &s1, class socket &s2);
+
+  int poll(pollfd *fds, int nfds, int timeout);
 
   inline const char *c_str(const char *s) noexcept
   { return s; }

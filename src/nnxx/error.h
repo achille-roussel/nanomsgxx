@@ -7,8 +7,19 @@
 
 namespace nnxx {
 
-  class termination : public std::exception {
+  class term_error : public std::exception {
+  public:
     const char *what() const noexcept;
+  };
+
+  class timeout_error : public std::system_error {
+  public:
+    timeout_error();
+  };
+
+  class signal_error : public std::system_error {
+  public:
+    signal_error();
   };
 
   namespace this_thread {
