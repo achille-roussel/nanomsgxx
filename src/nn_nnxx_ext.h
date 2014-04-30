@@ -28,10 +28,8 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include <stddef.h>
 #include <stdint.h>
 #include <nanomsg/nn.h>
-#include <nanomsg/reqrep.h>
 
 struct nn_sockaddr_ctrl {
   int16_t sa_protocol;

@@ -1,4 +1,5 @@
 #include <string.h>
+#include <nanomsg/reqrep.h>
 #include <nn_nnxx_ext.h>
 #include <nnxx/unittest.h>
 

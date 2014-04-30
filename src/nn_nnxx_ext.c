@@ -1,7 +1,7 @@
 #include <errno.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <nanomsg/reqrep.h>
 #include <nn_nnxx_ext.h>
 
 static int nn_check_socket_domain_and_protocol (int s, int *d, int *p)
