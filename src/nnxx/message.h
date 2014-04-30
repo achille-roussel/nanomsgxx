@@ -1,6 +1,7 @@
 #ifndef NNXX_MESSAGE_H
 #define NNXX_MESSAGE_H
 
+#include <iosfwd>
 #include <string>
 #include <nnxx/nn.h>
 
@@ -59,6 +60,18 @@ namespace nnxx {
                           message::size_type size) noexcept;
 
   std::string to_string(const message &msg);
+
+  template < typename Char, typename Traits >
+  std::basic_ostream<Char, Traits> &
+  operator<<(std::basic_ostream<Char, Traits> &out, const message &msg)
+  {
+    const auto data = static_cast<const Char *>(msg.data());
+    const auto size = msg.size() / sizeof(Char);
+    out.write(data, size);
+    return out;
+  }
+
+  extern template std::ostream &operator<<(std::ostream &, const message &);
 
 }
 

@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <cstdio>
+#include <ostream>
 #include <nnxx/error.h>
 #include <nnxx/message.h>
 
@@ -128,5 +129,7 @@ namespace nnxx {
 
     return { s, p };
   }
+
+  template std::ostream &operator<<(std::ostream &, const message &);
 
 }
