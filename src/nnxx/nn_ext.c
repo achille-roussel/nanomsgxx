@@ -26,7 +26,18 @@
 #include <stdlib.h>
 #include <string.h>
 #include <nanomsg/reqrep.h>
-#include <nn_nnxx_ext.h>
+#include <nnxx/nn_ext.h>
+
+static size_t nn_memhash (const char *s, size_t n)
+{
+  size_t h = 0;
+  size_t i;
+
+  for (i = 0; i != n; ++i, ++s) {
+    h = (*s) + (h << 6) + (h << 16) - h;
+  }
+  return h;
+}
 
 static int nn_check_socket_domain_and_protocol (int s, int *d, int *p)
 {
@@ -49,10 +60,6 @@ static int nn_check_socket_domain_and_protocol (int s, int *d, int *p)
   optlen = sizeof(optval);
   optval = 0;
   if (nn_getsockopt (s, NN_SOL_SOCKET, NN_PROTOCOL, &optval, &optlen)) {
-    return -1;
-  }
-  if ((optval != NN_REP) && (optval != NN_REQ)) {
-    errno = ENOTSUP;
     return -1;
   }
   *p = optval;
@@ -124,6 +131,14 @@ int nn_sockaddr_ctrl_cmp (const struct nn_sockaddr_ctrl *addr1,
     return k;
   }
   return addr1->sa_controllen - addr2->sa_controllen;
+}
+
+size_t nn_sockaddr_ctrl_hash (const struct nn_sockaddr_ctrl *addr)
+{
+  return addr->sa_control == NULL
+    ? addr->sa_protocol
+    : addr->sa_protocol
+    + nn_memhash ((const char *) addr->sa_control, addr->sa_controllen);
 }
 
 int nn_recvfrom (int s, void *buf, size_t buflen, int flags,

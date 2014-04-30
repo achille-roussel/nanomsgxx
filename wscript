@@ -18,7 +18,7 @@ def h_files(waf):
     return waf.path.ant_glob('**/src/nnxx.h **/src/nnxx/*.h')
 
 def c_files(waf):
-    return waf.path.ant_glob('**/src/*.c')
+    return waf.path.ant_glob('**/src/nnxx/*.c')
 
 def cpp_files(waf):
     return waf.path.ant_glob('**/src/nnxx/*.cpp')

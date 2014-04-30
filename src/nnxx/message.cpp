@@ -120,6 +120,9 @@ namespace nnxx {
   message make_message(message::pointer data, message::size_type size) noexcept
   { return message{ data, size }; }
 
+  void swap(message &m1, message &m2) noexcept
+  { m1.swap(m2); }
+
   std::string to_string(const message &msg)
   {
     auto s = reinterpret_cast<const char *>(msg.data());

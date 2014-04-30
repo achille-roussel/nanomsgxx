@@ -14,7 +14,7 @@ namespace nnxx {
     typedef size_t       size_type;
 
     message() noexcept;
-    message(size_type size, int type = 0);
+    explicit message(size_type size, int type = 0);
     message(message &&m) noexcept;
     message(message const &) = delete;
 
@@ -46,8 +46,7 @@ namespace nnxx {
     explicit message(pointer, size_type) noexcept;
   };
 
-  inline void swap(message &m1, message &m2) noexcept
-  { m1.swap(m2); }
+  void swap(message &m1, message &m2) noexcept;
 
   message make_message(message::pointer data, message::size_type size) noexcept;
 

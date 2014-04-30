@@ -1,9 +1,21 @@
+#include <algorithm>
 #include <cstring>
 #include <nnxx/error.h>
 #include <nnxx/message.h>
 #include <nnxx/socket.h>
 
 namespace nnxx {
+
+  static int check_socket_error(int flags)
+  {
+    if (this_thread::get_errc() != std::errc::resource_unavailable_try_again) {
+      throw_error();
+    }
+    if (!(flags & DONTWAIT)) {
+      throw timeout_error{ };
+    }
+    return -1;
+  }
 
   socket::socket() noexcept:
     m_fd(-1)
@@ -78,10 +90,8 @@ namespace nnxx {
         shutdown(how);
         break;
       }
-      catch (const std::system_error &e) {
-        if (e.code().value() == ETERM) {
-          throw;
-        }
+      catch (const term_error &) {
+        throw;
       }
       catch (const std::exception &) {
       }
@@ -94,41 +104,72 @@ namespace nnxx {
   void socket::getopt(int level, int option, void *val, size_t *len) const
   { check_error(nn_getsockopt(m_fd, level, option, val, len)); }
 
+  int socket::send(const void *buf, size_t len, int flags, socket_address &&addr)
+  {
+    int n;
+
+    if ((n = nn_sendto(m_fd, buf, len, flags, &addr)) < 0) {
+      return check_socket_error(flags);
+    }
+
+    addr.detach();
+    return n;
+  }
+
   int socket::send(const void *buf, size_t len, int flags)
   {
     int n;
 
     if ((n = nn_send(m_fd, buf, len, flags)) < 0) {
-      if (this_thread::get_errc() == std::errc::resource_unavailable_try_again) {
-        if (!(flags & DONTWAIT)) {
-          throw timeout_error{ };
-        }
-        return -1;
-      }
-      throw_error();
+      return check_socket_error(flags);
     }
 
     return n;
   }
 
+  int socket::send(const char *str, int flags, socket_address &&addr)
+  { return send(str, std::strlen(str), flags, std::move(addr)); }
+
   int socket::send(const char *str, int flags)
   { return send(str, std::strlen(str), flags); }
 
-  int socket::send(message &&msg, int flags)
+  int socket::send(message &&msg, int flags, socket_address &&addr)
   {
+    message::pointer data = msg.data();
     int n;
 
-    if ((n = nn_send(m_fd, msg.data(), MSG, flags)) < 0) {
-      if (this_thread::get_errc() == std::errc::resource_unavailable_try_again) {
-        if (!(flags & DONTWAIT)) {
-          throw timeout_error{ };
-        }
-        return -1;
-      }
-      throw_error();
+    if ((n = nn_sendto(m_fd, &data, MSG, flags, &addr)) < 0) {
+      return check_socket_error(flags);
+    }
+
+    addr.detach();
+    msg.detach();
+    return n;
+  }
+
+  int socket::send(message &&msg, int flags)
+  {
+    message::pointer data = msg.data();
+    int n;
+
+    if ((n = nn_send(m_fd, &data, MSG, flags)) < 0) {
+      return check_socket_error(flags);
     }
 
     msg.detach();
+    return n;
+  }
+
+  int socket::recv(void *buf, size_t len, int flags, socket_address &addr)
+  {
+    socket_address ctrl;
+    int n;
+
+    if ((n = nn_recvfrom(m_fd, buf, len, flags, &ctrl)) < 0) {
+      return check_socket_error(flags);
+    }
+
+    addr = std::move(ctrl);
     return n;
   }
 
@@ -137,16 +178,25 @@ namespace nnxx {
     int n;
 
     if ((n = nn_recv(m_fd, buf, len, flags)) < 0) {
-      if (this_thread::get_errc() == std::errc::resource_unavailable_try_again) {
-        if (!(flags & DONTWAIT)) {
-          throw timeout_error{ };
-        }
-        return -1;
-      }
-      throw_error();
+      return check_socket_error(flags);
     }
 
     return n;
+  }
+
+  message socket::recv(int flags, socket_address &addr)
+  {
+    socket_address ctrl;
+    void *p;
+    int   n;
+
+    if ((n = nn_recvfrom(m_fd, &p, MSG, flags, &ctrl)) < 0) {
+      check_socket_error(flags);
+      return { };
+    }
+
+    addr = std::move(ctrl);
+    return make_message(p, n);
   }
 
   message socket::recv(int flags)
@@ -155,13 +205,8 @@ namespace nnxx {
     int   n;
 
     if ((n = nn_recv(m_fd, &p, MSG, flags)) < 0) {
-      if (this_thread::get_errc() == std::errc::resource_unavailable_try_again) {
-        if (!(flags & DONTWAIT)) {
-          throw timeout_error{ };
-        }
-        return { };
-      }
-      throw_error();
+      check_socket_error(flags);
+      return { };
     }
 
     return make_message(p, n);
@@ -172,5 +217,8 @@ namespace nnxx {
 
   socket make_socket(int fd) noexcept
   { return socket{ fd }; }
+
+  void swap(socket &s1, socket &s2) noexcept
+  { s1.swap(s2); }
 
 }

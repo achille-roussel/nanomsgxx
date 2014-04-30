@@ -22,8 +22,8 @@
  * SOFTWARE.
  */
 
-#ifndef NN_NNXX_EXT_H
-#define NN_NNXX_EXT_H
+#ifndef NNXX_NN_EXT_H
+#define NNXX_NN_EXT_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -47,6 +47,8 @@ extern int nn_sockaddr_ctrl_copy (struct nn_sockaddr_ctrl *to,
 extern int nn_sockaddr_ctrl_cmp (const struct nn_sockaddr_ctrl *addr1,
                                  const struct nn_sockaddr_ctrl *addr2);
 
+extern size_t nn_sockaddr_ctrl_hash (const struct nn_sockaddr_ctrl *addr);
+
 extern int nn_recvfrom (int s, void *buf, size_t buflen, int flags,
                         struct nn_sockaddr_ctrl *addr);
 
@@ -56,5 +58,5 @@ extern int nn_sendto (int s, const void *buf, size_t buflen, int flags,
 #ifdef __cplusplus
 }
 #endif
-#endif /* NN_NNXX_EXT_H */
+#endif /* NNXX_NN_EXT_H */
 

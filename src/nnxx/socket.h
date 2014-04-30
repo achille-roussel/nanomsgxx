@@ -2,6 +2,7 @@
 #define NNXX_SOCKET_H
 
 #include <nnxx/nn.h>
+#include <nnxx/socket_address.h>
 
 namespace nnxx {
 
@@ -90,17 +91,31 @@ namespace nnxx {
       return len;
     }
 
+    int send(const void *buf, size_t len, int flags, socket_address &&addr);
+
     int send(const void *buf, size_t len, int flags = 0);
+
+    int send(const char *str, int flags, socket_address &&addr);
 
     int send(const char *str, int flags = 0);
 
+    int send(message &&msg, int flags, socket_address &&addr);
+
     int send(message &&msg, int flags = 0);
+
+    template < typename String >
+    int send(const String &s, int flags, socket_address &&addr)
+    { return send(c_str(s), flags, static_cast<socket_address&&>(addr)); }
 
     template < typename String >
     int send(const String &s, int flags = 0)
     { return send(c_str(s), flags); }
 
+    int recv(void *buf, size_t len, int flags, socket_address &addr);
+
     int recv(void *buf, size_t len, int flags = 0);
+
+    message recv(int flags, socket_address &addr);
 
     message recv(int flags = 0);
 
@@ -114,8 +129,7 @@ namespace nnxx {
     explicit socket(int) noexcept;
   };
 
-  inline void swap(socket &s1, socket &s2) noexcept
-  { s1.swap(s2); }
+  void swap(socket &s1, socket &s2) noexcept;
 
   template < typename T >
   void setsockopt(socket &s, int level, int option, const T &val)

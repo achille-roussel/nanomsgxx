@@ -1,6 +1,6 @@
 #include <string.h>
 #include <nanomsg/reqrep.h>
-#include <nn_nnxx_ext.h>
+#include <nnxx/nn_ext.h>
 #include <nnxx/unittest.h>
 
 int main() {
@@ -21,28 +21,28 @@ int main() {
   nnxx_assert (nn_connect (s3, "inproc://test") >= 0);
 
   /*  Sending requests. */
-  nnxx_assert (nn_send (s2, "Hello World! (1)", 12, 0) == 12);
-  nnxx_assert (nn_send (s3, "Hello World! (2)", 12, 0) == 12);
+  nnxx_assert (nn_send (s2, "Hello World! (1)", 16, 0) == 16);
+  nnxx_assert (nn_send (s3, "Hello World! (2)", 16, 0) == 16);
 
   /*  Recieving requests. */
-  nnxx_assert (nn_recvfrom (s1, &buf1, NN_MSG, 0, &addr1) == 12);
-  nnxx_assert (nn_recvfrom (s1, &buf2, NN_MSG, 0, &addr2) == 12);
+  nnxx_assert (nn_recvfrom (s1, &buf1, NN_MSG, 0, &addr1) == 16);
+  nnxx_assert (nn_recvfrom (s1, &buf2, NN_MSG, 0, &addr2) == 16);
 
   /*  Making sure we have the correct data. */
-  nnxx_assert (memcmp (buf1, "Hello World! (1)", 12) == 0);
-  nnxx_assert (memcmp (buf2, "Hello World! (2)", 12) == 0);
+  nnxx_assert (memcmp (buf1, "Hello World! (1)", 16) == 0);
+  nnxx_assert (memcmp (buf2, "Hello World! (2)", 16) == 0);
 
   /*  Sending responses back in reverse order. */
-  nnxx_assert (nn_sendto (s1, &buf2, NN_MSG, 0, &addr2) == 12);
-  nnxx_assert (nn_sendto (s1, &buf1, NN_MSG, 0, &addr1) == 12);
+  nnxx_assert (nn_sendto (s1, &buf2, NN_MSG, 0, &addr2) == 16);
+  nnxx_assert (nn_sendto (s1, &buf1, NN_MSG, 0, &addr1) == 16);
 
   /*  Recieving responses. */
-  nnxx_assert (nn_recv (s2, &buf1, NN_MSG, 0) == 12);
-  nnxx_assert (nn_recv (s3, &buf2, NN_MSG, 0) == 12);
+  nnxx_assert (nn_recv (s2, &buf1, NN_MSG, 0) == 16);
+  nnxx_assert (nn_recv (s3, &buf2, NN_MSG, 0) == 16);
 
   /*  Making sure the clients got the right responses. */
-  nnxx_assert (memcmp (buf1, "Hello World! (1)", 12) == 0);
-  nnxx_assert (memcmp (buf2, "Hello World! (2)", 12) == 0);
+  nnxx_assert (memcmp (buf1, "Hello World! (1)", 16) == 0);
+  nnxx_assert (memcmp (buf2, "Hello World! (2)", 16) == 0);
 
   /*  Releasing resources. */
   nn_freemsg (buf2);
