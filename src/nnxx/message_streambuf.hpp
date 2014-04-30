@@ -7,8 +7,9 @@ namespace nnxx {
 
   template < typename Char, typename Traits >
   basic_message_streambuf<Char, Traits>::
-  basic_message_streambuf() noexcept:
+  basic_message_streambuf(size_type base_size) noexcept:
     base_type(),
+    m_base_size(base_size),
     m_msg()
   { }
 
@@ -16,6 +17,7 @@ namespace nnxx {
   basic_message_streambuf<Char, Traits>::
   basic_message_streambuf(size_type size, int type):
     base_type(),
+    m_base_size(size),
     m_msg(size * sizeof(char_type), type)
   { clear(); }
 
@@ -23,6 +25,7 @@ namespace nnxx {
   basic_message_streambuf<Char, Traits>::
   basic_message_streambuf(basic_message_streambuf &&m) noexcept:
     base_type(std::move(m)),
+    m_base_size(m.m_base_size),
     m_msg(std::move(m.m_msg))
   { m.clear(); }
 
@@ -30,6 +33,7 @@ namespace nnxx {
   basic_message_streambuf<Char, Traits>::
   basic_message_streambuf(message &&msg) noexcept:
     base_type(),
+    m_base_size(msg.empty() ? 1000 : msg.size()),
     m_msg(std::move(msg))
   { clear(); }
 
@@ -53,6 +57,7 @@ namespace nnxx {
   {
     using std::swap;
     base_type::swap(m);
+    swap(m_base_size, m.m_base_size);
     swap(m_msg, m.m_msg);
   }
 
@@ -108,7 +113,7 @@ namespace nnxx {
     const auto n = m_msg.size();
 
     if (!m_msg) {
-      m_msg = message{ 2000 * sizeof(char_type) };
+      m_msg = message{ m_base_size * sizeof(char_type) };
     }
     else {
       m_msg = copy(m_msg, 2 * sizeof(char_type) * m_msg.size());

@@ -58,8 +58,11 @@ namespace nnxx {
     m_size = 0;
   }
 
+  bool message::empty() const noexcept
+  { return m_size == 0; }
+
   message::operator bool () const noexcept
-  { return m_data != nullptr; }
+  { return !empty(); }
 
   message::pointer message::data() noexcept
   { return m_data; }

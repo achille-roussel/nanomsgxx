@@ -18,7 +18,7 @@ namespace nnxx {
     typedef typename base_type::off_type    off_type;
     typedef typename base_type::traits_type traits_type;
 
-    basic_message_streambuf() noexcept;
+    explicit basic_message_streambuf(size_type base_size = 1000) noexcept;
     basic_message_streambuf(basic_message_streambuf &&m) noexcept;
     basic_message_streambuf(basic_message_streambuf const &) = delete;
     basic_message_streambuf(size_type size, int type);
@@ -41,7 +41,8 @@ namespace nnxx {
     int_type overflow(int_type);
 
   private:
-    message m_msg;
+    size_type m_base_size;
+    message   m_msg;
   };
 
   template < typename Char, typename Traits >

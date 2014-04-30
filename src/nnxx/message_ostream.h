@@ -11,13 +11,14 @@ namespace nnxx {
     typedef typename std::basic_ostream<Char, Traits> base_type;
     typedef basic_message_streambuf<Char, Traits>     message_streambuf;
   public:
-    typedef typename base_type::char_type   char_type;
-    typedef typename base_type::int_type    int_type;
-    typedef typename base_type::pos_type    pos_type;
-    typedef typename base_type::off_type    off_type;
-    typedef typename base_type::traits_type traits_type;
+    typedef typename base_type::char_type         char_type;
+    typedef typename base_type::int_type          int_type;
+    typedef typename base_type::pos_type          pos_type;
+    typedef typename base_type::off_type          off_type;
+    typedef typename base_type::traits_type       traits_type;
+    typedef typename message_streambuf::size_type size_type;
 
-    basic_message_ostream() noexcept;
+    explicit basic_message_ostream(size_type base_size = 1000) noexcept;
     basic_message_ostream(basic_message_ostream &&m) noexcept;
     basic_message_ostream(basic_message_ostream const &) = delete;
     basic_message_ostream(message &&msg) noexcept;

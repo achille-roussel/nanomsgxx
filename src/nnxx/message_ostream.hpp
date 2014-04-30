@@ -7,9 +7,9 @@ namespace nnxx {
 
   template < typename Char, typename Traits >
   basic_message_ostream<Char, Traits>::
-  basic_message_ostream() noexcept:
+  basic_message_ostream(size_type base_size) noexcept:
     base_type(nullptr),
-    m_buffer()
+    m_buffer(base_size)
   { this->rdbuf(&m_buffer); }
 
   template < typename Char, typename Traits >

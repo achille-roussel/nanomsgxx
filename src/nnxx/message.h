@@ -35,6 +35,8 @@ namespace nnxx {
 
     size_type size() const noexcept;
 
+    bool empty() const noexcept;
+
     friend message make_message(pointer data, size_type size) noexcept;
 
   private:
