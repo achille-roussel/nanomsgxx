@@ -84,9 +84,9 @@ high performance code easy to write.
 
 If you're getting excited about using nanomsgxx in your next C++ project then
 give the documentation a look and learn more about how it abstracts the pain
-away from building messages, polling, timeouts and other parts of nanomsg.
+away from building messages, polling, timeouts and more...
 The library provides many useful abstractions that make developing with nanomsg
-easy and safe...
+easy and safe.
 
 Resources
 ---------
