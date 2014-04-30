@@ -4,8 +4,8 @@
 #include <nnxx/unittest.h>
 
 int main() {
-  struct nn_sockaddr_ctrl addr1;
-  struct nn_sockaddr_ctrl addr2;
+  struct nn_msgctl ctl1;
+  struct nn_msgctl ctl2;
   int s1 = nn_socket (AF_SP_RAW, NN_REP);
   int s2 = nn_socket (AF_SP, NN_REQ);
   int s3 = nn_socket (AF_SP, NN_REQ);
@@ -25,16 +25,16 @@ int main() {
   nnxx_assert (nn_send (s3, "Hello World! (2)", 16, 0) == 16);
 
   /*  Recieving requests. */
-  nnxx_assert (nn_recvfrom (s1, &buf1, NN_MSG, 0, &addr1) == 16);
-  nnxx_assert (nn_recvfrom (s1, &buf2, NN_MSG, 0, &addr2) == 16);
+  nnxx_assert (nn_recvfrom (s1, &buf1, NN_MSG, 0, &ctl1) == 16);
+  nnxx_assert (nn_recvfrom (s1, &buf2, NN_MSG, 0, &ctl2) == 16);
 
   /*  Making sure we have the correct data. */
   nnxx_assert (memcmp (buf1, "Hello World! (1)", 16) == 0);
   nnxx_assert (memcmp (buf2, "Hello World! (2)", 16) == 0);
 
   /*  Sending responses back in reverse order. */
-  nnxx_assert (nn_sendto (s1, &buf2, NN_MSG, 0, &addr2) == 16);
-  nnxx_assert (nn_sendto (s1, &buf1, NN_MSG, 0, &addr1) == 16);
+  nnxx_assert (nn_sendto (s1, &buf2, NN_MSG, 0, &ctl2) == 16);
+  nnxx_assert (nn_sendto (s1, &buf1, NN_MSG, 0, &ctl1) == 16);
 
   /*  Recieving responses. */
   nnxx_assert (nn_recv (s2, &buf1, NN_MSG, 0) == 16);

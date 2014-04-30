@@ -31,29 +31,28 @@ extern "C" {
 #include <stdint.h>
 #include <nanomsg/nn.h>
 
-struct nn_sockaddr_ctrl {
-  int16_t sa_protocol;
-  void *  sa_control;
-  size_t  sa_controllen;
+struct nn_msgctl {
+  void * ctl_base;
+  size_t ctl_len;
 };
 
-extern void nn_sockaddr_ctrl_init (struct nn_sockaddr_ctrl *addr);
+extern void nn_msgctl_init (struct nn_msgctl *ctl);
 
-extern void nn_sockaddr_ctrl_term (struct nn_sockaddr_ctrl *addr);
+extern void nn_msgctl_term (struct nn_msgctl *ctl);
 
-extern int nn_sockaddr_ctrl_copy (struct nn_sockaddr_ctrl *to,
-                                  const struct nn_sockaddr_ctrl *from);
+extern int nn_msgctl_copy (struct nn_msgctl *to,
+                                  const struct nn_msgctl *from);
 
-extern int nn_sockaddr_ctrl_cmp (const struct nn_sockaddr_ctrl *addr1,
-                                 const struct nn_sockaddr_ctrl *addr2);
+extern int nn_msgctl_cmp (const struct nn_msgctl *ctl1,
+                                 const struct nn_msgctl *ctl2);
 
-extern size_t nn_sockaddr_ctrl_hash (const struct nn_sockaddr_ctrl *addr);
+extern size_t nn_msgctl_hash (const struct nn_msgctl *ctl);
 
 extern int nn_recvfrom (int s, void *buf, size_t buflen, int flags,
-                        struct nn_sockaddr_ctrl *addr);
+                        struct nn_msgctl *ctl);
 
 extern int nn_sendto (int s, const void *buf, size_t buflen, int flags,
-                      const struct nn_sockaddr_ctrl *addr);
+                      const struct nn_msgctl *ctl);
 
 #ifdef __cplusplus
 }

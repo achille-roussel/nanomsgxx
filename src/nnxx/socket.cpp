@@ -2,6 +2,7 @@
 #include <cstring>
 #include <nnxx/error.h>
 #include <nnxx/message.h>
+#include <nnxx/message_control.h>
 #include <nnxx/socket.h>
 
 namespace nnxx {
@@ -104,15 +105,15 @@ namespace nnxx {
   void socket::getopt(int level, int option, void *val, size_t *len) const
   { check_error(nn_getsockopt(m_fd, level, option, val, len)); }
 
-  int socket::send(const void *buf, size_t len, int flags, socket_address &&addr)
+  int socket::send(const void *buf, size_t len, int flags, message_control &&ctl)
   {
     int n;
 
-    if ((n = nn_sendto(m_fd, buf, len, flags, &addr)) < 0) {
+    if ((n = nn_sendto(m_fd, buf, len, flags, &ctl)) < 0) {
       return check_socket_error(flags);
     }
 
-    addr.detach();
+    ctl.detach();
     return n;
   }
 
@@ -127,22 +128,22 @@ namespace nnxx {
     return n;
   }
 
-  int socket::send(const char *str, int flags, socket_address &&addr)
-  { return send(str, std::strlen(str), flags, std::move(addr)); }
+  int socket::send(const char *str, int flags, message_control &&ctl)
+  { return send(str, std::strlen(str), flags, std::move(ctl)); }
 
   int socket::send(const char *str, int flags)
   { return send(str, std::strlen(str), flags); }
 
-  int socket::send(message &&msg, int flags, socket_address &&addr)
+  int socket::send(message &&msg, int flags, message_control &&ctl)
   {
     message::pointer data = msg.data();
     int n;
 
-    if ((n = nn_sendto(m_fd, &data, MSG, flags, &addr)) < 0) {
+    if ((n = nn_sendto(m_fd, &data, MSG, flags, &ctl)) < 0) {
       return check_socket_error(flags);
     }
 
-    addr.detach();
+    ctl.detach();
     msg.detach();
     return n;
   }
@@ -160,16 +161,16 @@ namespace nnxx {
     return n;
   }
 
-  int socket::recv(void *buf, size_t len, int flags, socket_address &addr)
+  int socket::recv(void *buf, size_t len, int flags, message_control &ctl)
   {
-    socket_address ctrl;
+    message_control tmp;
     int n;
 
-    if ((n = nn_recvfrom(m_fd, buf, len, flags, &ctrl)) < 0) {
+    if ((n = nn_recvfrom(m_fd, buf, len, flags, &tmp)) < 0) {
       return check_socket_error(flags);
     }
 
-    addr = std::move(ctrl);
+    ctl = std::move(tmp);
     return n;
   }
 
@@ -184,18 +185,18 @@ namespace nnxx {
     return n;
   }
 
-  message socket::recv(int flags, socket_address &addr)
+  message socket::recv(int flags, message_control &ctl)
   {
-    socket_address ctrl;
+    message_control tmp;
     void *p;
     int   n;
 
-    if ((n = nn_recvfrom(m_fd, &p, MSG, flags, &ctrl)) < 0) {
+    if ((n = nn_recvfrom(m_fd, &p, MSG, flags, &tmp)) < 0) {
       check_socket_error(flags);
       return { };
     }
 
-    addr = std::move(ctrl);
+    ctl = std::move(tmp);
     return make_message(p, n);
   }
 

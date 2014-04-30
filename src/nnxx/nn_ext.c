@@ -39,7 +39,7 @@ static size_t nn_memhash (const char *s, size_t n)
   return h;
 }
 
-static int nn_check_socket_domain_and_protocol (int s, int *d, int *p)
+static int nn_check_raw_socket (int s)
 {
   size_t optlen;
   int    optval;
@@ -54,116 +54,94 @@ static int nn_check_socket_domain_and_protocol (int s, int *d, int *p)
     errno = ENOTSUP;
     return -1;
   }
-  *d = optval;
-
-  /*  Making sure the socket protocol is NN_REQ or NN_REP. */
-  optlen = sizeof(optval);
-  optval = 0;
-  if (nn_getsockopt (s, NN_SOL_SOCKET, NN_PROTOCOL, &optval, &optlen)) {
-    return -1;
-  }
-  *p = optval;
-
-  /*  Everything is fine. */
   return 0;
 }
 
-void nn_sockaddr_ctrl_init (struct nn_sockaddr_ctrl *addr)
+void nn_msgctl_init (struct nn_msgctl *ctl)
 {
-  memset (addr, 0, sizeof(*addr));
+  memset (ctl, 0, sizeof(*ctl));
 }
 
-void nn_sockaddr_ctrl_term (struct nn_sockaddr_ctrl *addr)
+void nn_msgctl_term (struct nn_msgctl *ctl)
 {
-  if (addr->sa_control) {
-    nn_freemsg (addr->sa_control);
-    addr->sa_control = NULL;
-  }
+  free (ctl->ctl_base);
 }
 
-int nn_sockaddr_ctrl_copy (struct nn_sockaddr_ctrl *to,
-                           const struct nn_sockaddr_ctrl *from)
+int nn_msgctl_copy (struct nn_msgctl *to,
+                           const struct nn_msgctl *from)
 {
   void * control = NULL;
 
-  if (from->sa_control) {
-    control = malloc (from->sa_controllen);
+  /*  Copy control base if it was allocated. */
+  if (from->ctl_base) {
+    control = malloc (from->ctl_len);
     if (!control) {
       errno = ENOMEM;
       return -1;
     }
-    memmove (control, from->sa_control, from->sa_controllen);
+    memmove (control, from->ctl_base, from->ctl_len);
   }
-  to->sa_protocol = from->sa_protocol;
-  to->sa_control = control;
-  to->sa_controllen = from->sa_controllen;
+
+  /*  Copy to destination object. */
+  to->ctl_base = control;
+  to->ctl_len = from->ctl_len;
   return 0;
 }
 
-int nn_sockaddr_ctrl_cmp (const struct nn_sockaddr_ctrl *addr1,
-                          const struct nn_sockaddr_ctrl *addr2)
+int nn_msgctl_cmp (const struct nn_msgctl *ctl1,
+                          const struct nn_msgctl *ctl2)
 {
   int k;
   int n;
 
-  /*  Compare protocols. */
-  if (addr1->sa_protocol != addr2->sa_protocol) {
-    return addr1->sa_protocol - addr2->sa_protocol;
-  }
-
   /*  Compare type of control buffers. */
-  if (!addr1->sa_control && !addr2->sa_control) {
+  if (!ctl1->ctl_base && !ctl2->ctl_base) {
     return 0;
   }
-  if (!addr1->sa_control) {
+  if (!ctl1->ctl_base) {
     return -1;
   }
-  if (!addr2->sa_control) {
+  if (!ctl2->ctl_base) {
     return 1;
   }
 
   /*  Compare content of control buffers. */
-  n = addr1->sa_controllen < addr2->sa_controllen
-    ? addr1->sa_controllen
-    : addr2->sa_controllen;
-  k = memcmp (addr1->sa_control, addr2->sa_control, n);
+  n = ctl1->ctl_len < ctl2->ctl_len ? ctl1->ctl_len : ctl2->ctl_len;
+  k = memcmp (ctl1->ctl_base, ctl2->ctl_base, n);
   if (k != 0) {
     return k;
   }
-  return addr1->sa_controllen - addr2->sa_controllen;
+  return ctl1->ctl_len - ctl2->ctl_len;
 }
 
-size_t nn_sockaddr_ctrl_hash (const struct nn_sockaddr_ctrl *addr)
+size_t nn_msgctl_hash (const struct nn_msgctl *ctl)
 {
-  return addr->sa_control == NULL
-    ? addr->sa_protocol
-    : addr->sa_protocol
-    + nn_memhash ((const char *) addr->sa_control, addr->sa_controllen);
+  return ctl->ctl_base == NULL
+    ? 0
+    : nn_memhash ((const char *) ctl->ctl_base, ctl->ctl_len);
 }
 
 int nn_recvfrom (int s, void *buf, size_t buflen, int flags,
-                 struct nn_sockaddr_ctrl *addr)
+                 struct nn_msgctl *ctl)
 {
   struct nn_iovec vec [1];
   struct nn_msghdr msg;
   void * control;
-  int domain;
-  int protocol;
   int n;
 
-  /*  If the caller is not interested in getting the sender's address we simply
+  /*  If the caller is not interested in getting the sender's ctless we simply
       delegate to nn_recv. */
-  if (!addr) {
+  if (!ctl) {
     return nn_recv (s, buf, buflen, flags);
   }
 
-  /*  Making sure the operation is supported and the arguments are valid. */
-  if (nn_check_socket_domain_and_protocol (s, &domain, &protocol)) {
+  /*  Making sure the operation is supported. */
+  if (nn_check_raw_socket (s)) {
     return -1;
   }
 
   /*  Recieving a message. */
-  nn_sockaddr_ctrl_init (addr);
+  nn_msgctl_init (ctl);
   vec [0].iov_base = buf;
   vec [0].iov_len = buflen;
   memset (&msg, 0, sizeof(msg));
@@ -176,39 +154,32 @@ int nn_recvfrom (int s, void *buf, size_t buflen, int flags,
     return -1;
   }
 
-  /*  Set the address object. */
-  addr->sa_protocol = protocol;
-  addr->sa_control = control;
-  addr->sa_controllen = msg.msg_controllen;
+  /*  Set control object. */
+  ctl->ctl_base = control;
+  ctl->ctl_len = msg.msg_controllen;
   return n;
 }
 
 int nn_sendto (int s, const void *buf, size_t buflen, int flags,
-               const struct nn_sockaddr_ctrl *addr)
+               const struct nn_msgctl *ctl)
 {
   struct nn_iovec vec [1];
   struct nn_msghdr msg;
   void * control;
-  int domain;
-  int protocol;
 
-  /*  If the caller doesn't specify a reciever address we simply delegate to
+  /*  If the caller doesn't specify a reciever ctless we simply delegate to
       nn_send. */
-  if (!addr) {
+  if (!ctl) {
     return nn_send (s, buf, buflen, flags);
   }
 
-  /*  Make sure the operation is supported and the arguments are valid. */
-  if (nn_check_socket_domain_and_protocol (s, &domain, &protocol)) {
-    return -1;
-  }
-  if (addr->sa_protocol != protocol) {
-    errno = EINVAL;
+  /*  Make sure the operation is supported. */
+  if (nn_check_raw_socket (s)) {
     return -1;
   }
 
   /*  Sending the message. */
-  control = addr->sa_control;
+  control = ctl->ctl_base;
   vec [0].iov_base = (void *) buf;
   vec [0].iov_len = buflen;
   memset (&msg, 0, sizeof(msg));
