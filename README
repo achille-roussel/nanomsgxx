@@ -26,7 +26,7 @@ link your program against libnanomsgxx.
 Getting started
 ---------------
 
-nanomsgxx aims for providing a very thin abstraction on top of the nanomsg C API,
+nanomsgxx aims to provide a very thin abstraction on top of the nanomsg C API,
 while taking advantage of C++11's features to make the code easier to read and
 write.
 
