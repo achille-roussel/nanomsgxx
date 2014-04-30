@@ -1,4 +1,1 @@
-nanomsgxx
-=========
-
-Nanomsg binding for C++11
+README

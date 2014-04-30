@@ -28,10 +28,7 @@ namespace nnxx {
   void device(socket &s1, socket &s2)
   {
     nn_device(s1.fd(), s2.fd());
-
-    if (this_thread::get_errno() != ETERM) {
-      throw_error();
-    }
+    throw_error();
   }
 
   int poll(pollfd *fds, int nfds, int timeout)
