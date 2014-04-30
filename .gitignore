@@ -1,0 +1,10 @@
+# Others
+build/*
+
+# Emacs
+*~
+\#*\#
+
+# Waf
+.waf*
+.lock*
