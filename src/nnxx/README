@@ -1,0 +1,6 @@
+Here are all the source files for nanomsgxx, the file names match the ones of
+nanomsg, for example C++ ports of symbols in nanomsg/nn.h will be found in
+nnxx/nn.h, etc...
+This C++ port also add some more abstractions that take advantage of C++11 new
+features and make the code easier to use, these are available in extra header
+files that don't match any in the C nanomsg API.
