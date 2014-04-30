@@ -75,7 +75,7 @@ receiver side
 **A few highlights**
 
 - as you can expect from a C++ abstraction there's no need to manually tell when
-to release resources, this is handled automatically in the destructor
+to release resources, this is handled automatically in the destructors
 - the *nnxx::message* type automatically manages buffers for zero-copy, making
 high performance code easy to write.
 - error cases are reported throught exceptions that are subclasses of
