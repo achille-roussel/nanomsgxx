@@ -62,14 +62,14 @@ int main() {
 **What did we write?**
 
 You've probably recognized most of these calls if you're familiar with nanomsg's
-API. nanomsgxx uses the *nnxx* namespace.
+API. nanomsgxx uses the *nnxx* namespace, here we have...
 
-- we declared two socket objects in the *SP* domain using the *PAIR* protcol
+- declared two socket objects in the *SP* domain using the *PAIR* protcol
 and connected them together
-- we sent *"Hello World!"* from the first socket to the second
-- we used the *nnxx::socket::recv* method to retrieve the message on the
+- sent *"Hello World!"* from the first socket to the second
+- used the *nnxx::socket::recv* method to retrieve the message on the
 receiver side
-- we printed the received message to stdout
+- printed the received message to stdout
 
 **A few highlights**
 
