@@ -14,9 +14,9 @@ http://docs.waf.googlecode.com/git/book_17/single.html
 waf is packaged with nanomsgxx, all you should need is a python interpreter and
 running these commands:
 ```
-waf configure
-waf build
-waf install
+./waf configure
+./waf build
+./waf install
 ```
 
 The library and headers will be installed on your system and you'll be able to

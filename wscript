@@ -15,13 +15,16 @@ def all_files(waf):
     return h_files(waf) + cpp_files(waf) + test_files(waf)
 
 def h_files(waf):
-    return waf.path.ant_glob('**/src/nanomsgxx **/src/nnxx/*.h')
+    return waf.path.ant_glob('**/src/nnxx.h **/src/nnxx/*.h')
 
 def cpp_files(waf):
     return waf.path.ant_glob('**/src/nnxx/*.cpp')
 
 def test_files(waf):
     return waf.path.ant_glob('**/tests/*.cpp')
+
+def install_files(waf):
+    waf.install_files('${PREFIX}/include', h_files(waf))
 
 # ==============================================================================
 # Waf commands
@@ -57,6 +60,7 @@ def build_tests(waf, libnanomsgxx):
     conf.update({
         'features' : ['cxx', 'cxxprogram', 'test'],
         'linkflags': ['-L.', '-lnanomsgxx'],
+        'install_path': None,
     })
 
     tests = []
@@ -79,6 +83,7 @@ def build(waf):
     libnanomsgxx = build_nanomsgxx(waf)
     if not waf.options.no_tests:
         build_tests(waf, libnanomsgxx)
+    install_files(waf)
 
 def configure(waf):
     waf.load('compiler_cxx waf_unit_test')
