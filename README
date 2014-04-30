@@ -41,7 +41,7 @@ int main() {
   try {
     nnxx::socket s1 { nnxx::SP, nnxx::PAIR };
     nnxx::socket s2 { nnxx::SP, nnxx::PAIR };
-    const char *addr = "tcp://127.0.0.1:5432";
+    const char *addr = "inproc://example";
 
     s1.bind(addr);
     s2.connect(addr);
@@ -66,10 +66,10 @@ API. nanomsgxx uses the *nnxx* namespace.
 
 - we declared two socket objects in the *SP* domain using the *PAIR* protcol
 and connected them together
-- we send "Hello World!" from the first socket to the second
-- we use the *nnxx::socket::recv* method to retrieve the message on the
+- we sent *"Hello World!"* from the first socket to the second
+- we used the *nnxx::socket::recv* method to retrieve the message on the
 receiver side
-- we print the received message
+- we printed the received message to stdout
 
 **A few highlights**
 
