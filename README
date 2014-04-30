@@ -63,6 +63,7 @@ int main() {
 
 You've probably recognized most of these calls if you're familiar with nanomsg's
 API. nanomsgxx uses the *nnxx* namespace.
+
 1. we declared two socket objects in the *SP* domain using the *PAIR* protcol
 and connected them together
 2. we send "Hello World!" from the first socket to the second
