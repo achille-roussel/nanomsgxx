@@ -60,6 +60,7 @@ int main() {
 ```
 
 **What did we write?**
+
 You've probably recognized most of these calls if you're familiar with nanomsg's
 API. nanomsgxx uses the *nnxx* namespace.
 1. we declared two socket objects in the *SP* domain using the *PAIR* protcol
@@ -70,6 +71,7 @@ receiver side
 4. we print the received message
 
 **A few highlights**
+
 - as you can expect from a C++ abstraction there's no need to manually tell when
 to release resources, this is handled automatically in the destructor
 - the *nnxx::message* type automatically manages buffers for zero-copy, making
@@ -78,6 +80,7 @@ high performance code easy to write.
 *std::system_error*
 
 **The next step**
+
 If you're excited about using nanomsgxx in your next C++ project then give the
 documentation a look, the library provides many useful abstractions that make
 developing with nanomsg easy and safe...
