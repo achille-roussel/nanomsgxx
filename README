@@ -20,7 +20,7 @@ running these commands:
 ```
 
 The library and headers will be installed on your system and you'll be able to
-link your program against *libnanomsgxx*.
+link your program against **libnanomsgxx**.
 
 
 Getting started
