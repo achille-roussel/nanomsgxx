@@ -8,8 +8,7 @@ Building and installing
 -----------------------
 
 nanomsgxx uses waf to drive the build system, you can get more information about
-what waf is and how it works there:
-http://docs.waf.googlecode.com/git/book_17/single.html
+what waf is and how it works [here](http://docs.waf.googlecode.com/git/book_17/single.html).
 
 waf is packaged with nanomsgxx, all you should need is a python interpreter and
 running these commands:
@@ -92,7 +91,7 @@ easy and safe.
 Resources
 ---------
 
-Documentation: 
+Documentation: http://achille-roussel.github.io/nanomsgxx
 
 nanomsg website: http://nanomsg.org/index.html
 
