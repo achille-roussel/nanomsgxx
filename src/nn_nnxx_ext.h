@@ -43,8 +43,11 @@ extern void nn_sockaddr_ctrl_init (struct nn_sockaddr_ctrl *addr);
 
 extern void nn_sockaddr_ctrl_term (struct nn_sockaddr_ctrl *addr);
 
-extern int nn_sockaddr_reqrep_cmp (const struct nn_sockaddr_ctrl *addr1,
-                                   const struct nn_sockaddr_ctrl *addr2);
+extern int nn_sockaddr_ctrl_copy (struct nn_sockaddr_ctrl *to,
+                                  const struct nn_sockaddr_ctrl *from);
+
+extern int nn_sockaddr_ctrl_cmp (const struct nn_sockaddr_ctrl *addr1,
+                                 const struct nn_sockaddr_ctrl *addr2);
 
 extern int nn_recvfrom (int s, void *buf, size_t buflen, int flags,
                         struct nn_sockaddr_ctrl *addr);

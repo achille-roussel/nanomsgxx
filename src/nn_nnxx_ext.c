@@ -50,6 +50,25 @@ void nn_sockaddr_ctrl_term (struct nn_sockaddr_ctrl *addr)
   }
 }
 
+int nn_sockaddr_ctrl_copy (struct nn_sockaddr_ctrl *to,
+                           const struct nn_sockaddr_ctrl *from)
+{
+  void * control = NULL;
+
+  if (from->sa_control) {
+    control = malloc (from->sa_controllen);
+    if (!control) {
+      errno = ENOMEM;
+      return -1;
+    }
+    memmove (control, from->sa_control, from->sa_controllen);
+  }
+  to->sa_protocol = from->sa_protocol;
+  to->sa_control = control;
+  to->sa_controllen = from->sa_controllen;
+  return 0;
+}
+
 int nn_sockaddr_ctrl_cmp (const struct nn_sockaddr_ctrl *addr1,
                           const struct nn_sockaddr_ctrl *addr2)
 {
