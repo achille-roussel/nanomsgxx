@@ -1,4 +1,92 @@
 nanomsgxx
 =========
 
-Nanomsg binding for C++11
+nanomsgxx is a binding of the nanomsg library for C++11.
+
+
+Building and installing
+-----------------------
+
+nanomsgxx uses waf to drive the build system, you can get more information about
+what waf is and how it works there:
+http://docs.waf.googlecode.com/git/book_17/single.html
+
+waf is packaged with nanomsgxx, all you should need is a python interpreter and
+running these commands:
+```
+waf configure
+waf build
+waf install
+```
+
+The library and headers will be installed on your system and you'll be able to
+link your program against libnanomsgxx.
+
+
+Getting started
+---------------
+
+nanomsgxx aims for providing a very thin abstraction on top of the nanomsg C API,
+while taking advantage of C++11's features to make the code easier to read and
+write.
+
+**Quick example**
+```c++
+#include <iostream>
+#include <system_error>
+#include <nnxx/message.h>
+#include <nnxx/socket.h>
+
+int main() {
+  try {
+    nnxx::socket s1 { nnxx::SP, nnxx::PAIR };
+    nnxx::socket s2 { nnxx::SP, nnxx::PAIR };
+    const char *addr = "tcp://127.0.0.1:5432";
+
+    s1.bind(addr);
+    s2.connect(addr);
+
+    s1.send("Hello World!");
+
+    nnxx::message msg = s2.recv();
+    std::cout << msg << std::endl;
+    return 0;
+  }
+  catch (const std::system_error &e) {
+    std::cerr << e.what() << std::endl;
+    return 1;
+  }
+}
+```
+
+**What did we write?**
+You've probably recognized most of these calls if you're familiar with nanomsg's
+API. nanomsgxx uses the *nnxx* namespace.
+1. we declared two socket objects in the *SP* domain using the *PAIR* protcol
+and connected them together
+2. we send "Hello World!" from the first socket to the second
+3. we use the *nnxx::socket::recv* method to retrieve the message on the
+receiver side
+4. we print the received message
+
+**A few highlights**
+- as you can expect from a C++ abstraction there's no need to manually tell when
+to release resources, this is handled automatically in the destructor
+- the *nnxx::message* type automatically manages buffers for zero-copy, making
+high performance code easy to write.
+- error cases are reported throught exceptions that are subclasses of
+*std::system_error*
+
+**The next step**
+If you're excited about using nanomsgxx in your next C++ project then give the
+documentation a look, the library provides many useful abstractions that make
+developing with nanomsg easy and safe...
+
+Resources
+---------
+
+Documentation: 
+
+nanomsg website: http://nanomsg.org/index.html
+
+nanomsg sources: https://github.com/nanomsg/nanomsg
