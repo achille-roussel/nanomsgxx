@@ -54,34 +54,32 @@
 
       <p><strong>Quick example</strong></p>
       <div class="highlight highlight-c++">
-        <pre>
-          <span class="cp">#include &lt;iostream&gt;</span>
-          <span class="cp">#include &lt;system_error&gt;</span>
-          <span class="cp">#include &lt;nnxx/message.h&gt;</span>
-          <span class="cp">#include &lt;nnxx/pair.h&gt;</span>
-          <span class="cp">#include &lt;nnxx/socket.h&gt;</span>
+        <span class="cp">#include &lt;iostream&gt;</span>
+        <span class="cp">#include &lt;system_error&gt;</span>
+        <span class="cp">#include &lt;nnxx/message.h&gt;</span>
+        <span class="cp">#include &lt;nnxx/pair.h&gt;</span>
+        <span class="cp">#include &lt;nnxx/socket.h&gt;</span>
 
-          <span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-          <span class="n">try</span> <span class="p">{</span>
-          <span class="n">nnxx</span><span class="o">::</span><span class="n">socket</span> <span class="n">s1</span> <span class="p">{</span> <span class="n">nnxx</span><span class="o">::</span><span class="n">SP</span><span class="p">,</span> <span class="n">nnxx</span><span class="o">::</span><span class="n">PAIR</span> <span class="p">};</span>
-          <span class="n">nnxx</span><span class="o">::</span><span class="n">socket</span> <span class="n">s2</span> <span class="p">{</span> <span class="n">nnxx</span><span class="o">::</span><span class="n">SP</span><span class="p">,</span> <span class="n">nnxx</span><span class="o">::</span><span class="n">PAIR</span> <span class="p">};</span>
-          <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">addr</span> <span class="o">=</span> <span class="s">"inproc://example"</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">try</span> <span class="p">{</span>
+        <span class="n">nnxx</span><span class="o">::</span><span class="n">socket</span> <span class="n">s1</span> <span class="p">{</span> <span class="n">nnxx</span><span class="o">::</span><span class="n">SP</span><span class="p">,</span> <span class="n">nnxx</span><span class="o">::</span><span class="n">PAIR</span> <span class="p">};</span>
+        <span class="n">nnxx</span><span class="o">::</span><span class="n">socket</span> <span class="n">s2</span> <span class="p">{</span> <span class="n">nnxx</span><span class="o">::</span><span class="n">SP</span><span class="p">,</span> <span class="n">nnxx</span><span class="o">::</span><span class="n">PAIR</span> <span class="p">};</span>
+        <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">addr</span> <span class="o">=</span> <span class="s">"inproc://example"</span><span class="p">;</span>
 
-          <span class="n">s1</span><span class="p">.</span><span class="n">bind</span><span class="p">(</span><span class="n">addr</span><span class="p">);</span>
-          <span class="n">s2</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">addr</span><span class="p">);</span>
+        <span class="n">s1</span><span class="p">.</span><span class="n">bind</span><span class="p">(</span><span class="n">addr</span><span class="p">);</span>
+        <span class="n">s2</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">addr</span><span class="p">);</span>
 
-          <span class="n">s1</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="s">"Hello World!"</span><span class="p">);</span>
+        <span class="n">s1</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="s">"Hello World!"</span><span class="p">);</span>
 
-          <span class="n">nnxx</span><span class="o">::</span><span class="n">message</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">s2</span><span class="p">.</span><span class="n">recv</span><span class="p">();</span>
-          <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">msg</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-          <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-          <span class="p">}</span>
-          <span class="k">catch</span> <span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">system_error</span> <span class="o">&amp;</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-          <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-          <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-          <span class="p">}</span>
-          <span class="p">}</span>
-        </pre>
+        <span class="n">nnxx</span><span class="o">::</span><span class="n">message</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">s2</span><span class="p">.</span><span class="n">recv</span><span class="p">();</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">msg</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">catch</span> <span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">system_error</span> <span class="o">&amp;</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="p">}</span>
       </div>
 
       <p><strong>What did we write?</strong></p>
