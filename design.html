@@ -48,8 +48,8 @@ nanomsgxx, it covers these topics:
 nanomsg uses many constants to represent protocols, socket domains, options, flags...
 Since C++ syntax is mostly compatible with C, standard nanomsg constants (NN_*) can be
 simply used wherever constants are expected in the C++ API. However nanomsgxx ports all
-constants within the <code>nnxx</code> namespace, removing the leading <em>NN_</em>, for
-example the <code>NN_MSG</code> constant in the C API is ported by the <code>nnxx::MSG</code>
+constants within the <em>nnxx</em> namespace, removing the leading <em>NN_</em>, for
+example the <em>NN_MSG</em> constant in the C API is ported by the <em>nnxx::MSG</em>
 symbol.
 This applies to almost all constants, except in a few cases where it conflicts with
 some existing symbols (more on that later).
@@ -64,9 +64,9 @@ receive any object that can be converted to a C-string (null-terminted <em>char<
 sequence), this includes:
 </p>
 <ul>
-<li>objects of <code>const char *</code> type, or implicitly converted to this pointer type</li>
-<li>objects of <code>std::string</code> type, or any other specialization of <code>std::basic_string</code>
-<li>any object that has a <em>c_str</em> member function returning a <code>const char *</code>
+<li>objects of <em>const char *</em> type, or implicitly converted to this pointer type</li>
+<li>objects of <em>std::string</em> type, or any other specialization of <em>std::basic_string</em>
+<li>any object that has a <em>c_str</em> member function returning a <em>const char *</em>
 </ul>
 <p>
 This feature can be extended by providing a <em>c_str</em> function for new types,
