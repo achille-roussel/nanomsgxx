@@ -31,6 +31,10 @@
       <section id="main_content" class="inner">
         <h1>
 <a name="nanomsgxx" class="anchor" href="#nanomsgxx"><span class="octicon octicon-link"></span></a>Documentation</h1>
+<p>
+This document exposes the different components of nanomsgxx, provides explanations and examples
+on how to use them in C++ programs, as well as the API reference describing each type and functions.<br/>
+</p>
 
 <h2>
 <a name="chapters" class="anchor" href="#chapters"><span class="octicon octicon-link"></span></a>Chapters</h2>
@@ -104,8 +108,8 @@ API. nanomsgxx uses the <em>nnxx</em> namespace, here we have...</p>
 <ul>
 <li>declared two socket objects in the <em>SP</em> domain using the <em>PAIR</em> protcol
 and connected them together</li>
-<li>sent <em>"Hello World!"</em> from the first socket to the second</li>
-<li>used the <em>nnxx::socket::recv</em> method to retrieve the message on the
+<li>sent <strong>"Hello World!"</strong> from the first socket to the second</li>
+<li>used the <strong>nnxx::socket::recv</strong> method to retrieve the message on the
 receiver side</li>
 <li>printed the received message to stdout</li>
 </ul><p><strong>A few highlights</strong></p>
@@ -113,10 +117,10 @@ receiver side</li>
 <ul>
 <li>as you can expect from a C++ abstraction there's no need to manually tell when
 to release resources, this is handled automatically in the destructors</li>
-<li>the <em>nnxx::message</em> type automatically manages buffers for zero-copy, making
+<li>the <strong>nnxx::message</strong> type automatically manages buffers for zero-copy, making
 high performance code easy to write.</li>
 <li>error cases are reported throught exceptions that are subclasses of
-<em>std::system_error</em>
+<strong>std::system_error</strong>
 </li>
 </ul>
 
