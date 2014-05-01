@@ -52,8 +52,8 @@ nanomsgxx, it covers these categories:
 nanomsg uses many constants to represent protocols, socket domains, options, flags...
 Since C++ is compatible with C, standard nanomsg constants (NN_*) can be simply used
 wherever constants are expected in the C++ API. However nanomsgxx ports all constants
-within the <pre>nnxx</pre> namespace, removing the leading <pre>NN_</pre>, for example
-the <pre>NN_MSG</pre> constant in the C API is ported by the <pre>nnxx::MSG</pre> symbol.
+within the <code>nnxx</code> namespace, removing the leading <code>NN_</code>, for example
+the <code>NN_MSG</code> constant in the C API is ported by the <code>nnxx::MSG</code> symbol.
 This applies to almost all constants, except in a few cases where it conflicts with
 some existing symbols (more on that later).
 </p>
