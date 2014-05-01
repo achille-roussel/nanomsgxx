@@ -63,16 +63,16 @@ some existing symbols (more on that later).
 <p>
 nanomsgxx functions accept string arguments in some cases, to bind or connect to a
 node for example. Everywhere a string is expected the functions are designed to
-receive any object that can be converted to a C-string (null-terminted <pre>char</pre>
+receive any object that can be converted to a C-string (null-terminted <code>char</code>
 sequence), this includes:
 </p>
 <ul>
-<li>objects of <pre>const char *</pre> type, or implicitly converted to this pointer type</li>
-<li>objects of <pre>std::string</pre> type, or any other specialization of <pre>std::basic_string</pre>
-<li>any object that has a <pre>c_str</pre> member function returning a <pre>const char *</pre> object.
+<li>objects of <code>const char *</code> type, or implicitly converted to this pointer type</li>
+<li>objects of <code>std::string</code> type, or any other specialization of <code>std::basic_string</code>
+<li>any object that has a <code>c_str</code> member function returning a <code>const char *</code> object.
 </ul>
 <p>
-This feature can be extended by providing a <pre>c_str</pre> function for new types,
+This feature can be extended by providing a <code>c_str</code> function for new types,
 for example:
 </p>
 <div class="highlight highlight-c++">
