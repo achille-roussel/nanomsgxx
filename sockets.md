@@ -2,9 +2,9 @@
 layout: docpage
 title: Sockets
 prev: Messages
-next: Protocols
+next: Polling
 prev_page: messages.html
-next_page: protocols.html
+next_page: polling.html
 ---
 
 Sockets are one main component of the nanomsg API, they're used to exchanged
