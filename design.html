@@ -97,6 +97,10 @@ move constructor</a> and a <a href="http://en.cppreference.com/w/cpp/language/mo
 operator</a>, these are powerful features of C++11 and the library makes heavy use of it to provide an easy
 resource management model, as well as protecting the user from mis-using the library in some places.
 </p>
+<strong>Member vs Non-Member Functions</strong>
+<p>
+
+</p>
 
 <h2>
 <a name="exceptions" class="anchor" href="#exceptions"><span class="octicon octicon-link"></span></a>Exceptions</h2>
@@ -111,11 +115,23 @@ can be accessed through the caught exception.
 </p>
 <strong>Signals</strong>
 <p>
-
+When a program receives a signal it may cause any ongoing system call to be
+cancelled to execute a signal handler instead, in that case the systeam call
+terminates with the <strong>EINTR</strong> error code.
+While nanomsg mirrors this behavior, nanomsgxx reports these conditions with
+the <strong>nnxx::signal_error</strong> exception.<br/>
+This can be deactivated on a per-call basis by passing <strong>nnxx::NO_SIGNAL_ERROR</strong>
+in the flags argument on any blocking call, you should then refer to the documentation
+of each function to understand how to handle this case.
 </p>
 <strong>Timeouts</strong>
 <p>
-
+nanomsg's API lets the user define a timeout for any blocking operation (typically
+receiving or sending messages), and reports any timeout in the operation with
+a <strong>nnxx::timeout_error</strong> exception.<br/>
+This can be deactivated on a per-call basis by passing <strong>nnxx::NO_TIMEOUT_ERROR</strong>
+in the flags argument on any blocking call, you should then refer to the documentation
+of each function to understand how to handle this case.
 </p>
 <strong>Termination</strong>
 <p>
