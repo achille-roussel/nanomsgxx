@@ -64,12 +64,13 @@ receive any object that can be converted to a C-string (null-terminted <em>char<
 sequence), this includes:
 </p>
 <ul>
-<li>objects of <em>const char *</em> type, or implicitly converted to this pointer type</li>
-<li>objects of <em>std::string</em> type, or any other specialization of <em>std::basic_string</em>
-<li>any object that has a <em>c_str</em> member function returning a <em>const char *</em>
+<li>objects of <strong>const char *</strong> type, or implicitly converted to this pointer type</li>
+<li>objects of <strong>std::string</strong> type, or any other specialization of
+<a href="http://en.cppreference.com/w/cpp/string/basic_string">std::basic_string</a>
+<li>any object that has a <strong>c_str</strong> member function returning a <strong>const char *</strong>
 </ul>
 <p>
-This feature can be extended by providing a <em>c_str</em> function for new types,
+This feature can be extended by providing a <strong>c_str</strong> function for new types,
 for example:
 </p>
 <div class="highlight highlight-c++">
