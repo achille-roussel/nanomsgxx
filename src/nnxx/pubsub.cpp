@@ -28,6 +28,9 @@
 
 namespace nnxx {
 
+  bool is_subscribed(const socket &s)
+  { return s.getopt<int>(SUB, SUB_SUBSCRIBE); }
+
   void subscribe(socket &s, const void *topic, size_t topiclen)
   { s.setopt(SUB, SUB_SUBSCRIBE, topic, topiclen); }
 

@@ -92,13 +92,6 @@ namespace nnxx {
 
   int poll(pollfd *fds, int nfds, int timeout);
 
-  inline const char *c_str(const char *s) noexcept
-  { return s; }
-
-  template < typename String >
-  const char *c_str(const String &s) noexcept(noexcept(s.c_str()))
-  { return s.c_str(); }
-
 }
 
 #endif // NNXX_NN_H

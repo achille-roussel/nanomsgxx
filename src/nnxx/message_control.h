@@ -63,6 +63,20 @@ namespace nnxx {
 
   bool operator>=(const message_control &a1, const message_control &a2) noexcept;
 
+  struct message_control_hash {
+    size_t operator()(const message_control &ctl) const noexcept
+    { return ctl.hash(); }
+  };
+
 }
 
+#ifndef NNXX_NO_STD_EXT
+namespace std {
+
+  template < >
+  struct hash<nnxx::message_control> : public nnxx::message_control_hash
+  { };
+
+}
+#endif // NNXX_NO_STD_EXT
 #endif // NNXX_MESSAGE_CONTROL_H

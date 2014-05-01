@@ -115,6 +115,14 @@ namespace nnxx {
       return len;
     }
 
+    template < typename T >
+    size_t getopt(int level, int option) const
+    {
+      T optval;
+      getopt(level, option, optval);
+      return optval;
+    }
+
     int send(const void *buf, size_t len, int flags, message_control &&ctl);
 
     int send(const void *buf, size_t len, int flags = 0);
@@ -127,17 +135,23 @@ namespace nnxx {
 
     int send(message &&msg, int flags = 0);
 
-    template < typename String >
-    int send(const String &s, int flags, message_control &&ctl)
-    { return send(c_str(s), flags, static_cast<message_control&&>(ctl)); }
+    template < typename T >
+    int send(const T &obj, int flags, message_control &&ctl)
+    { return send(obj.data(), obj.size(), flags, static_cast<message_control&&>(ctl)); }
 
-    template < typename String >
-    int send(const String &s, int flags = 0)
-    { return send(c_str(s), flags); }
+    template < typename T >
+    int send(const T &obj, int flags = 0)
+    { return send(obj.data(), obj.size(), flags); }
 
     int recv(void *buf, size_t len, int flags, message_control &ctl);
 
     int recv(void *buf, size_t len, int flags = 0);
+
+    template < typename T >
+    T recv(int flags, message_control &ctl);
+
+    template < typename T >
+    T recv(int flags = 0);
 
     message recv(int flags, message_control &ctl);
 
@@ -155,20 +169,9 @@ namespace nnxx {
 
   void swap(socket &s1, socket &s2) noexcept;
 
-  template < typename T >
-  void setsockopt(socket &s, int level, int option, const T &val)
-  { s.setopt(level, option, val); }
-
-  template < typename T >
-  T getsockopt(const socket &s, int level, int option)
-  {
-    T val;
-    s.getopt(level, option, val);
-    return val;
-  }
-
   socket make_socket(int fd) noexcept;
 
 }
 
+#include <nnxx/socket_message.hpp>
 #endif // NNXX_SOCKET_H

@@ -28,10 +28,10 @@
 namespace nnxx {
 
   milliseconds get_surveyor_deadline(const socket &s)
-  { return milliseconds(getsockopt<int>(s, SURVEYOR, SURVEYOR_DEADLINE)); }
+  { return milliseconds(s.getopt<int>(SURVEYOR, SURVEYOR_DEADLINE)); }
 
   void set_surveyor_deadline(socket &s, milliseconds t)
-  { setsockopt(s, SURVEYOR, SURVEYOR_DEADLINE, static_cast<int>(t.count())); }
+  { s.setopt(SURVEYOR, SURVEYOR_DEADLINE, static_cast<int>(t.count())); }
 
 }
 

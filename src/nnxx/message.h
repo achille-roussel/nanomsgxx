@@ -35,6 +35,8 @@ namespace nnxx {
   public:
     typedef void const * const_pointer;
     typedef void       * pointer;
+    typedef char       * iterator;
+    typedef char const * const_iterator;
     typedef size_t       size_type;
 
     message() noexcept;
@@ -60,6 +62,12 @@ namespace nnxx {
     size_type size() const noexcept;
 
     bool empty() const noexcept;
+
+    iterator begin() noexcept;
+    iterator end()   noexcept;
+
+    const_iterator begin() const noexcept;
+    const_iterator end()   const noexcept;
 
     friend message make_message(pointer data, size_type size) noexcept;
 
@@ -100,4 +108,5 @@ namespace nnxx {
 
 }
 
+#include <nnxx/socket_message.hpp>
 #endif // NNXX_MESSAGE_H

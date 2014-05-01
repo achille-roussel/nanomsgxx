@@ -28,22 +28,22 @@
 namespace nnxx {
 
   milliseconds get_linger(const socket &s)
-  { return milliseconds(getsockopt<int>(s, SOCKET, LINGER)); }
+  { return milliseconds(s.getopt<int>(SOCKET, LINGER)); }
 
   milliseconds get_recv_timeout(const socket &s)
-  { return milliseconds(getsockopt<int>(s, SOCKET, RCVTIMEO)); }
+  { return milliseconds(s.getopt<int>(SOCKET, RCVTIMEO)); }
 
   milliseconds get_send_timeout(const socket &s)
-  { return milliseconds(getsockopt<int>(s, SOCKET, SNDTIMEO)); }
+  { return milliseconds(s.getopt<int>(SOCKET, SNDTIMEO)); }
 
   void set_linger(socket &s, milliseconds t)
-  { setsockopt(s, SOCKET, LINGER, static_cast<int>(t.count())); }
+  { s.setopt(SOCKET, LINGER, static_cast<int>(t.count())); }
 
   void set_recv_timeout(socket &s, milliseconds t)
-  { setsockopt(s, SOCKET, RCVTIMEO, static_cast<int>(t.count())); }
+  { s.setopt(SOCKET, RCVTIMEO, static_cast<int>(t.count())); }
 
   void set_send_timeout(socket &s, milliseconds t)
-  { setsockopt(s, SOCKET, SNDTIMEO, static_cast<int>(t.count())); }
+  { s.setopt(SOCKET, SNDTIMEO, static_cast<int>(t.count())); }
 
   with_linger::with_linger(socket &s, milliseconds t):
     m_socket(s),

@@ -29,7 +29,7 @@
 
 int main() {
   nnxx::message m1;
-  nnxx::message m2 { 1000 };
+  nnxx::message m2 { 12 };
 
   nnxx_check(!m1);
   nnxx_check(m2);
@@ -38,7 +38,7 @@ int main() {
   nnxx_check(m1.size() == 0);
 
   nnxx_check(m2.data() != nullptr);
-  nnxx_check(m2.size() == 1000);
+  nnxx_check(m2.size() == 12);
 
   m1 = std::move(m2);
   nnxx_check(m1);

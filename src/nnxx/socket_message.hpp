@@ -22,15 +22,28 @@
  * SOFTWARE.
  */
 
-#include <nnxx/socket.h>
-#include <nnxx/tcp.h>
+#if defined(NNXX_SOCKET_H) && defined(NNXX_MESSAGE_H)
+#ifndef NNXX_SOCKET_MESSAGE_H
+#define NNXX_SOCKET_MESSAGE_H
 
 namespace nnxx {
 
-  bool get_tcp_no_delay(const socket &s)
-  { return s.getopt<int>(SOCKET, TCP_NODELAY); }
+  template < typename Buffer >
+  Buffer socket::recv(int flags, message_control &ctl)
+  {
+    const auto msg = this->recv(flags, ctl);
+    return Buffer{ msg.begin(), msg.end() };
+  }
 
-  void set_tcp_no_delay(socket &s, bool enable)
-  { s.setopt(SOCKET, TCP_NODELAY, static_cast<int>(enable)); }
+  template < typename Buffer >
+  Buffer socket::recv(int flags)
+  {
+    const auto msg = this->recv(flags);
+    return Buffer{ msg.begin(), msg.end() };
+  }
 
 }
+
+#endif // NNXX_SOCKET_MESSAGE_H
+#endif
+

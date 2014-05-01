@@ -97,6 +97,18 @@ namespace nnxx {
   message::size_type message::size() const noexcept
   { return m_size; }
 
+  message::iterator message::begin() noexcept
+  { return reinterpret_cast<iterator>(m_data); }
+
+  message::iterator message::end() noexcept
+  { return reinterpret_cast<iterator>(m_data) + m_size; }
+
+  message::const_iterator message::begin() const noexcept
+  { return reinterpret_cast<const_iterator>(m_data); }
+
+  message::const_iterator message::end() const noexcept
+  { return reinterpret_cast<const_iterator>(m_data) + m_size; }
+
   message::size_type copy(const message &from, message &to) noexcept
   { return copy(from, to, 0, 0, std::min(from.size(), to.size())); }
 
@@ -148,17 +160,7 @@ namespace nnxx {
   { m1.swap(m2); }
 
   std::string to_string(const message &msg)
-  {
-    auto s = reinterpret_cast<const char *>(msg.data());
-    auto t = s + msg.size();
-    auto p = s;
-
-    while ((p != t) && ((*p) != '\0')) {
-      ++p;
-    }
-
-    return { s, p };
-  }
+  { return { msg.begin(), msg.end() }; }
 
   template std::ostream &operator<<(std::ostream &, const message &);
 
