@@ -41,15 +41,14 @@ namespace nnxx {
   { setopt(level, option, &val, sizeof(val)); }
 
   template < typename T >
-  size_t socket::getopt(int level, int option, T &val) const
+  void socket::getopt(int level, int option, T &val) const
   {
     size_t len = sizeof(val);
     getopt(level, option, &val, &len);
-    return len;
   }
 
   template < typename T >
-  size_t socket::getopt(int level, int option) const
+  T socket::getopt(int level, int option) const
   {
     T optval;
     getopt(level, option, optval);

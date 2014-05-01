@@ -105,10 +105,10 @@ namespace nnxx {
     void getopt(int level, int option, void *optval, size_t *len) const;
 
     template < typename T >
-    size_t getopt(int level, int option, T &val) const;
+    void getopt(int level, int option, T &val) const;
 
     template < typename T >
-    size_t getopt(int level, int option) const;
+    T getopt(int level, int option) const;
 
     int send(const void *buf, size_t len, int flags, message_control &&ctl);
 
