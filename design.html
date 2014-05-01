@@ -99,7 +99,14 @@ resource management model, as well as protecting the user from mis-using the lib
 </p>
 <strong>Member vs Non-Member Functions</strong>
 <p>
-
+Member functions are used of nanomsgxx objects to provide operations that are
+part of the object's identity, providing the low-level pieces on which extensions
+can be built.<br/>
+For example the <strong>nnxx::socket</strong> type will have the <strong>recv</strong>
+and <strong>send</strong> member functions because receiving and sending messages
+are the core features of the this type, but protocol extensions such as turning on
+or off Nagle's algorithm for TCP connections will be provided as a non-member
+function because it's not an operation that can be performed on any socket type.
 </p>
 
 <h2>
