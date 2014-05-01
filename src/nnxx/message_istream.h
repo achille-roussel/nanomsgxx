@@ -42,7 +42,7 @@ namespace nnxx {
     typedef typename base_type::traits_type       traits_type;
     typedef typename message_streambuf::size_type size_type;
 
-    explicit basic_message_istream(size_type base_size = 1000) noexcept;
+    explicit basic_message_istream() noexcept;
     basic_message_istream(basic_message_istream &&m) noexcept;
     basic_message_istream(basic_message_istream const &) = delete;
     basic_message_istream(message &&msg) noexcept;
