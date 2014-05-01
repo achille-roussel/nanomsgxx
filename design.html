@@ -120,8 +120,9 @@ catching an exception.
 <strong>Termination</strong>
 <p>
 When the program is about to exit it is supposed to inform the nanomsg library
-by calling <code>nn_term</code>, making any future or pending calls to nanomsg
-routines returning with the error code <em>ETERM</em>.<br/>
+by calling <a href="http://nanomsg.org/v0.3/nn_term.3.html">nn_term</a>, making
+any future or pending calls to nanomsg routines returning with the error code
+<em>ETERM</em>.<br/>
 While this is still reported with an exception in nanomsgxx it's on case where
 the exception thrown isn't a sub-class of <em>std::system_error</em>. The
 <em>nnxx::term_error</em> exception is instead a sub-class of
