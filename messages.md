@@ -112,7 +112,7 @@ parallel.
 ```c++
 nnxx::socket s { nnxx::SP_RAW, nnxx::REP };
 
-...
+// ...
 
 nnxx::message_control ctl1;
 nnxx::message_control ctl2;
@@ -124,7 +124,7 @@ int flags = 0;
 req1 = s.recv(flags, ctl1);
 req2 = s.recv(flags, ctl2);
 
-...
+// ...
 
 // Sending responses in different order, it's a raw socket, we're not bound
 // to follow the end-to-end enforcements of simple sockets.
