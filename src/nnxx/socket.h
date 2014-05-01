@@ -128,12 +128,6 @@ namespace nnxx {
     template < typename T >
     int send(const T &obj, int flags = 0);
 
-    template < typename Iterator >
-    int send(Iterator first, Iterator last, int flags, message_control &&ctl);
-
-    template < typename Iterator >
-    int send(Iterator first, Iterator last, int flags = 0);
-
     int recv(void *buf, size_t len, int flags, message_control &ctl);
 
     int recv(void *buf, size_t len, int flags = 0);
