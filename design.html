@@ -138,12 +138,23 @@ of each function to understand how to handle this case.
 When the program is about to exit it is supposed to inform the nanomsg library
 by calling <a href="http://nanomsg.org/v0.3/nn_term.3.html">nn_term</a>, making
 any future or pending calls to nanomsg routines failing and setting <em>errno</em>
-to <em>ETERM</em>.<br/>
-While this is still reported with an exception in nanomsgxx it's on case where
-the exception thrown isn't a sub-class of <strong>std::system_error</strong>. The
-<strong>nnxx::term_error</strong> exception is instead a sub-class of
+to <strong>ETERM</strong>. While this is still reported with an exception in nanomsgxx
+it's on case where the exception thrown isn't a sub-class of <strong>std::system_error</strong>.
+The <strong>nnxx::term_error</strong> exception is instead a sub-class of
 <a href="http://en.cppreference.com/w/cpp/error/logic_error">std::logic_error</a>.
 That allows the program to handle this condition away from local error handling logic.
+</p>
+<strong>Memory Allocation</strong>
+<p>
+The nanomsg library uses dynamic memory allocations in some places, if these fail
+for whatever reasons the functions report the error with the <strong>ENOMEM</strong>
+<em>errno</em> code.<br/>
+This is another case where nanomsgxx will report an error through an exception that
+is not a subclass of <strong>std::system_error</strong>.<br/>
+The C++ standard library
+provides the <strong>std::bad_alloc</strong> for this purpose, in order to easily
+integrate with programs that are written for standard C++ nanomsgxx also reports
+memory allocation failures by throwing an instance of <strong>std::bad_alloc</strong>.
 </p>
 
 <div class="navigation">
