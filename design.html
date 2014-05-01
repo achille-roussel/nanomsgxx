@@ -37,7 +37,7 @@
 
 <p>
   This chapter exposes the main design decisions that were made when developping
-  nanomsgxx, here are the sub-categories:
+  nanomsgxx, it covers these categories:
 </p>
 <ul>
 <li><a href="#constants"><strong>Constants</strong></a></li>
@@ -48,6 +48,13 @@
 
 <h2>
 <a name="constants" class="anchor" href="#constants"><span class="octicon octicon-link"></span></a>Constants</h2>
+nanomsg uses many constants to represent protocols, socket domains, options, flags...
+Since C++ is compatible with C, standard nanomsg constants (NN_*) can be simply used
+wherever constants are expected in the C++ API. However nanomsgxx ports all constants
+within the <em>nnxx</em> namespace, removing the leading <em>NN_</em>, for example
+the <em>NN_MSG</em> constant in the C API is ported by the <em>nnxx::MSG</em> symbol.
+This applies to almost all constants, except in a few cases where it conflicts with
+some existing symbols (more on that later).
 
 <h2>
 <a name="strings" class="anchor" href="#strings"><span class="octicon octicon-link"></span></a>Strings</h2>
