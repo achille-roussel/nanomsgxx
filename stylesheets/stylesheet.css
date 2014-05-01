@@ -421,3 +421,22 @@ Small Device Styles
   }
 
 }
+
+/** my styles **/
+.nnxx-title {
+    font-size: 1.5em;
+    position: absolute;
+    top: 0.1em;
+}
+
+div.navigation {
+    height: 1em;
+}
+
+div.navigation span.left {
+    float:left;
+}
+
+div.navigation span.right {
+    float:right;
+}
