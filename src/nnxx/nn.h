@@ -71,6 +71,13 @@ namespace nnxx {
     EV_POLLOUT = NN_POLLOUT,
   };
 
+  enum {
+    // These constant shall not collide with NN_DONTWAIT or any other flag used
+    // on the nn_recv and nn_send functions.
+    NO_SIGNAL_ERROR  = 1 << 14,
+    NO_TIMEOUT_ERROR = 1 << 15,
+  };
+
   struct symbol_properties : public nn_symbol_properties {
     operator bool () const noexcept { return name != nullptr; }
   };

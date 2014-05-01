@@ -120,37 +120,41 @@ namespace nnxx {
 
   poll_vector poll(poll_vector &&entries);
 
-  poll_vector poll(poll_vector &&entries, time_point timeout);
+  poll_vector poll(poll_vector &&entries, time_point timeout, int flags = 0);
 
-  poll_vector poll(poll_vector &&entries, duration timeout);
+  poll_vector poll(poll_vector &&entries, duration timeout, int flags = 0);
 
   poll_vector &poll(poll_vector &entries);
 
-  poll_vector &poll(poll_vector &entries, time_point timeout);
+  poll_vector &poll(poll_vector &entries, time_point timeout, int flags = 0);
 
-  poll_vector &poll(poll_vector &entries, duration timeout);
+  poll_vector &poll(poll_vector &entries, duration timeout, int flags = 0);
 
   template < typename Rep, typename Period >
   poll_vector &poll(poll_vector &entries,
-                    const std::chrono::duration<Rep, Period> &timeout)
-  { return poll(entries, std::chrono::duration_cast<duration>(timeout)); }
+                    const std::chrono::duration<Rep, Period> &timeout,
+                    int flags = 0)
+  { return poll(entries, std::chrono::duration_cast<duration>(timeout), flags); }
 
   template < typename Clock, typename Duration >
   poll_vector &poll(poll_vector &entries,
-                    const std::chrono::time_point<Clock, Duration> &timeout)
-  { return poll(entries, std::chrono::time_point_cast<time_point>(timeout)); }
+                    const std::chrono::time_point<Clock, Duration> &timeout,
+                    int flags = 0)
+  { return poll(entries, std::chrono::time_point_cast<time_point>(timeout), flags); }
 
   template < typename Rep, typename Period >
   poll_vector poll(poll_vector &&entries,
-                   const std::chrono::duration<Rep, Period> &timeout)
+                   const std::chrono::duration<Rep, Period> &timeout,
+                   int flags = 0)
   { return poll(std::forward<poll_vector>(entries),
-                std::chrono::duration_cast<duration>(timeout)); }
+                std::chrono::duration_cast<duration>(timeout), flags); }
 
   template < typename Clock, typename Duration >
   poll_vector poll(poll_vector &&entries,
-                   const std::chrono::time_point<Clock, Duration> &timeout)
+                   const std::chrono::time_point<Clock, Duration> &timeout,
+                   int flags = 0)
   { return poll(std::forward<poll_vector>(entries),
-                std::chrono::time_point_cast<time_point>(timeout)); }
+                std::chrono::time_point_cast<time_point>(timeout), flags); }
 
         recv_ready_sequence recv_ready(poll_vector       &entries) noexcept;
   const_recv_ready_sequence recv_ready(poll_vector const &entries) noexcept;

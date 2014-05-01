@@ -33,12 +33,20 @@ namespace nnxx {
 
   static int check_socket_error(int flags)
   {
-    if (this_thread::get_errc() != std::errc::resource_unavailable_try_again) {
-      throw_error();
+    const auto err = this_thread::get_errc();
+
+    if (err != std::errc::resource_unavailable_try_again) {
+      if ((err != std::errc::interrupted) || !(flags & NO_SIGNAL_ERROR)) {
+        throw_error();
+      }
     }
-    if (!(flags & DONTWAIT)) {
-      throw timeout_error{ };
+
+    else if (!(flags & DONTWAIT)) {
+      if (!(flags & NO_TIMEOUT_ERROR)) {
+        throw timeout_error{ };
+      }
     }
+
     return -1;
   }
 

@@ -150,19 +150,19 @@ namespace nnxx {
   poll_vector poll(poll_vector &&entries)
   { return std::move(poll(entries)); }
 
-  poll_vector poll(poll_vector &&entries, duration timeout)
-  { return std::move(poll(entries, timeout)); }
+  poll_vector poll(poll_vector &&entries, duration timeout, int flags)
+  { return std::move(poll(entries, timeout, flags)); }
 
-  poll_vector poll(poll_vector &&entries, time_point timeout)
-  { return std::move(poll(entries, timeout)); }
+  poll_vector poll(poll_vector &&entries, time_point timeout, int flags)
+  { return std::move(poll(entries, timeout, flags)); }
 
   poll_vector &poll(poll_vector &entries)
   { return poll(entries, duration::max()); }
 
-  poll_vector &poll(poll_vector &entries, time_point timeout)
-  { return poll(entries, timeout - clock::now()); }
+  poll_vector &poll(poll_vector &entries, time_point timeout, int flags)
+  { return poll(entries, timeout - clock::now(), flags); }
 
-  poll_vector &poll(poll_vector &entries, duration timeout)
+  poll_vector &poll(poll_vector &entries, duration timeout, int flags)
   {
     const int t = (timeout == duration::max())
       ? -1
@@ -170,9 +170,14 @@ namespace nnxx {
 
     const int n = poll(entries.data(), entries.size(), t);
 
-    check_error(n);
+    if (n < 0) {
+      const auto err = this_thread::get_errc();
+      if ((err != std::errc::interrupted) || !(flags & NO_SIGNAL_ERROR)) {
+        throw_error();
+      }
+    }
 
-    if ((n == 0) && (t != 0)) {
+    if ((n == 0) && (t != 0) && !(flags & NO_TIMEOUT_ERROR)) {
       throw_error(ETIMEDOUT);
     }
 
