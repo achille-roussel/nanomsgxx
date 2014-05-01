@@ -8,3 +8,6 @@ build/*
 # Waf
 .waf*
 .lock*
+
+# Jekyll
+_site/*
