@@ -423,20 +423,20 @@ Small Device Styles
 }
 
 /** my styles **/
-.nnxx-title {
+h5.nnxx-title {
     font-size: 1.5em;
     position: absolute;
     top: 0.1em;
 }
 
-div.navigation {
+div.nnxx-navigation {
     height: 1em;
 }
 
-div.navigation span.left {
+div.nnxx-navigation span.left {
     float:left;
 }
 
-div.navigation span.right {
+div.nnxx-navigation span.right {
     float:right;
 }
