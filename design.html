@@ -46,10 +46,10 @@ nanomsgxx, it covers these topics:
 <a name="constants" class="anchor" href="#constants"><span class="octicon octicon-link"></span></a>Constants</h2>
 <p>
 nanomsg uses many constants to represent protocols, socket domains, options, flags...
-Since C++ is compatible with C, standard nanomsg constants (NN_*) can be simply used
-wherever constants are expected in the C++ API. However nanomsgxx ports all constants
-within the <code>nnxx</code> namespace, removing the leading <em>NN_</em>, for example
-the <code>NN_MSG</code> constant in the C API is ported by the <code>nnxx::MSG</code>
+Since C++ syntax is mostly compatible with C, standard nanomsg constants (NN_*) can be
+simply used wherever constants are expected in the C++ API. However nanomsgxx ports all
+constants within the <code>nnxx</code> namespace, removing the leading <em>NN_</em>, for
+example the <code>NN_MSG</code> constant in the C API is ported by the <code>nnxx::MSG</code>
 symbol.
 This applies to almost all constants, except in a few cases where it conflicts with
 some existing symbols (more on that later).
@@ -83,6 +83,20 @@ for example:
 
 <h2>
 <a name="objects" class="anchor" href="#objects"><span class="octicon octicon-link"></span></a>Objects</h2>
+<p>
+The nanomsgxx API provides a few object types that abstracts concepts of the C
+API, while trying to stay as close as possible it adds a few extra types to
+integrate with the C++ standard library and take advantages of the rich features
+of the language.
+</p>
+<strong>Moveable Objects</strong>
+<p>
+All types in the nanomsgxx API provide a [move constructor](http://en.cppreference.com/w/cpp/language/move_constructor)
+and a (move assignment operator)[http://en.cppreference.com/w/cpp/language/move_operator],
+this is a powerful feature of C++11 and the library makes heavy use of it to
+provide an easy resource management model, as well as protecting the user from
+mis-using the library in some places.
+</p>
 
 <h2>
 <a name="exceptions" class="anchor" href="#exceptions"><span class="octicon octicon-link"></span></a>Exceptions</h2>
