@@ -137,8 +137,8 @@ of each function to understand how to handle this case.
 <p>
 When the program is about to exit it is supposed to inform the nanomsg library
 by calling <a href="http://nanomsg.org/v0.3/nn_term.3.html">nn_term</a>, making
-any future or pending calls to nanomsg routines returning with the error code
-<strong>ETERM</strong>.<br/>
+any future or pending calls to nanomsg routines failing and setting <em>errno</em>
+to <em>ETERM</em>.<br/>
 While this is still reported with an exception in nanomsgxx it's on case where
 the exception thrown isn't a sub-class of <strong>std::system_error</strong>. The
 <strong>nnxx::term_error</strong> exception is instead a sub-class of
