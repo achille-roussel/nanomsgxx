@@ -75,9 +75,13 @@ sequence), this includes:
 This feature can be extended by providing a <pre>c_str</pre> function for new types,
 for example:
 </p>
-<pre>
-
+<div class="highlight highlight-c++">
+<pre><span class="k">const </span><span class="kt">char </span>* c_str(other_string_type s)
+{
+  <span class="k">return </span>to_c_string(s);
+}
 </pre>
+</div>
 
 <h2>
 <a name="objects" class="anchor" href="#objects"><span class="octicon octicon-link"></span></a>Objects</h2>
