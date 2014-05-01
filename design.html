@@ -36,8 +36,8 @@
 <a name="design" class="anchor" href="#design"><span class="octicon octicon-link"></span></a>Design</h1>
 
 <p>
-  This chapter exposes the main design decisions that were made when developping
-  nanomsgxx, it covers these categories:
+This chapter exposes the main design decisions that were made when developping
+nanomsgxx, it covers these categories:
 </p>
 <ul>
 <li><a href="#constants"><strong>Constants</strong></a></li>
@@ -48,16 +48,36 @@
 
 <h2>
 <a name="constants" class="anchor" href="#constants"><span class="octicon octicon-link"></span></a>Constants</h2>
+<p>
 nanomsg uses many constants to represent protocols, socket domains, options, flags...
 Since C++ is compatible with C, standard nanomsg constants (NN_*) can be simply used
 wherever constants are expected in the C++ API. However nanomsgxx ports all constants
-within the <em>nnxx</em> namespace, removing the leading <em>NN_</em>, for example
-the <em>NN_MSG</em> constant in the C API is ported by the <em>nnxx::MSG</em> symbol.
+within the <pre>nnxx</pre> namespace, removing the leading <pre>NN_</pre>, for example
+the <pre>NN_MSG</pre> constant in the C API is ported by the <pre>nnxx::MSG</pre> symbol.
 This applies to almost all constants, except in a few cases where it conflicts with
 some existing symbols (more on that later).
+</p>
 
 <h2>
 <a name="strings" class="anchor" href="#strings"><span class="octicon octicon-link"></span></a>Strings</h2>
+<p>
+nanomsgxx functions accept string arguments in some cases, to bind or connect to a
+node for example. Everywhere a string is expected the functions are designed to
+receive any object that can be converted to a C-string (null-terminted <pre>char</pre>
+sequence), this includes:
+</p>
+<ul>
+<li>objects of <pre>const char *</pre> type, or implicitly converted to this pointer type</li>
+<li>objects of <pre>std::string</pre> type, or any other specialization of <pre>std::basic_string</pre>
+<li>any object that has a <pre>c_str</pre> member function returning a <pre>const char *</pre> object.
+</ul>
+<p>
+This feature can be extended by providing a <pre>c_str</pre> function for new types,
+for example:
+</p>
+<pre>
+
+</pre>
 
 <h2>
 <a name="objects" class="anchor" href="#objects"><span class="octicon octicon-link"></span></a>Objects</h2>
