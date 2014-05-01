@@ -86,14 +86,12 @@ namespace nnxx {
     endpoint bind(const char *addr);
 
     template < typename String >
-    endpoint bind(const String &addr)
-    { return bind(c_str(addr)); }
+    endpoint bind(const String &addr);
 
     endpoint connect(const char *addr);
 
     template < typename String >
-    endpoint connect(const String &addr)
-    { return connect(c_str(addr)); }
+    endpoint connect(const String &addr);
 
     void shutdown(endpoint how);
 
@@ -102,26 +100,15 @@ namespace nnxx {
     void setopt(int level, int option, const void *val, size_t len);
 
     template < typename T >
-    void setopt(int level, int option, const T &val)
-    { setopt(level, option, &val, sizeof(val)); }
+    void setopt(int level, int option, const T &val);
 
     void getopt(int level, int option, void *optval, size_t *len) const;
 
     template < typename T >
-    size_t getopt(int level, int option, T &val) const
-    {
-      size_t len = sizeof(val);
-      getopt(level, option, &val, &len);
-      return len;
-    }
+    size_t getopt(int level, int option, T &val) const;
 
     template < typename T >
-    size_t getopt(int level, int option) const
-    {
-      T optval;
-      getopt(level, option, optval);
-      return optval;
-    }
+    size_t getopt(int level, int option) const;
 
     int send(const void *buf, size_t len, int flags, message_control &&ctl);
 
@@ -136,12 +123,16 @@ namespace nnxx {
     int send(message &&msg, int flags = 0);
 
     template < typename T >
-    int send(const T &obj, int flags, message_control &&ctl)
-    { return send(obj.data(), obj.size(), flags, static_cast<message_control&&>(ctl)); }
+    int send(const T &obj, int flags, message_control &&ctl);
 
     template < typename T >
-    int send(const T &obj, int flags = 0)
-    { return send(obj.data(), obj.size(), flags); }
+    int send(const T &obj, int flags = 0);
+
+    template < typename Iterator >
+    int send(Iterator first, Iterator last, int flags, message_control &&ctl);
+
+    template < typename Iterator >
+    int send(Iterator first, Iterator last, int flags = 0);
 
     int recv(void *buf, size_t len, int flags, message_control &ctl);
 
@@ -173,5 +164,5 @@ namespace nnxx {
 
 }
 
-#include <nnxx/socket_message.hpp>
+#include <nnxx/socket.hpp>
 #endif // NNXX_SOCKET_H

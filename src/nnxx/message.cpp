@@ -153,7 +153,7 @@ namespace nnxx {
     return new_msg;
   }
 
-  message make_message(message::pointer data, message::size_type size) noexcept
+  message make_message_from(message::pointer data, message::size_type size) noexcept
   { return message{ data, size }; }
 
   void swap(message &m1, message &m2) noexcept

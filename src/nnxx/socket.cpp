@@ -229,7 +229,7 @@ namespace nnxx {
     }
 
     ctl = std::move(tmp);
-    return make_message(p, n);
+    return make_message_from(p, n);
   }
 
   message socket::recv(int flags)
@@ -242,7 +242,7 @@ namespace nnxx {
       return { };
     }
 
-    return make_message(p, n);
+    return make_message_from(p, n);
   }
 
   int socket::fd() const noexcept

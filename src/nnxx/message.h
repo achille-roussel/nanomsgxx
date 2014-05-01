@@ -26,6 +26,7 @@
 #define NNXX_MESSAGE_H
 
 #include <iosfwd>
+#include <iterator>
 #include <string>
 #include <nnxx/nn.h>
 
@@ -69,7 +70,7 @@ namespace nnxx {
     const_iterator begin() const noexcept;
     const_iterator end()   const noexcept;
 
-    friend message make_message(pointer data, size_type size) noexcept;
+    friend message make_message_from(pointer data, size_type size) noexcept;
 
   private:
     pointer   m_data;
@@ -80,7 +81,7 @@ namespace nnxx {
 
   void swap(message &m1, message &m2) noexcept;
 
-  message make_message(message::pointer data, message::size_type size) noexcept;
+  message make_message_from(message::pointer data, message::size_type size) noexcept;
 
   message copy(const message &msg, message::size_type size = 0, int type = 0);
 
@@ -93,6 +94,29 @@ namespace nnxx {
                           message::size_type size) noexcept;
 
   std::string to_string(const message &msg);
+
+  template < typename Iterator >
+  message make_message(Iterator first, Iterator last)
+  {
+    typedef typename std::iterator_traits<Iterator> traits;
+    typedef typename traits::value_type   type;
+    typedef typename traits::value_type * pointer;
+    using std::copy;
+    using std::distance;
+    message msg (distance(first, last) * sizeof(type));
+    copy(first,
+         last,
+         reinterpret_cast<pointer>(msg.data()));
+    return msg;
+  }
+
+  template < typename Iterable >
+  message make_message(Iterable &&obj)
+  {
+    using std::begin;
+    using std::end;
+    return make_message(begin(obj), end(obj));
+  }
 
   template < typename Char, typename Traits >
   std::basic_ostream<Char, Traits> &
@@ -108,5 +132,5 @@ namespace nnxx {
 
 }
 
-#include <nnxx/socket_message.hpp>
+#include <nnxx/socket.hpp>
 #endif // NNXX_MESSAGE_H

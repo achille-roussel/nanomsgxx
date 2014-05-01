@@ -40,10 +40,10 @@ int main() {
   nnxx_check(s3.send("Hello World! 2") == 14);
 
   nnxx_check(s1.recv<std::string>() == "Hello World! 1");
-  nnxx_check(s1.send("1") == 1);
+  nnxx_check(s1.send(std::string{ "1" }) == 1);
 
   nnxx_check(s1.recv<std::string>() == "Hello World! 2");
-  nnxx_check(s1.send("2") == 1);
+  nnxx_check(s1.send(std::string{ "2" }) == 1);
 
   nnxx_check(to_string(s2.recv()) == "1");
   nnxx_check(to_string(s3.recv()) == "2");
