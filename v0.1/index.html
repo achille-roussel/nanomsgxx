@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="nanomsgxx : nanomsg binding for C++11" />
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/nnxx.css">
+    <title>nanomsgxx</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/achille-roussel/nanomsgxx">View on GitHub</a>
+
+          <h1 id="project_title">nanomsgxx</h1>
+          <h2 id="project_tagline">nanomsg binding for C++11</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/achille-roussel/nanomsgxx/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/achille-roussel/nanomsgxx/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="nanomsgxx" class="anchor" href="#nanomsgxx"><span class="octicon octicon-link"></span></a>Documentation</h1>
+<p>
+This document exposes the different components of nanomsgxx, provides explanations and examples
+on how to use them in C++ programs, as well as the API reference describing each type and functions.<br/>
+</p>
+
+<h2>
+<a name="chapters" class="anchor" href="#chapters"><span class="octicon octicon-link"></span></a>Chapters</h2>
+
+<ol>
+<li><a href="design.html"><strong>Design</strong></a></li>
+<li><a href="messages.html"><strong>Messages</strong></a></li>
+<li><a href="sockets.html"><strong>Sockets</strong></a></li>
+<li><a href="polling.html"><strong>Polling</strong></a></li>
+<li><a href="api.html"><strong>API Reference</strong></a></li>
+</ol>
+
+<h2>
+<a name="building-and-installing" class="anchor" href="#building-and-installing"><span class="octicon octicon-link"></span></a>Building and installing</h2>
+
+<p>nanomsgxx's build is driven by waf, you can get more information about
+what waf is and how it works <a href="http://docs.waf.googlecode.com/git/book_17/single.html">here</a>.</p>
+
+<p>waf is packaged with nanomsgxx, all you should need is a python interpreter and
+running these commands:</p>
+
+<pre><code>./waf configure
+./waf build
+./waf install
+</code></pre>
+
+<p>The library and headers will be installed on your system and you'll be able to
+link your program against <strong>libnanomsgxx</strong>.</p>
+
+<h2>
+<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting started</h2>
+
+<p>nanomsgxx aims to provide a very thin abstraction on top of the nanomsg C API,
+while taking advantage of C++11's features to make the code easier to read and
+write.</p>
+
+<p><strong>Quick example</strong></p>
+
+<div class="highlight highlight-c++"><pre><span class="cp">#include &lt;iostream&gt;</span>
+<span class="cp">#include &lt;system_error&gt;</span>
+<span class="cp">#include &lt;nnxx/message.h&gt;</span>
+<span class="cp">#include &lt;nnxx/pair.h&gt;</span>
+<span class="cp">#include &lt;nnxx/socket.h&gt;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">try</span> <span class="p">{</span>
+    <span class="n">nnxx</span><span class="o">::</span><span class="n">socket</span> <span class="n">s1</span> <span class="p">{</span> <span class="n">nnxx</span><span class="o">::</span><span class="n">SP</span><span class="p">,</span> <span class="n">nnxx</span><span class="o">::</span><span class="n">PAIR</span> <span class="p">};</span>
+    <span class="n">nnxx</span><span class="o">::</span><span class="n">socket</span> <span class="n">s2</span> <span class="p">{</span> <span class="n">nnxx</span><span class="o">::</span><span class="n">SP</span><span class="p">,</span> <span class="n">nnxx</span><span class="o">::</span><span class="n">PAIR</span> <span class="p">};</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">addr</span> <span class="o">=</span> <span class="s">"inproc://example"</span><span class="p">;</span>
+
+    <span class="n">s1</span><span class="p">.</span><span class="n">bind</span><span class="p">(</span><span class="n">addr</span><span class="p">);</span>
+    <span class="n">s2</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">addr</span><span class="p">);</span>
+
+    <span class="n">s1</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="s">"Hello World!"</span><span class="p">);</span>
+
+    <span class="n">nnxx</span><span class="o">::</span><span class="n">message</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">s2</span><span class="p">.</span><span class="n">recv</span><span class="p">();</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">msg</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">catch</span> <span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">system_error</span> <span class="o">&amp;</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p><strong>What did we write?</strong></p>
+
+<p>You've probably recognized most of these calls if you're familiar with nanomsg's
+API. nanomsgxx uses the <em>nnxx</em> namespace, here we have...</p>
+
+<ul>
+<li>declared two socket objects using the <em>PAIR</em> protcol and connected them together</li>
+<li>sent <strong>"Hello World!"</strong> from the first socket to the second</li>
+<li>used the <strong>nnxx::socket::recv</strong> method to retrieve the message on the
+receiver side</li>
+<li>printed the received message to stdout</li>
+</ul><p><strong>A few highlights</strong></p>
+
+<ul>
+<li>as you can expect from a C++ abstraction there's no need to manually tell when
+to release resources, this is handled automatically in the destructors</li>
+<li>the <strong>nnxx::message</strong> type automatically manages buffers for zero-copy, making
+high performance code easy to write.</li>
+<li>error cases are reported throught exceptions that are subclasses of
+<strong>std::system_error</strong>
+</li>
+</ul>
+
+<h2>
+<a name="contributing" class="anchor" href="#contributing"><span class="octicon octicon-link"></span></a>Contributing</h2>
+<p>
+The nanomsgxx library is MIT licensed, so you can use and modify the code as you wish.<br/>
+Feel free to fork the <a href="https://github.com/achille-roussel/nanomsgxx">repo</a>
+on github and submit patches if you fixed a bug or want to improve nanomsgxx.
+</p>
+
+<div style="text-align:center; padding: 1em 0;">
+  <a style="font-size:1.2em;" href="design.html"><strong>Go on to first chapter &raquo;</strong></a>
+</div>
+
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">nanomsgxx maintained by <a href="https://github.com/achille-roussel">achille-roussel</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
