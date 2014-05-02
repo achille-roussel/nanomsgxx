@@ -15,7 +15,7 @@ def all_files(waf):
     return h_files(waf) + cpp_files(waf) + test_files(waf)
 
 def h_files(waf):
-    return waf.path.ant_glob('**/src/nnxx.h **/src/nnxx/*.h')
+    return waf.path.ant_glob('**/src/nnxx/*.h')
 
 def c_files(waf):
     return waf.path.ant_glob('**/src/nnxx/*.c')
@@ -27,7 +27,7 @@ def test_files(waf):
     return waf.path.ant_glob('**/tests/*.cpp')
 
 def install_files(waf):
-    waf.install_files('${PREFIX}/include', h_files(waf))
+    waf.install_files('${PREFIX}/include/nnxx', h_files(waf))
 
 # ==============================================================================
 # Waf commands
