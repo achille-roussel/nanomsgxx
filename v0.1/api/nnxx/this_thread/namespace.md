@@ -1,5 +1,5 @@
 ---
-layout: cpppage
+layout: v0.1/cpppage
 title: nnxx::this_thread (namespace)
 index_page: ../../../index.html
 prev_page: ../../../api.html

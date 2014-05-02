@@ -1,5 +1,5 @@
 ---
-layout: docpage
+layout: v0.1/docpage
 title: 2. Messages
 prev: Design
 next: Sockets
