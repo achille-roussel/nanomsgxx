@@ -2,15 +2,15 @@
 layout: docpage
 title: Polling
 prev: Sockets
-next: Timeouts
+next: API Reference
 prev_page: sockets.html
-next_page: timeouts.html
+next_page: api.html
 ---
 
 The nanomsg C API provides a powerful polling system that is mirrored on POSIX's
-polling interface. C++ though doesn't provide any sort of polling interface on
-file descriptors in the standard library, so nanomsgxx comes with its own API
-for polling on nanomsg sockets instead of integrating with an existing one.  
+polling interface. C++ though doesn't have any sort of interface for polling
+events on file descriptors in the standard library, so nanomsgxx comes with its
+own API for polling on nanomsg sockets instead of integrating with an existing one.  
 The wrapper is very small and mostly is syntaxing sugar on top of the C API.
 
 Poll Entries
@@ -79,9 +79,9 @@ nnxx::socket s2 { /* ... */ };
 // Polling the socket, nnxx::poll_vector can be initialized from a
 // std::initializer_list<nnxx::poll_entry>
 nnxx::poll_vector entries = nnxx::poll({
-  { s1, nnxx::EV_POLLIN },
-  { s2, nnxx::EV_POLLIN | nnxx::EV_POLLOUT },
-});
+    { s1, nnxx::EV_POLLIN },
+    { s2, nnxx::EV_POLLIN | nnxx::EV_POLLOUT },
+  });
 
 for (auto e : nnxx::recv_ready(entries)) {
   // All entries enumerated here won't block on a receive operation.
@@ -102,3 +102,35 @@ cause compilation to fail. That's why nanomsgxx uses **nnxx::EV_POLLIN** and
 
 Timeouts
 --------
+
+Polling is by nature a blocking operation, so the API has to provides a way to
+set a timeout that will give the hand back to the program in case nothing 
+happens for a while because we may have to do some other things once in a while.
+
+As described in the [design](design.html) section, exceptions are used to report
+timeouts in the nanomsgxx API.  
+A timeout can be specified as second argument to
+the **nnxx::poll** function, it may be give as a
+[std::chrono::duration](http://en.cppreference.com/w/cpp/chrono/duration) (if we
+want to set *how long* the function should wait), or as a
+[std::chrono::time_point](http://en.cppreference.com/w/cpp/chrono/time_point)
+(if we want to set *when* the function should return).  
+Here's how we'd handle a timeout:
+
+```c++
+nnxx::poll_vector entries;
+
+// ...
+
+try {
+  // Polls for events, waits at most one second.
+  entries = nnxx::poll({
+      { s1, nnxx::EV_POLLIN },
+      { s2, nnxx::EV_POLLIN | nnxx::EV_POLLOUT },
+    },
+    std::chrono::seconds(1));
+}
+catch (const nnxx::timeout_error &) {
+  // Nothing happened for more than one second.
+}
+```

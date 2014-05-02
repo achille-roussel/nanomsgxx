@@ -44,7 +44,6 @@ on how to use them in C++ programs, as well as the API reference describing each
 <li><a href="messages.html"><strong>Messages</strong></a></li>
 <li><a href="sockets.html"><strong>Sockets</strong></a></li>
 <li><a href="polling.html"><strong>Polling</strong></a></li>
-<li><a href="timeouts.html"><strong>Timeouts</strong></a></li>
 <li><a href="api.html"><strong>API Reference</strong></a></li>
 </ul><h2>
 <a name="building-and-installing" class="anchor" href="#building-and-installing"><span class="octicon octicon-link"></span></a>Building and installing</h2>
@@ -106,8 +105,7 @@ write.</p>
 API. nanomsgxx uses the <em>nnxx</em> namespace, here we have...</p>
 
 <ul>
-<li>declared two socket objects in the <em>SP</em> domain using the <em>PAIR</em> protcol
-and connected them together</li>
+<li>declared two socket objects using the <em>PAIR</em> protcol and connected them together</li>
 <li>sent <strong>"Hello World!"</strong> from the first socket to the second</li>
 <li>used the <strong>nnxx::socket::recv</strong> method to retrieve the message on the
 receiver side</li>
