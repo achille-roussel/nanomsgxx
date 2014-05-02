@@ -38,6 +38,7 @@ namespace nnxx {
   class poll_entry : public pollfd {
   public:
     poll_entry() noexcept;
+    poll_entry(int s, int ev) noexcept;
     poll_entry(socket &s, int ev) noexcept;
 
     void clear() noexcept;

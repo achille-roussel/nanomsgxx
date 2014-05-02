@@ -64,7 +64,9 @@ void nn_msgctl_init (struct nn_msgctl *ctl)
 
 void nn_msgctl_term (struct nn_msgctl *ctl)
 {
-  nn_freemsg (ctl->ctl_base);
+  if (ctl->ctl_base) {
+    nn_freemsg (ctl->ctl_base);
+  }
 }
 
 int nn_msgctl_copy (struct nn_msgctl *to,

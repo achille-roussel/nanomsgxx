@@ -106,6 +106,9 @@ namespace nnxx {
   poll_entry::poll_entry() noexcept
   { clear(); }
 
+  poll_entry::poll_entry(int s, int ev) noexcept
+  { set(s, ev); }
+
   poll_entry::poll_entry(socket &s, int ev) noexcept
   { set(s, ev); }
 
