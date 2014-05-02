@@ -84,6 +84,7 @@ h3 {
 
 h4 {
   font-size: 21px;
+  margin-top: 20px;
 }
 
 h5 {
@@ -163,7 +164,7 @@ pre, code {
   color: #222;
   background-color: #fff;
 
-  font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+  font-family: monospace; /* Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace; */
   font-size: 14px;
 
   border-radius: 2px;

@@ -5,7 +5,7 @@ h5.nnxx-title {
 }
 
 div.nnxx-navigation {
-    height: 1em;
+    height: 1.1em;
 }
 
 div.nnxx-navigation span.left {
@@ -14,4 +14,13 @@ div.nnxx-navigation span.left {
 
 div.nnxx-navigation span.right {
     float:right;
+}
+
+div.nnxx-navigation-bottom {
+    margin-top: 20px;
+}
+
+.highlight {
+    margin-bottom: 10px;
+    margin-top: 20px;
 }
