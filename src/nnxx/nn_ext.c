@@ -140,7 +140,7 @@ int nn_recvfrom (int s, void *buf, size_t buflen, int flags,
     return -1;
   }
 
-  /*  Recieving a message. */
+  /*  Receiving a message. */
   nn_msgctl_init (ctl);
   vec [0].iov_base = buf;
   vec [0].iov_len = buflen;
@@ -167,7 +167,7 @@ int nn_sendto (int s, const void *buf, size_t buflen, int flags,
   struct nn_msghdr msg;
   void * control;
 
-  /*  If the caller doesn't specify a reciever ctless we simply delegate to
+  /*  If the caller doesn't specify a receiver ctless we simply delegate to
       nn_send. */
   if (!ctl) {
     return nn_send (s, buf, buflen, flags);
