@@ -64,7 +64,7 @@ void nn_msgctl_init (struct nn_msgctl *ctl)
 
 void nn_msgctl_term (struct nn_msgctl *ctl)
 {
-  free (ctl->ctl_base);
+  nn_freemsg (ctl->ctl_base);
 }
 
 int nn_msgctl_copy (struct nn_msgctl *to,
@@ -74,7 +74,7 @@ int nn_msgctl_copy (struct nn_msgctl *to,
 
   /*  Copy control base if it was allocated. */
   if (from->ctl_base) {
-    control = malloc (from->ctl_len);
+    control = nn_allocmsg (from->ctl_len, 0);
     if (!control) {
       errno = ENOMEM;
       return -1;
