@@ -62,10 +62,6 @@ namespace nnxx {
     m_fd(nn_socket(domain, protocol))
   { check_error(m_fd); }
 
-  socket::socket(int fd) noexcept:
-    m_fd(fd)
-  { }
-
   socket::~socket()
   { force_close(); }
 
@@ -247,9 +243,6 @@ namespace nnxx {
 
   int socket::fd() const noexcept
   { return m_fd; }
-
-  socket make_socket(int fd) noexcept
-  { return socket{ fd }; }
 
   void swap(socket &s1, socket &s2) noexcept
   { s1.swap(s2); }

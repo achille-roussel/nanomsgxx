@@ -144,17 +144,11 @@ namespace nnxx {
 
     int fd() const noexcept;
 
-    friend socket make_socket(int fd) noexcept;
-
   private:
     int m_fd;
-
-    explicit socket(int) noexcept;
   };
 
   void swap(socket &s1, socket &s2) noexcept;
-
-  socket make_socket(int fd) noexcept;
 
 }
 
