@@ -1,8 +1,7 @@
 ---
 layout: v0.1/cpppage
 title: nnxx::this_thread (namespace)
-index_page: ../../../index.html
-prev_page: ../../../api.html
+path_prefix: ../../../
 ---
 
 The **nnxx::this_thread** namespace is used to declare functions that act on

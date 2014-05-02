@@ -1,8 +1,7 @@
 ---
 layout: v0.1/cpppage
 title: nnxx::message
-index_page: ../../index.html
-prev_page: ../../api.html
+path_prefix: ../../
 ---
 
 Messages wrap around memory buffers that can be used to send and receive

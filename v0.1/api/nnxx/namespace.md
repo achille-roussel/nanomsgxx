@@ -1,8 +1,7 @@
 ---
 layout: v0.1/cpppage
 title: nnxx (namespace)
-index_page: ../../api.html
-prev_page: ../../api.html
+path_prefix: ../../
 ---
 
 The **nnxx** namespace contains all nanomsgxx symbols.
