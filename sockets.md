@@ -24,7 +24,7 @@ class socket {
 
   // ...
 
-  // Working on any memory buffer.
+  // Working with any memory buffer.
   int send(const void *buf, size_t buflen, int flags, message_control &&ctl);
   int send(const void *buf, size_t buflen, int flags = 0);
 
@@ -32,11 +32,11 @@ class socket {
   int send(const char *str, int flags, message_control &&ctl);
   int send(const char *str, int flags = 0);
 
-  // Working with any string-like type
-  template < typename String >
-  int send(const String &str, int flags, message_control &&ctl);
-  template < typename String >
-  int send(const String &str, int flags = 0);
+  // Working with any string-like types.
+  template < typename T >
+  int send(const T &str, int flags, message_control &&ctl);
+  template < typename T >
+  int send(const T &str, int flags = 0);
 
   // Zero-copy operations.
   int send(message &&msg, int flags, message_control &&ctl);
@@ -55,6 +55,9 @@ selected by the compiler, and other arguments are always the same:
 - optional **nnxx::message_control** instance providing meta-information to the
 underlying procotol
 
+The template versions of the **send** functions accept any type that can be
+iterated.
+
 The **send** functions return the number of bytes in the sent messages, or
 a negative value under some conditions if the **flags** argument isn't zero.
 
@@ -69,9 +72,15 @@ class socket {
 
   // ...
 
-  // Working on any memory buffer.
+  // Working with any memory buffer.
   int recv(void *buf, size_t buflen, int flags, message_control &ctl);
   int recv(void *buf, size_t buflen, int flags = 0);
+
+  // Working with any string-like types.
+  template < typename T >
+  T recv(int flags, message_control &ctl);
+  template < typename T >
+  T recv(int flags = 0);
 
   // Zero-copy operations.
   message recv(int flags, message_control &ctl);
@@ -93,7 +102,10 @@ the underlying protocol will be stored.
 The first version of **recv** functions return the number of bytes in the
 received message, or a negative value under some conditions if the **flags**
 argument isn't zero.  
-The second version return an instance **nnxx::message** carying a memory buffer
+The second version is templated, the template argument should be a sequence
+container (string, vector, list... ) that accepts two iterators (start and end)
+as argument.
+The third version return an instance **nnxx::message** carying a memory buffer
 with a message read from the socket, the object can be evaluated to **false** if
 something happened and the **flags** argument wasn't zero, for example:
 
@@ -130,6 +142,9 @@ class socket {
 
   template < typename T >
   void getopt(int level, int optname, T &optval) const;
+
+  template < typename T >
+  T getopt(int level, int optname) const;
 
   // ...
 
