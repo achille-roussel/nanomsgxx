@@ -1,6 +1,6 @@
 ---
 layout: docpage
-title: Sockets
+title: 3. Sockets
 prev: Messages
 next: Polling
 prev_page: messages.html
@@ -9,14 +9,14 @@ next_page: polling.html
 
 Sockets are one main component of the nanomsg API, they're used to exchanged
 messages between nodes and are reprented by descriptors.  
-nanomsgxx uses the **nnxx::socket** type to wrap around such descriptors and
+nanomsgxx uses the [nnxx::socket](api/nnxx/socket.html) type to wrap around such descriptors and
 provide automatic resource management and low level abstractions around the
 C API socket routines.
 
 Sending Messages
 ----------------
 
-The **nnxx::socket** type has a *send* member function that lets us send messages
+The [nnxx::socket](api/nnxx/socket.html) type has a *send* member function that lets us send messages
 throught a socket, it comes with multiple signatures:
 
 ```c++
@@ -50,16 +50,16 @@ class socket {
 As you can see the type of the first argument specifies which version will be
 selected by the compiler, and other arguments are always the same:
 
-- optional flags, that may be a combination of **nnxx::DONTWAIT**,
-**nnxx::NO&#95;SIGNAL&#95;ERROR** and **nnxx::NO&#95;TIMEOUT&#95;ERROR**
-- optional **nnxx::message_control** instance providing meta-information to the
+- optional flags, that may be a combination of [nnxx::DONTWAIT](api/nnxx/namespace.html#DONTWAIT),
+[nnxx::NO&#95;SIGNAL&#95;ERROR](api/nnxx/namespace.html#NO_SIGNAL_ERROR) and [nnxx::NO&#95;TIMEOUT&#95;ERROR](api/nnxx/namespace.html#NO_TIMEOUT_ERROR)
+- optional [nnxx::message_control](api/nnxx/message_control.html) instance providing meta-information to the
 underlying procotol
 
 The template versions of the **send** functions accept any type that can be
 iterated.
 
 The **send** functions return the number of bytes in the sent messages, or
-a negative value under some conditions if the **flags** argument isn't zero.
+a negative value under some conditions if the *flags* argument isn't zero.
 
 Receiving Messages
 ------------------
@@ -94,20 +94,20 @@ class socket {
 As you can see the type of the first argument specifies which version will be
 selected by the compiler, and other arguments are always the same:
 
-- optional flags, that may be a combination of **nnxx::DONTWAIT**,
-**nnxx::NO&#95;SIGNAL&#95;ERROR** and **nnxx::NO&#95;TIMEOUT&#95;ERROR**
-- optional **nnxx::message_control** instance where meta-information coming from
+- optional flags, that may be a combination of [nnxx::DONTWAIT](api/nnxx/namespace.html#DONTWAIT),
+[nnxx::NO&#95;SIGNAL&#95;ERROR](api/nnxx/namespace.html#NO_SIGNAL_ERROR) and [nnxx::NO&#95;TIMEOUT&#95;ERROR](api/nnxx/namespace.html#NO_TIMEOUT_ERROR)
+- optional [nnxx::message_control](api/nnxx/message_control.html) instance where meta-information coming from
 the underlying protocol will be stored.
 
 The first version of **recv** functions return the number of bytes in the
-received message, or a negative value under some conditions if the **flags**
+received message, or a negative value under some conditions if the *flags*
 argument isn't zero.  
 The second version is templated, the template argument should be a sequence
 container (string, vector, list... ) that accepts two iterators (start and end)
 as argument.
-The third version return an instance **nnxx::message** carying a memory buffer
+The third version return an instance [nnxx::message](api/nnxx/message.html) carying a memory buffer
 with a message read from the socket, the object can be evaluated to **false** if
-something happened and the **flags** argument wasn't zero, for example:
+something happened and the *flags* argument wasn't zero, for example:
 
 ```c++
 nnxx::message msg { s.recv(nnxx::DONTWAIT) };
@@ -124,7 +124,7 @@ Socket Options
 --------------
 
 Options can be set on sockets, some options apply to the socket properties,
-some other apply to the underlying protocol. **nnxx::socket** provides member
+some other apply to the underlying protocol. [nnxx::socket](api/nnxx/socket.html) provides member
 functions that wrap around the [nn_setsockopt](http://nanomsg.org/v0.3/nn_setsockopt.3.html)
 and [nn_getsockopt](http://nanomsg.org/v0.3/nn_getsockopt.3.html) routine:
 

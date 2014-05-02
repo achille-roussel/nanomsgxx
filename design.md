@@ -1,6 +1,6 @@
 ---
 layout: docpage
-title: Design
+title: 1. Design
 prev: Introduction
 next: Messages
 prev_page: index.html
@@ -16,9 +16,9 @@ Constants
 nanomsg uses many constants to represent protocols, socket domains, options,
 flags... Since C++ syntax is mostly compatible with C, standard nanomsg constants
 (NN\_&#42;) can be simply used wherever constants are expected in the C++ API.
-However nanomsgxx ports all constants within the **nnxx** namespace, removing the
-leading NN\_. For example the **NN\_MSG** constant in the C API is ported by the
-**nnxx::MSG** symbol. This applies to almost all constants, except in a few cases
+However nanomsgxx ports all constants within the [nnxx](api/nnxx/namespace.html) namespace, removing the
+leading NN\_. For example the [NN\_MSG](http://nanomsg.org/v0.3/nn_send.3.html) constant in the C API is ported by the
+[nnxx::MSG](api/nnxx/namespace.html#MSG) symbol. This applies to almost all constants, except in a few cases
 where it conflicts with some existing symbols (more on that later).
 
 Strings
@@ -65,7 +65,7 @@ user from mis-using the library in some places.
 Member functions are used of nanomsgxx objects to provide operations that are
 part of the object's identity, providing the low-level pieces on which extensions
 can be built.  
-For example the **nnxx::socket** type will have the recv and send member functions
+For example the [nnxx::socket](api/nnxx/socket.html) type will have the recv and send member functions
 because receiving and sending messages are the core features of the this type,
 but protocol extensions such as turning on or off Nagle's algorithm for TCP
 connections will be provided as a non-member function because it's not an
@@ -86,9 +86,9 @@ routine can be accessed through the caught exception.
 
 When a program receives a signal it may cause any ongoing system call to be
 cancelled to execute a signal handler instead, in that case the systeam call
-terminates with the EINTR error code. While nanomsg mirrors this behavior,
-nanomsgxx reports these conditions with the **nnxx::signal&#95;error** exception.  
-This can be deactivated on a per-call basis by passing **nnxx::NO&#95;SIGNAL&#95;ERROR**
+terminates with the **EINTR** error code. While nanomsg mirrors this behavior,
+nanomsgxx reports these conditions with the [nnxx::signal&#95;error](api/nnxx/signal_error.html) exception.  
+This can be deactivated on a per-call basis by passing [nnxx::NO&#95;SIGNAL&#95;ERROR](api/nnxx/namespace.thml#NO_SIGNAL_ERROR)
 in the flags argument on any blocking call, you should then refer to the
 documentation of each function to understand how to handle this case.
 
@@ -96,8 +96,8 @@ documentation of each function to understand how to handle this case.
 
 nanomsg's API lets the user define a timeout for any blocking operation
 (typically receiving or sending messages), and reports any timeout in the
-operation with a **nnxx::timeout&#95;error** exception.  
-This can be deactivated on a per-call basis by passing **nnxx::NO&#95;TIMEOUT&#95;ERROR**
+operation with a [nnxx::timeout&#95;error](api/nnxx/timeout_error.html) exception.  
+This can be deactivated on a per-call basis by passing [nnxx::NO&#95;TIMEOUT&#95;ERROR](api/nnxx/namespace.html#NO_TIMEOUT_ERROR)
 in the flags argument on any blocking call, you should then refer to the
 documentation of each function to understand how to handle this case.
 
@@ -109,7 +109,7 @@ by calling
 making any future or pending calls to nanomsg routines
 failing and setting errno to **ETERM**. While this is still reported with an
 exception in nanomsgxx it's on case where the exception thrown isn't a
-sub-class of **std::system&#95;error**. The **nnxx::term&#95;error** exception is
+sub-class of [std::system_error](http://en.cppreference.com/w/cpp/error/system_error). The [nnxx::term&#95;error](api/nxxx/term_error.html) exception is
 instead a sub-class of
 [std::logic_error](http://en.cppreference.com/w/cpp/error/logic_error).
 That allows the program to handle this condition away from local error handling
@@ -121,10 +121,10 @@ The nanomsg library uses dynamic memory allocations in some places, if these
 fail for whatever reasons the functions report the error with the ENOMEM errno
 code.  
 This is another case where nanomsgxx will report an error through an exception
-that is not a subclass of **std::system&#95;error**.
+that is not a subclass of [std::system_error](http://en.cppreference.com/w/cpp/error/system_error).
 The C++ standard library provides the
 [std::bad_alloc](http://en.cppreference.com/w/cpp/memory/new/bad_alloc)
 exception for this purpose,
 in order to easily integrate with programs that are written for standard C++
 nanomsgxx also reports memory allocation failures by throwing an instance of
-**std::bad&#95;alloc**. 
+[std::bad_alloc](http://en.cppreference.com/w/cpp/memory/new/bad_alloc). 

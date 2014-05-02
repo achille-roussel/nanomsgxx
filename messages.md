@@ -1,6 +1,6 @@
 ---
 layout: docpage
-title: Messages
+title: 2. Messages
 prev: Design
 next: Sockets
 prev_page: design.html
@@ -15,17 +15,17 @@ with messages in nanomsgxx.
 Message
 -------
 
-Messages passed from and to sockets are represented by the **nnxx::message**
+Messages passed from and to sockets are represented by the [nnxx::message](api/nnxx/message.html)
 type, it features:
 
 - automatic memory management
 - zero-copy operations when sending and recveiving on sockets
 
-Every memory buffer managed by a **nnxx::message** object is allocated and freed
+Every memory buffer managed by a [nnxx::message](api/nnxx/message.html) object is allocated and freed
 using the [nn_allocmsg](http://nanomsg.org/v0.3/nn_allocmsg.3.html) and
 [nn_freemsg](http://nanomsg.org/v0.3/nn_freemsg.3.html) functions of the nanomsg
 C API.  
-Here's an example of how you could use a **nnxx::message** instance:
+Here's an example of how you could use a [nnxx::message](api/nnxx/message.html) instance:
 
 ```c++
 void forward_message(nxx::socket &from, nnxx::socket &to)
@@ -53,7 +53,7 @@ Message Output Stream
 Output streams are useful for abstracting away the support on which we write
 formatted data to, if we want to build a message to send it over a socket we
 can use such stream to do so.  
-Instances of **nnxx::message_ostream** are designed for this use case, here's
+Instances of [nnxx::message_ostream](api/nnxx/message_ostream.html) are designed for this use case, here's
 an example:
 
 ```c++
@@ -75,7 +75,7 @@ Message Input Stream
 --------------------
 
 When receiving a message from a socket we can use parsers based on standard C++
-streams to read the data. nanomsgxx provides the **nnxx::message_istream** type,
+streams to read the data. nanomsgxx provides the [nnxx::message_istream](api/nnxx/message_istream.html) type,
 here's a usage example:
 
 ```c++
@@ -96,7 +96,7 @@ std::vector<int> recv_int_vector(nnxx::socket &s)
 Message Control
 ---------------
 
-When using nanomsg raw sockets (nnxx::SP&#95;RAW), messages can be associated
+When using nanomsg raw sockets ([nnxx::SP&#95;RAW](api/nnxx/namespace.thml#SP_RAW)), messages can be associated
 with control headers that provide meta informations relative to the underlying
 protocol (routing for example).  
 In the basic C API provides the [nn_sendmsg](http://nanomsg.org/v0.3/nn_sendmsg.3.html)
@@ -104,9 +104,9 @@ and [nn_recvmsg](http://nanomsg.org/v0.3/nn_recvmsg.3.html) for this purpose,
 which lets us retrieve the control information within the **nn_msghdr** object
 we pass to these functions.
 
-This feature is abstracted in nanomsgxx with the **nnxx::message_control** type,
+This feature is abstracted in nanomsgxx with the [nnxx::message_control](api/nnxx/message_control.html) type,
 which we can get or set and receiving and sending messages, this is particulary
-useful when dealing with **nnxx::REP** sockets if we want to handle requests in
+useful when dealing with [nnxx::REP](api/nnxx/namespace.html#REP) sockets if we want to handle requests in
 parallel.
 
 ```c++
