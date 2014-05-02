@@ -5,7 +5,8 @@ title: API Reference
 
 You are reading the reference documentation for the nanomsgxx C++ API, it
 presents each type and functions provided by the library along with technical
-on how and when to use them in your program, as well as some code examples.  
+details on how and when to use them in your program, as well as some code
+examples.
 
 **Namespaces**
 
