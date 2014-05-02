@@ -72,6 +72,7 @@ namespace nnxx {
   };
 
   enum {
+    DONTWAIT = NN_DONTWAIT,
     // These constant shall not collide with NN_DONTWAIT or any other flag used
     // on the nn_recv and nn_send functions.
     NO_SIGNAL_ERROR  = 1 << 14,

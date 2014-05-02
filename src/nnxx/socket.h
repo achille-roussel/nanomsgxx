@@ -52,10 +52,6 @@ namespace nnxx {
     MSG = NN_MSG,
   };
 
-  enum {
-    DONTWAIT = NN_DONTWAIT,
-  };
-
   typedef int endpoint;
 
   class message;
