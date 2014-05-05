@@ -12,7 +12,7 @@ VERSION = '0.1'
 # ==============================================================================
 
 def all_files(waf):
-    return h_files(waf) + cpp_files(waf) + test_files(waf)
+    return h_files(waf) + cpp_files(waf) + hpp_files(waf) + test_files(waf)
 
 def h_files(waf):
     return waf.path.ant_glob('**/src/nnxx/*.h')
