@@ -79,7 +79,7 @@ def build_nanomsgxx(waf):
     return libnanomsgxx
 
 def build_tests(waf):
-    if waf.options.no_tests:
+    if waf.options.notests:
         return []
     conf = copy(DEFAULT_CONF)
     conf.update({
@@ -137,4 +137,4 @@ def options(waf):
     add_bool('--debug', 'build in debug mode')
     add_bool('--static', 'build static library')
     add_bool('--shared', 'build shared library (default)')
-    add_bool('--no-tests', 'turn off tests')
+    add_bool('--notests', 'turn off tests')
