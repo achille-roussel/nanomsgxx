@@ -1,0 +1,17 @@
+#!/usr/bin/env python
+# encoding: utf-8
+#
+# Extensions build script.
+from copy import copy
+
+def configure(waf):
+    pass
+
+def build(waf):
+    conf = copy(waf.env.C_CONF_KWARGS)
+    conf.update({
+        'source': waf.path.ant_glob('*.c'),
+        'target': 'nanomsgext',
+    })
+    waf.env.nnext = waf.stlib(**conf)
+    waf.env.nnext.post()

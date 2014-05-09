@@ -1,0 +1,28 @@
+#!/usr/bin/env python
+# encoding: utf-8
+#
+# Nanomsgxx build script.
+from copy import copy
+
+def configure(waf):
+    waf.check_cxx(lib='nanomsg')
+
+def build(waf):
+    conf = copy(waf.env.CXX_CONF_KWARGS)
+    conf.update({
+        'lib'   : ['nanomsg', 'nanomsgext'],
+        'source': waf.path.ant_glob('*.cpp'),
+        'target': 'nanomsgxx',
+    })
+
+    if waf.options.static:
+        waf.env.nnxx = waf.stlib(**conf)
+    else:
+        waf.env.nnxx = waf.shlib(**conf)
+    waf.env.nnxx.post()
+
+    for t1 in waf.env.nnxx.tasks:
+        for t2 in waf.env.nnext.tasks:
+            t1.set_run_after(t2)
+
+    waf.install_files('${PREFIX}/include/nnxx', waf.path.ant_glob('*.h *.hpp'))

@@ -1,0 +1,30 @@
+#!/usr/bin/env python
+# encoding: utf-8
+#
+# Tests build script.
+from copy import copy
+from waflib.Tools import waf_unit_test
+
+def configure(waf):
+    pass
+
+def build(waf):
+    features  = ['cxx', 'cxxprogram', 'test']
+    lib       = ['nanomsg', 'nanomsgext', 'nanomsgxx']
+    for f in waf.path.ant_glob('*.cpp'):
+        source = str(f)
+        target = str(f)[:-4]
+        conf   = copy(waf.env.CXX_CONF_KWARGS)
+        conf.update({
+            'target'      : target,
+            'source'      : source,
+            'features'    : features,
+            'lib'         : lib,
+            'install_path': None,
+        })
+        test = waf(**conf)
+        test.post()
+        for t1 in test.tasks:
+            for t2 in waf.env.nnxx.tasks:
+                t1.set_run_after(t2)
+    waf.add_post_fun(waf_unit_test.summary)
