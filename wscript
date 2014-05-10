@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # encoding: utf-8
+import os
 
 APPNAME = 'nanomsgxx'
 VERSION = '0.1'
@@ -8,7 +9,7 @@ def build(waf):
     cflags   = ['-W', '-Wall', '-Wextra']
     cxxflags = ['-W', '-Wall', '-Wextra', '-std=c++11']
     defines  = []
-    includes = ['src']
+    includes = [os.path.join(waf.path.abspath(), 'src')]
     libpath  = ['src/ext', 'src/nnxx']
 
     if waf.options.debug:
@@ -18,11 +19,6 @@ def build(waf):
         cflags   += ['-O3']
         cxxflags += ['-O3']
         defines  += ['NDEBUG=1']
-
-    waf.env.DEFINES  += defines
-    waf.env.INCLUDES += includes
-    waf.env.CFLAGS   += cflags
-    waf.env.CXXFLAGS += cxxflags
 
     waf.env.C_CONF_KWARGS = {
         'includes': includes,
