@@ -10,7 +10,7 @@ def configure(waf):
 def build(waf):
     conf = copy(waf.env.CXX_CONF_KWARGS)
     conf.update({
-        'lib'   : ['nanomsg', 'nanomsgext'],
+        'lib'   : ['nanomsgext', 'nanomsg'],
         'source': waf.path.ant_glob('*.cpp'),
         'target': 'nanomsgxx',
     })

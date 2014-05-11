@@ -23,14 +23,6 @@ namespace nnxx {
 
   template < typename Char, typename Traits >
   basic_message_streambuf<Char, Traits>::
-  basic_message_streambuf(basic_message_streambuf &&m) noexcept:
-    base_type(std::move(m)),
-    m_base_size(m.m_base_size),
-    m_msg(std::move(m.m_msg))
-  { m.clear(); }
-
-  template < typename Char, typename Traits >
-  basic_message_streambuf<Char, Traits>::
   basic_message_streambuf(message &&msg) noexcept:
     base_type(),
     m_base_size(msg.empty() ? 1000 : msg.size()),
@@ -41,25 +33,6 @@ namespace nnxx {
   basic_message_streambuf<Char, Traits>::
   ~basic_message_streambuf()
   { }
-
-  template < typename Char, typename Traits >
-  basic_message_streambuf<Char, Traits> &
-  basic_message_streambuf<Char, Traits>::
-  operator=(basic_message_streambuf &&m) noexcept
-  {
-    m.swap(*this);
-    return *this;
-  }
-
-  template < typename Char, typename Traits >
-  void basic_message_streambuf<Char, Traits>::
-  swap(basic_message_streambuf &m) noexcept
-  {
-    using std::swap;
-    base_type::swap(m);
-    swap(m_base_size, m.m_base_size);
-    swap(m_msg, m.m_msg);
-  }
 
   template < typename Char, typename Traits >
   void basic_message_streambuf<Char, Traits>::clear() noexcept
@@ -131,6 +104,35 @@ namespace nnxx {
 
     return ~traits_type::eof();
   }
+
+#if NNXX_LIBCPP
+  template < typename Char, typename Traits >
+  basic_message_streambuf<Char, Traits>::
+  basic_message_streambuf(basic_message_streambuf &&m) noexcept:
+    base_type(std::move(m)),
+    m_base_size(m.m_base_size),
+    m_msg(std::move(m.m_msg))
+  { m.clear(); }
+
+  template < typename Char, typename Traits >
+  basic_message_streambuf<Char, Traits> &
+  basic_message_streambuf<Char, Traits>::
+  operator=(basic_message_streambuf &&m) noexcept
+  {
+    m.swap(*this);
+    return *this;
+  }
+
+  template < typename Char, typename Traits >
+  void basic_message_streambuf<Char, Traits>::
+  swap(basic_message_streambuf &m) noexcept
+  {
+    using std::swap;
+    base_type::swap(m);
+    swap(m_base_size, m.m_base_size);
+    swap(m_msg, m.m_msg);
+  }
+#endif // NNXX_LIBCPP
 
 }
 

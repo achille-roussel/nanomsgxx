@@ -24,7 +24,7 @@
 
 #include <string.h>
 #include <nanomsg/reqrep.h>
-#include <nnxx/nn_ext.h>
+#include <ext/nn_ext.h>
 #include <nnxx/unittest.h>
 
 int main() {

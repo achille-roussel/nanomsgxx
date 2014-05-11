@@ -25,7 +25,7 @@
 #ifndef NNXX_MESSAGE_CONTROL_H
 #define NNXX_MESSAGE_CONTROL_H
 
-#include <nnxx/nn_ext.h>
+#include <ext/nn_ext.h>
 
 namespace nnxx {
 

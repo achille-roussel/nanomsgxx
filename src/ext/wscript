@@ -9,6 +9,7 @@ def configure(waf):
 
 def build(waf):
     conf = copy(waf.env.C_CONF_KWARGS)
+    conf['cflags'] += ['-fPIC']
     conf.update({
         'source': waf.path.ant_glob('*.c'),
         'target': 'nanomsgext',

@@ -22,6 +22,7 @@
  * SOFTWARE.
  */
 
+#include <cstring>
 #include <nnxx/message_ostream.h>
 #include <nnxx/unittest.h>
 

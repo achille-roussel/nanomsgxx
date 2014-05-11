@@ -43,26 +43,29 @@ namespace nnxx {
     typedef typename message_streambuf::size_type size_type;
 
     explicit basic_message_istream() noexcept;
-    basic_message_istream(basic_message_istream &&m) noexcept;
+    explicit basic_message_istream(message &&msg) noexcept;
     basic_message_istream(basic_message_istream const &) = delete;
-    basic_message_istream(message &&msg) noexcept;
-
     ~basic_message_istream();
-
-    basic_message_istream &operator=(basic_message_istream &&m) noexcept;
     basic_message_istream &operator=(basic_message_istream const &&) = delete;
 
+#if NNXX_LIBCPP
+    basic_message_istream(basic_message_istream &&m) noexcept;
+    basic_message_istream &operator=(basic_message_istream &&m) noexcept;
     void swap(basic_message_istream &m) noexcept; 
+#endif // NNXX_LIBCPP
+
     void msg(message &&m) noexcept;
 
   private:
     message_streambuf m_buffer;
   };
 
+#if NNXX_LIBCPP
   template < typename Char, typename Traits >
   void swap(basic_message_istream<Char, Traits> &m1,
             basic_message_istream<Char, Traits> &m2) noexcept
   { m1.swap(m2); }
+#endif // NNXX_LIBCPP
 
   typedef basic_message_istream<char> message_istream;
 

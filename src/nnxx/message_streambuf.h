@@ -28,6 +28,12 @@
 #include <streambuf>
 #include <nnxx/message.h>
 
+#ifdef _LIBCPP_VERSION
+# define NNXX_LIBCPP 1
+#else
+# define NNXX_LIBCPP 0
+#endif // _LIBCPP_VERSION
+
 namespace nnxx {
 
   template < typename Char, typename Traits = std::char_traits<Char> >
@@ -43,17 +49,18 @@ namespace nnxx {
     typedef typename base_type::traits_type traits_type;
 
     explicit basic_message_streambuf(size_type base_size = 1000) noexcept;
-    basic_message_streambuf(basic_message_streambuf &&m) noexcept;
+    explicit basic_message_streambuf(message &&msg) noexcept;
     basic_message_streambuf(basic_message_streambuf const &) = delete;
     basic_message_streambuf(size_type size, int type);
-    basic_message_streambuf(message &&msg) noexcept;
-
     ~basic_message_streambuf();
-
-    basic_message_streambuf &operator=(basic_message_streambuf &&m) noexcept;
     basic_message_streambuf &operator=(basic_message_streambuf const &) = delete;
 
+#if NNXX_LIBCPP
+    basic_message_streambuf(basic_message_streambuf &&m) noexcept;
+    basic_message_streambuf &operator=(basic_message_streambuf &&m) noexcept;
     void swap(basic_message_streambuf &m) noexcept;
+#endif // NNXX_LIBCPP
+
     void msg(message &&m) noexcept;
     void clear() noexcept;
 

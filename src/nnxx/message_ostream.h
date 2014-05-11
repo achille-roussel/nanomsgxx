@@ -43,18 +43,18 @@ namespace nnxx {
     typedef typename message_streambuf::size_type size_type;
 
     explicit basic_message_ostream(size_type base_size = 1000) noexcept;
-    basic_message_ostream(basic_message_ostream &&m) noexcept;
+    explicit basic_message_ostream(message &&msg) noexcept;
     basic_message_ostream(basic_message_ostream const &) = delete;
-    basic_message_ostream(message &&msg) noexcept;
-
     ~basic_message_ostream();
+    basic_message_ostream &operator=(basic_message_ostream const &) = delete;
 
+#if NNXX_LIBCPP
+    basic_message_ostream(basic_message_ostream &&m) noexcept;
     basic_message_ostream &operator=(basic_message_ostream &&m) noexcept;
-    basic_message_ostream &operator=(basic_message_ostream const &&) = delete;
-
     void swap(basic_message_ostream &m) noexcept; 
-    void msg(message &&m) noexcept;
+#endif // NNXX_LIBCPP
 
+    void    msg(message &&m) noexcept;
     message msg(int type = 0);
     message move_msg() noexcept;
 
@@ -62,10 +62,12 @@ namespace nnxx {
     message_streambuf m_buffer;
   };
 
+#if NNXX_LIBCPP
   template < typename Char, typename Traits >
   void swap(basic_message_ostream<Char, Traits> &m1,
             basic_message_ostream<Char, Traits> &m2) noexcept
   { m1.swap(m2); }
+#endif // NNXX_LIBCPP
 
   typedef basic_message_ostream<char> message_ostream;
 

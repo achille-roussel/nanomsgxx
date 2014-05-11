@@ -26,7 +26,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <nanomsg/reqrep.h>
-#include <nnxx/nn_ext.h>
+#include <ext/nn_ext.h>
 
 static size_t nn_memhash (const char *s, size_t n)
 {

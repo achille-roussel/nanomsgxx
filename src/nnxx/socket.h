@@ -27,6 +27,12 @@
 
 #include <nnxx/nn.h>
 
+// Some system define DOMAIN in math.h, this constant is defined for internal use
+// only so we're fine undefining it.
+#ifdef DOMAIN
+#undef DOMAIN
+#endif
+
 namespace nnxx {
 
   enum {
