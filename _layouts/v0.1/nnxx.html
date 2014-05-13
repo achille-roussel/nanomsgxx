@@ -1,0 +1,44 @@
+{% include v0.1/header.html %}
+{% include v0.1/page_header.html %}
+{% include v0.1/api_header.html %}
+
+<h1 class="nnxx-code">{{ page.title }}</h1>
+<p>{{ page.info1 }}</p>
+<table class="fixed">
+  <thead>
+    <tr>
+      <th>C (nanomsg)</th>
+      <th>C++ (nanomsgxx)</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for constant in page.constants1 %}
+    <tr>
+      <td><a href="{{ constant.c_location }}">{{ constant.c }}</a></td>
+      <td>{{ constant.cxx }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<p>{{ page.info2 }}</p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for constant in page.constants2 %}
+    <tr>
+      <td>{{ constant.cxx }}</td>
+      <td>{{ constant.info }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% include v0.1/api_footer.html %}
+{% include v0.1/page_footer.html %}
+{% include v0.1/footer.html %}

@@ -1,0 +1,22 @@
+{% include v0.1/header.html %}
+{% include v0.1/page_header.html %}
+{% include v0.1/api_header.html %}
+
+<h1 class="nnxx-code">{{ page.title }}</h1>
+<p>{{ page.info }}</p>
+
+{% for section in page.sections %}
+<strong class="nnxx-api-section">{{ section.title }}</strong>
+<ul class="nnxx-api-section">
+  {% for element in section.elements %}
+  <li>
+    <strong class="nnxx-api-title"><a href="{{ element.location }}">{{ element.title }}</a></strong>
+    <p>{{ element.info }}</p>
+  </li>
+  {% endfor %}
+</ul>
+{% endfor %}
+
+{% include v0.1/api_footer.html %}
+{% include v0.1/page_footer.html %}
+{% include v0.1/footer.html %}

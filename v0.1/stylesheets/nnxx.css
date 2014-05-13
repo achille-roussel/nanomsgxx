@@ -6,6 +6,7 @@ h5.nnxx-title {
 
 div.nnxx-navigation {
     height: 1.1em;
+    margin: 20px 0;
 }
 
 div.nnxx-navigation span.left {
@@ -23,4 +24,95 @@ div.nnxx-navigation-bottom {
 .highlight {
     margin-bottom: 10px;
     margin-top: 20px;
+}
+
+.nnxx-code {
+    font-family: monospace;
+}
+
+div.nnxx-code {
+    background-color: white;
+    border: 1px solid lightgray;
+    padding: 10px;
+}
+
+/* API */
+
+strong.nnxx-api-section {
+    display: block;
+    margin: 10px 0;
+}
+
+strong.nnxx-api-title {
+    font-family: monospace;
+    margon: 0;
+    padding: 0;
+}
+
+ul.nnxx-api-section {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul.nnxx-api-section li {
+    background-color: white;
+    border: 1px solid lightgray;
+    margin: 5px 0 0 0;
+    padding: 12px;
+}
+
+ul.nnxx-api-section p {
+    color: gray;
+    margin: 0;
+    padding: 0 0 0 8px;
+}
+
+/* Class */
+
+strong.nnxx-class {
+    color: gray;
+    display: block;
+    padding: 10px 0;
+}
+
+ul.nnxx-class {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul.nnxx-class li {
+    border: 1px solid lightgray;
+    background: white;
+    margin: 5px 0;
+    padding: 5px 10px;
+}
+
+ul.nnxx-class h6 {
+    border-bottom: 1px solid gray;
+    font-family: monospace;
+    padding-bottom: 5px;
+}
+
+span.nnxx-type {
+    color: green;
+}
+
+span.nnxx-name {
+
+}
+
+span.nnxx-attr {
+    color: darkgray;
+}
+
+span.nnxx-macro {
+    color: dodgerblue;
+    font-weight: bold;
+}
+
+span.nnxx-string {
+    color: yellowgreen;
+    font-weight: bold;
 }

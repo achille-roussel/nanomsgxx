@@ -1,0 +1,38 @@
+{% include v0.1/header.html %}
+{% include v0.1/page_header.html %}
+{% include v0.1/api_header.html %}
+
+<h1 class="nnxx-code">{{ page.title }}</h1>
+
+<strong class="nnxx-class">Synopsis</strong>
+<div class="nnxx-code">
+  <span class="nnxx-macro">#include </span>
+  <span class="nnxx-string">&lt;{{ page.cxx_include }}&gt;</span>
+</div>
+
+<strong class="nnxx-class">Methods</strong>
+<ul class="nnxx-class">
+{% for method in page.methods %}
+<li>
+  <h6>
+    {% for version in method.versions %}
+    <div>
+      <span class="nnxx-type">{{ version.signature.return }}</span>
+      <span class="nnxx-name">{{ version.signature.name }}</span>
+      (
+      {% for arg in version.signature.args %}
+      <span class="nnxx-type">{{ arg.type }}</span>
+      <span class="nnxx-name">{{ arg.name }}</span>
+      {% endfor %}
+      )
+      <span class="nnxx-attr">{{ version.signature.attr }}</span>
+    </div>
+    {% endfor %}
+  </h6>
+</li>
+{% endfor %}
+</ul>
+
+{% include v0.1/api_footer.html %}
+{% include v0.1/page_footer.html %}
+{% include v0.1/footer.html %}
