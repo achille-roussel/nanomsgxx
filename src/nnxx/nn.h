@@ -32,6 +32,10 @@ namespace nnxx {
   typedef struct nn_pollfd pollfd;
 
   enum {
+    SOCKADDR_MAX = NN_SOCKADDR_MAX,
+  };
+
+  enum {
     SP     = AF_SP,
     SP_RAW = AF_SP_RAW,
   };
