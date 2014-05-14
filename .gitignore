@@ -28,3 +28,11 @@ build/*
 # Emacs
 *~
 \#*\#
+
+# Doc
+doc/*.html
+doc/*.[1-9]
+doc/nnxx/*.html
+doc/nnxx/*.[1-9]
+doc/nanomsgxx/*.html
+doc/nanomsgxx/*.[1-9]
