@@ -65,6 +65,8 @@ def roff_output_file(waf, input_file):
 def build(waf):
     waf.env.basename = waf.path.abspath()
 
+    css_files  = waf.path.ant_glob('**/*.css')
+    idx_files  = waf.path.ant_glob('**/index.txt')
     html_files = []
     roff_files = []
 
@@ -76,7 +78,7 @@ def build(waf):
         roff_files.append(roff_file)
 
         ronn_task = ronn(env=waf.env)
-        ronn_task.set_inputs([input_file])
+        ronn_task.set_inputs([input_file] + css_files + idx_files)
         ronn_task.set_outputs([html_file, roff_file])
         waf.add_to_group(ronn_task)
 
