@@ -7,23 +7,50 @@ import os
 
 class ronn(Task):
 
-    def run(self):
-        return self.exec_command(' '.join([
+    def make_ronn_command(self):
+        return [
             'RONN_STYLE=' + self.env.basename,
             'ronn',
             '--organization', "'achille.roussel@gmail.com'",
             '--manual', 'nanomsgxx',
             '--style', 'dark,nnxx,highlight',
             self.inputs[0].abspath(),
-            '&&',
+        ]
+
+    def make_mv_command(self):
+        return [
+            'mv',
+            self.outputs[0].abspath(),
+            self.outputs[0].abspath() + '.tmp',
+        ]
+
+    def make_colorsyntax_command(self):
+        return [
             os.path.join(self.env.basename, 'colorsyntax'),
             '-s',
             'monokai',
             '<',
-            self.outputs[0].abspath(),
+            self.outputs[0].abspath() + '.tmp',
             '>',
             self.outputs[0].abspath(),
-        ]))
+        ]
+
+    def make_rm_command(self):
+        return [
+            'rm',
+            '-f',
+            self.outputs[0].abspath() + '.tmp',
+        ]
+
+    def make_command(self):
+        return                                         \
+            self.make_ronn_command()        + ['&&'] + \
+            self.make_mv_command()          + ['&&'] + \
+            self.make_colorsyntax_command() + ['&&'] + \
+            self.make_rm_command()
+
+    def run(self):
+        return self.exec_command(' '.join(self.make_command()))
 
 def html_output_file(waf, input_file):
     name = input_file.name.replace('.ronn', '.html')
