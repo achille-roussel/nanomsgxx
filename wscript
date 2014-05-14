@@ -39,6 +39,8 @@ def build(waf):
     waf.recurse('src/nnxx')
     if not waf.options.notests:
         waf.recurse('tests')
+    if waf.env.with_doc:
+        waf.recurse('doc')
 
 def configure(waf):
     waf.load('compiler_c compiler_cxx c_config waf_unit_test')
@@ -46,6 +48,12 @@ def configure(waf):
     waf.recurse('src/nnxx')
     if not waf.options.notests:
         waf.recurse('tests')
+    if waf.options.nodoc:
+        waf.env.with_doc = False
+    else:
+        waf.recurse('doc')
+        waf.env.with_doc = True
+    waf.env.install_html_path = waf.options.install_html_path
 
 def dist(waf):
     waf.algo  = 'tar.gz'
@@ -59,3 +67,6 @@ def options(waf):
     add_bool('--static', 'build static library')
     add_bool('--shared', 'build shared library (default)')
     add_bool('--notests', 'turn off tests')
+    add_bool('--nodoc', 'turn off documentation')
+    waf.add_option('--install-html-path', nargs=1, default='/usr/share/doc/nanomsgxx', help='where to install html doc')
+

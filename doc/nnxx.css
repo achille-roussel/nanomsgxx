@@ -1,0 +1,9 @@
+.mp pre {
+  border: 1px solid dimgray;
+  padding: 1em;
+  overflow: hidden;
+}
+
+.highlight {
+  margin-left: 8ex;
+}

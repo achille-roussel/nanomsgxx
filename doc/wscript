@@ -1,0 +1,89 @@
+#!/usr/bin/env python
+# encoding: utf-8
+#
+# Nanomsgxx doc build script.
+from waflib.Task import Task
+import os
+
+class ronn(Task):
+
+    def output_format(self):
+        raise NotImplementedError
+
+    def make_output_file(self, path):
+        raise NotImplementedError
+
+    def make_input_command(self, input_file):
+        return ['<', input_file.abspath()]
+
+    def make_output_command(self, output_file):
+        return ['>', output_file.abspath()]
+
+    def make_ronn_command(self):
+        return [
+            'ronn',
+            '--organization', "'achille.roussel@gmail.com'",
+            '--manual', 'nanomsgxx',
+            '--style', 'dark,nnxx,highlight',
+            '--pipe',
+            '--' + self.output_format(),
+        ]
+
+    def make_command(self, input_file, output_file):
+        return ['RONN_STYLE=' + self.env.BASEDIR]    \
+            + self.make_input_command(input_file)    \
+            + self.make_ronn_command()               \
+            + self.make_output_command(output_file)
+
+    def make_command_line(self, input_file, output_file):
+        return ' '.join(self.make_command(input_file, output_file))
+
+    def run(self):
+        print self.make_command_line(self.inputs[0], self.outputs[0])
+        return self.exec_command(self.make_command_line(self.inputs[0], self.outputs[0]))
+
+    def set_file(self, waf, input_node):
+        output_path = input_node.abspath()[len(waf.path.abspath()):]
+        output_node = waf.path.make_node(self.make_output_file(output_path))
+        self.set_inputs([input_node])
+        self.set_outputs([output_node])
+        return output_node
+
+class ronn_html(ronn):
+
+    def output_format(self):
+        return 'html'
+
+    def make_output_file(self, f):
+        return f[:-4] + 'html'
+
+    def make_output_command(self, output_file):
+        return ['|', os.path.join(self.env.BASEDIR, 'colorsyntax'), '-s', 'monokai'] \
+            +  super(ronn_html, self).make_output_command(output_file)
+
+class ronn_roff(ronn):
+
+    def output_format(self):
+        return 'roff'
+
+    def make_output_file(self, f):
+        return f[:-5]
+
+def build_doc(waf, task_type):
+    output_files = []
+    for f in waf.path.ant_glob('**/*.ronn'):
+        t = task_type(env=waf.env)
+        o = t.set_file(waf, f)
+        waf.add_to_group(t)
+        output_files.append(o)
+    return output_files
+
+def build(waf):
+    waf.env.BASEDIR = waf.path.abspath()
+    html_files = build_doc(waf, ronn_html)
+    #roff_files = build_doc(waf, ronn_roff)
+    waf.install_files(waf.env.install_html_path, html_files)
+
+def configure(waf):
+    waf.find_program('cat')
+    waf.find_program('ronn')

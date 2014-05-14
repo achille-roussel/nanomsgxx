@@ -1,0 +1,23 @@
+#!/usr/bin/env python
+from bs4 import BeautifulSoup
+from pygments import highlight
+from pygments.lexers import CppLexer
+from pygments.formatters import HtmlFormatter
+import argparse
+import sys
+
+def parse_arguments():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-s', '--style', default='default', help='The Pygments style to use')
+    return parser.parse_args()
+
+args  = parse_arguments()
+style = args.style
+doc   = BeautifulSoup(sys.stdin)
+
+for pre in doc.find_all('pre'):
+    code = pre.find('code')
+    data = code.string
+    pre.replace_with(BeautifulSoup(highlight(data, CppLexer(), HtmlFormatter(style=style))))
+
+print doc

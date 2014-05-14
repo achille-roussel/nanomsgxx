@@ -1,0 +1,52 @@
+nanomsgxx(7) -- C++11 binding for nanomsg
+=========================================
+
+## SYNOPSIS
+
+c++ -std=c++11 [flags] files **-lnanomsgxx** [libraries]
+
+## DESCRIPTION
+
+**nanomsgxx** is a binding of the **nanomsg** library for C++11, it is designed
+to take full advantage of C++11 features in order to make the code safe and easy
+to read and write.
+
+## LICENSE
+
+**nanomsgxx** is released under the MIT license, you should have got a copy of
+the license along with the sources.
+
+## INSTALL
+
+**nanomsgxx** build is driven by **waf**.
+
+waf is packaged with nanomsgxx, all you need a python interpreter, then run
+these commands:
+
+**
+./waf configure  
+./waf build  
+./waf install**
+
+The library and headers will be installed on your system and you'll be able to
+link your programs with **-lnanomsgxx**.
+
+## RESOURCES
+
+[Nanomsg](http://nanomsg.org/index.html)  
+[The Waf Book](http://docs.waf.googlecode.com/git/book_17/single.html)  
+[MIT License](http://opensource.org/licenses/MIT)
+
+## SEE ALSO
+
+nnxx(3)  
+nnxx::this_thread(3)  
+nanomsgxx-design(7)  
+nanomsgxx-messages(7)  
+nanomsgxx-sockets(7)  
+nanomsgxx-polling(7)  
+nanomsg(7)  
+
+## AUTHORS
+
+Achille Roussel
