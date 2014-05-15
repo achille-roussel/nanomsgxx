@@ -21,7 +21,7 @@ using the `nn_allocmsg` and `nn_freemsg` functions of the nanomsg C API.
 Here's an example of how you could use a `nnxx::message` instance:
 
 ```
-void forward_message(nxx::socket &from, nnxx::socket &to)
+void forward_message(nnxx::socket &from, nnxx::socket &to)
 {
   nnxx::message m;
 

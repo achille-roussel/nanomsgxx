@@ -117,7 +117,7 @@ try {
       { s1, nnxx::EV_POLLIN },
       { s2, nnxx::EV_POLLIN | nnxx::EV_POLLOUT },
     },
-    std::chrono::seconds(1));
+    std::chrono::second(1));
 }
 catch (const nnxx::timeout_error &) {
   // Nothing happened for more than one second.
