@@ -1,0 +1,174 @@
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "NANOMSGXX\-MESSAGES" "7" "May 2014" "achille.roussel@gmail.com" "nanomsgxx"
+.
+.SH "NAME"
+\fBnanomsgxx\-messages\fR \- Nanomsgxx Messages
+.
+.SH "DESCRIPTION"
+nanomsg is all about passing messages around from nodes to others, so nanomsgxx provides abstractions to make managing such messages easy and efficient\.
+.
+.br
+This chapter introduces the different abstraction types that allows you to deal with messages in nanomsgxx\.
+.
+.SH "MESSAGE"
+Messages passed from and to sockets are represented by the nnxx::message type, it features:
+.
+.IP "\(bu" 4
+automatic memory management
+.
+.IP "\(bu" 4
+zero\-copy operations when sending and recveiving on sockets
+.
+.IP "" 0
+.
+.P
+Every memory buffer managed by a \fBnnxx::message\fR object is allocated and freed using the \fBnn_allocmsg\fR and \fBnn_freemsg\fR functions of the nanomsg C API\.
+.
+.br
+Here\'s an example of how you could use a \fBnnxx::message\fR instance:
+.
+.IP "" 4
+.
+.nf
+
+void forward_message(nnxx::socket &from, nnxx::socket &to)
+{
+  nnxx::message m;
+
+  // These operations don\'t copy the message, it\'s simply passed
+  // around\.
+  m = from\.recv();
+  to\.send(std::move(m));
+
+  // Could also be made shorter:
+  // to\.send(recv\.from());
+}
+.
+.fi
+.
+.IP "" 0
+.
+.P
+Messages are very useful objects for managing memory buffers but they don\'t provide any interface to work with these buffers\. Standard C++ defines the iostream interface for this purpose, and nanomsgxx messages come along with input and output streams that provide compatibility with existing standard C++ code\.
+.
+.SH "OUTPUT STREAMS"
+Output streams are useful for abstracting away the support on which we write formatted data to, if we want to build a message to send it over a socket we can use such stream to do so\.
+.
+.br
+Instances of \fBnnxx::message_ostream\fR are designed for this use case, here\'s an example:
+.
+.IP "" 4
+.
+.nf
+
+void send_hello_world_42(nnxx::socket &s)
+{
+  nnxx::message_ostream os;
+
+  // Simply use the object like any standard output stream\.
+  os << "Hello World ";
+  os << 42;
+
+  // Get an instance of nnxx::message and send it through the
+  // socket, the connected peer will receive "Hello World 42"\.
+  s\.send(os\.msg());
+}
+.
+.fi
+.
+.IP "" 0
+.
+.SH "INPUT STREAMS"
+When receiving a message from a socket we can use parsers based on standard C++ streams to read the data\. nanomsgxx provides the \fBnnxx::message_istream\fR type, here\'s a usage example:
+.
+.IP "" 4
+.
+.nf
+
+std::vector<int> recv_int_vector(nnxx::socket &s)
+{
+  // Build a new input stream from a received message\.
+  std::message_istream is { s\.recv() };
+
+  // Use a standard input stream iterator to read all integers\.
+  std::istream_iterator<int> begin { is };
+  std::istream_iterator<int> end   {    };
+
+  // It\'s that easy ;)
+  return { begin, end };
+}
+.
+.fi
+.
+.IP "" 0
+.
+.SH "CONTROLS"
+When using nanomsg raw sockets (\fBnnxx::SP_RAW\fR), messages can be associated with control headers that provide meta informations relative to the underlying protocol (routing for example)\.
+.
+.br
+In the basic C API provides the \fBnn_sendmsg\fR and \fBnn_recvmsg\fR for this purpose, which lets us retrieve the control information within the \fBnn_msghdr\fR object we pass to these functions\.
+.
+.P
+This feature is abstracted in nanomsgxx with the \fBnnxx::message_control\fR type, which we can get or set and receiving and sending messages, this is particulary useful when dealing with \fBnnxx::REP\fR sockets if we want to handle requests in parallel\.
+.
+.IP "" 4
+.
+.nf
+
+nnxx::socket s { nnxx::SP_RAW, nnxx::REP };
+
+// \.\.\.
+
+nnxx::message_control ctl1;
+nnxx::message_control ctl2;
+nnxx::message req1;
+nnxx::message req2;
+int flags = 0;
+
+// Receiving messages and associated control headers\.
+req1 = s\.recv(flags, ctl1);
+req2 = s\.recv(flags, ctl2);
+
+// \.\.\.
+
+// Sending responses in different order, it\'s a raw socket,
+// we\'re not bound to follow the end\-to\-end enforcements of
+// simple sockets\.
+s\.send(std::move(rep2), flags, std::move(ctl2));
+s\.send(std::move(rep1), flags, std::move(ctl1));
+.
+.fi
+.
+.IP "" 0
+.
+.SH "SEE ALSO"
+nnxx::message(3)
+.
+.br
+nnxx::message_control(3)
+.
+.br
+nnxx::message_istream(3)
+.
+.br
+nnxx::message_ostream(3)
+.
+.br
+nanomsgxx(7)
+.
+.br
+nanomsgxx\-design(7)
+.
+.br
+nanomsgxx\-polling(7)
+.
+.br
+nanomsgxx\-sockets(7)
+.
+.br
+nanomsg(7)
+.
+.SH "AUTHORS"
+Achille Roussel

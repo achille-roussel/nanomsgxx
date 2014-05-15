@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta http-equiv="content-type" value="text/html;charset=utf8">
+<meta name="generator" value="Ronn/v0.7.3 (http://github.com/rtomayko/ronn/tree/0.7.3)">
+<title>nanomsgxx-messages(7) - Nanomsgxx Messages</title>
+<style media="all" type="text/css">
+  /* style: man */
+  body#manpage {margin:0}
+  .mp {max-width:100ex;padding:0 9ex 1ex 4ex}
+  .mp p,.mp pre,.mp ul,.mp ol,.mp dl {margin:0 0 20px 0}
+  .mp h2 {margin:10px 0 0 0}
+  .mp > p,.mp > pre,.mp > ul,.mp > ol,.mp > dl {margin-left:8ex}
+  .mp h3 {margin:0 0 0 4ex}
+  .mp dt {margin:0;clear:left}
+  .mp dt.flush {float:left;width:8ex}
+  .mp dd {margin:0 0 0 9ex}
+  .mp h1,.mp h2,.mp h3,.mp h4 {clear:left}
+  .mp pre {margin-bottom:20px}
+  .mp pre+h2,.mp pre+h3 {margin-top:22px}
+  .mp h2+pre,.mp h3+pre {margin-top:5px}
+  .mp img {display:block;margin:auto}
+  .mp h1.man-title {display:none}
+  .mp,.mp code,.mp pre,.mp tt,.mp kbd,.mp samp,.mp h3,.mp h4 {font-family:monospace;font-size:14px;line-height:1.42857142857143}
+  .mp h2 {font-size:16px;line-height:1.25}
+  .mp h1 {font-size:20px;line-height:2}
+  .mp {text-align:justify;background:#fff}
+  .mp,.mp code,.mp pre,.mp pre code,.mp tt,.mp kbd,.mp samp {color:#131211}
+  .mp h1,.mp h2,.mp h3,.mp h4 {color:#030201}
+  .mp u {text-decoration:underline}
+  .mp code,.mp strong,.mp b {font-weight:bold;color:#131211}
+  .mp em,.mp var {font-style:italic;color:#232221;text-decoration:none}
+  .mp a,.mp a:link,.mp a:hover,.mp a code,.mp a pre,.mp a tt,.mp a kbd,.mp a samp {color:#0000ff}
+  .mp b.man-ref {font-weight:normal;color:#434241}
+  .mp pre {padding:0 4ex}
+  .mp pre code {font-weight:normal;color:#434241}
+  .mp h2+pre,h3+pre {padding-left:0}
+  ol.man-decor,ol.man-decor li {margin:3px 0 10px 0;padding:0;float:left;width:33%;list-style-type:none;text-transform:uppercase;color:#999;letter-spacing:1px}
+  ol.man-decor {width:100%}
+  ol.man-decor li.tl {text-align:left}
+  ol.man-decor li.tc {text-align:center;letter-spacing:4px}
+  ol.man-decor li.tr {text-align:right;float:right}
+  </style>
+<style media="all" type="text/css">
+  /* style: dark */
+  .mp,body#manpage {background:#080706;color:#888}
+  .mp,.mp code,.mp pre,.mp pre code,.mp tt,.mp kbd,.mp samp {color:#aaa}
+  .mp h1,.mp h2,.mp h3,.mp h4 {color:#fff}
+  .man-decor,.man-decor ol li {color:#666}
+  .mp code,.mp strong,.mp b {color:#fff}
+  .mp em,.mp var,.mp u {color:#ddd}
+  .mp pre code {color:#ddd}
+  .mp a,.mp a:link,.mp a:hover,.mp a code,.mp a pre,.mp a tt,.mp a kbd,.mp a samp {color:#fff}
+  </style>
+<style media="all" type="text/css">
+  /* style: nnxx */
+  .mp pre {border: 1px solid dimgray;padding: 1em;overflow: hidden}
+  .highlight {margin-left: 8ex}
+  </style>
+<style media="all" type="text/css">
+  /* style: highlight-dark */
+  .highlight .hll {background-color: #49483e}
+  .highlight {background: #272822;color: white}
+  .highlight .c {color: salmon} 
+  .highlight .err {color: #960050;background-color: #1e0010} 
+  .highlight .k {color: aliceblue;font-weight: bold} 
+  .highlight .l {color: white} 
+  .highlight .n {color: white} 
+  .highlight .o {color: lightyellow} 
+  .highlight .p {color: lightyellow} 
+  .highlight .cm {color: salmon} 
+  .highlight .cp {color: salmon} 
+  .highlight .c1 {color: salmon} 
+  .highlight .cs {color: salmon} 
+  .highlight .ge {font-style: italic} 
+  .highlight .gs {font-weight: bold} 
+  .highlight .kc {color: aliceblue;font-weight: bold} 
+  .highlight .kd {color: aliceblue;font-weight: bold} 
+  .highlight .kn {color: #f92672} 
+  .highlight .kp {color: aliceblue;font-weight: bold} 
+  .highlight .kr {color: aliceblue;font-weight: bold} 
+  .highlight .kt {color: #A9FC63} 
+  .highlight .ld {color: #A9FC63} 
+  .highlight .m {color: white} 
+  .highlight .s {color: #A9FC63} 
+  .highlight .na {color: white} 
+  .highlight .nb {color: white} 
+  .highlight .nc {color: #A9FC63} 
+  .highlight .no {color: white} 
+  .highlight .nd {color: white} 
+  .highlight .ni {color: white} 
+  .highlight .ne {color: white} 
+  .highlight .nf {color: white} 
+  .highlight .nl {color: white} 
+  .highlight .nn {color: violet} 
+  .highlight .nx {color: white} 
+  .highlight .py {color: white} 
+  .highlight .nt {color: white} 
+  .highlight .nv {color: white} 
+  .highlight .ow {color: lightyellow} 
+  .highlight .w {color: white} 
+  .highlight .mf {color: white} 
+  .highlight .mh {color: white} 
+  .highlight .mi {color: white} 
+  .highlight .mo {color: white} 
+  .highlight .sb {color: #A9FC63} 
+  .highlight .sc {color: #A9FC63} 
+  .highlight .sd {color: #A9FC63} 
+  .highlight .s2 {color: #A9FC63} 
+  .highlight .se {color: white} 
+  .highlight .sh {color: #A9FC63} 
+  .highlight .si {color: #A9FC63} 
+  .highlight .sx {color: #A9FC63} 
+  .highlight .sr {color: #A9FC63} 
+  .highlight .s1 {color: #A9FC63} 
+  .highlight .ss {color: #A9FC63} 
+  .highlight .bp {color: white} 
+  .highlight .vc {color: white} 
+  .highlight .vg {color: white} 
+  .highlight .vi {color: white} 
+  .highlight .il {color: white} 
+  .mp {color: lightgray}
+  </style>
+</meta></meta></head>
+<!--
+  The following styles are deprecated and will be removed at some point:
+  div#man, div#man ol.man, div#man ol.head, div#man ol.man.
+
+  The .man-page, .man-decor, .man-head, .man-foot, .man-title, and
+  .man-navigation should be used instead.
+-->
+<body id="manpage">
+<div class="mp" id="man">
+<div class="man-navigation" style="display:none">
+<a href="#NAME">NAME</a>
+<a href="#DESCRIPTION">DESCRIPTION</a>
+<a href="#MESSAGE">MESSAGE</a>
+<a href="#OUTPUT-STREAMS">OUTPUT STREAMS</a>
+<a href="#INPUT-STREAMS">INPUT STREAMS</a>
+<a href="#CONTROLS">CONTROLS</a>
+<a href="#SEE-ALSO">SEE ALSO</a>
+<a href="#AUTHORS">AUTHORS</a>
+</div>
+<ol class="man-decor man-head man head">
+<li class="tl">nanomsgxx-messages(7)</li>
+<li class="tc">nanomsgxx</li>
+<li class="tr">nanomsgxx-messages(7)</li>
+</ol>
+<h2 id="NAME">NAME</h2>
+<p class="man-name">
+<code>nanomsgxx-messages</code> - <span class="man-whatis">Nanomsgxx Messages</span>
+</p>
+<h2 id="DESCRIPTION">DESCRIPTION</h2>
+<p>nanomsg is all about passing messages around from nodes to others, so nanomsgxx
+provides abstractions to make managing such messages easy and efficient.<br/>
+This chapter introduces the different abstraction types that allows you to deal
+with messages in nanomsgxx.</p>
+<h2 id="MESSAGE">MESSAGE</h2>
+<p>Messages passed from and to sockets are represented by the nnxx::message type,
+it features:</p>
+<ul>
+<li>automatic memory management</li>
+<li>zero-copy operations when sending and recveiving on sockets</li>
+</ul>
+<p>Every memory buffer managed by a <code>nnxx::message</code> object is allocated and freed
+using the <code>nn_allocmsg</code> and <code>nn_freemsg</code> functions of the nanomsg C API.<br/>
+Here's an example of how you could use a <code>nnxx::message</code> instance:</p>
+<div class="highlight"><pre><span class="kt">void</span> <span class="nf">forward_message</span><span class="p">(</span><span class="nn">nnxx</span><span class="o">::</span><span class="nc">socket</span> <span class="o">&amp;</span><span class="n">from</span><span class="p">,</span> <span class="nn">nnxx</span><span class="o">::</span><span class="nc">socket</span> <span class="o">&amp;</span><span class="n">to</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="nn">nnxx</span><span class="o">::</span><span class="nc">message</span> <span class="n">m</span><span class="p">;</span>
+
+  <span class="c1">// These operations don't copy the message, it's simply passed</span>
+  <span class="c1">// around.</span>
+  <span class="n">m</span> <span class="o">=</span> <span class="n">from</span><span class="p">.</span><span class="n">recv</span><span class="p">();</span>
+  <span class="n">to</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="nn">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">m</span><span class="p">));</span>
+
+  <span class="c1">// Could also be made shorter:</span>
+  <span class="c1">// to.send(recv.from());</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>Messages are very useful objects for managing memory buffers but they don't provide
+any interface to work with these buffers. Standard C++ defines the iostream interface
+for this purpose, and nanomsgxx messages come along with input and output streams
+that provide compatibility with existing standard C++ code.</p>
+<h2 id="OUTPUT-STREAMS">OUTPUT STREAMS</h2>
+<p>Output streams are useful for abstracting away the support on which we write
+formatted data to, if we want to build a message to send it over a socket we can
+use such stream to do so.<br/>
+Instances of <code>nnxx::message_ostream</code> are designed for this use case, here's an example:</p>
+<div class="highlight"><pre><span class="kt">void</span> <span class="nf">send_hello_world_42</span><span class="p">(</span><span class="nn">nnxx</span><span class="o">::</span><span class="nc">socket</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="nn">nnxx</span><span class="o">::</span><span class="nc">message_ostream</span> <span class="n">os</span><span class="p">;</span>
+
+  <span class="c1">// Simply use the object like any standard output stream.</span>
+  <span class="n">os</span> <span class="o">&lt;&lt;</span> <span class="s">"Hello World "</span><span class="p">;</span>
+  <span class="n">os</span> <span class="o">&lt;&lt;</span> <span class="mi">42</span><span class="p">;</span>
+
+  <span class="c1">// Get an instance of nnxx::message and send it through the</span>
+  <span class="c1">// socket, the connected peer will receive "Hello World 42".</span>
+  <span class="n">s</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">msg</span><span class="p">());</span>
+<span class="p">}</span>
+</pre></div>
+
+<h2 id="INPUT-STREAMS">INPUT STREAMS</h2>
+<p>When receiving a message from a socket we can use parsers based on standard C++
+streams to read the data. nanomsgxx provides the <code>nnxx::message_istream</code> type,
+here's a usage example:</p>
+<div class="highlight"><pre><span class="nn">std</span><span class="o">::</span><span class="nc">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="nf">recv_int_vector</span><span class="p">(</span><span class="nn">nnxx</span><span class="o">::</span><span class="nc">socket</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="c1">// Build a new input stream from a received message.</span>
+  <span class="nn">std</span><span class="o">::</span><span class="nc">message_istream</span> <span class="n">is</span> <span class="p">{</span> <span class="n">s</span><span class="p">.</span><span class="n">recv</span><span class="p">()</span> <span class="p">};</span>
+
+  <span class="c1">// Use a standard input stream iterator to read all integers.</span>
+  <span class="nn">std</span><span class="o">::</span><span class="nc">istream_iterator</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">begin</span> <span class="p">{</span> <span class="n">is</span> <span class="p">};</span>
+  <span class="nn">std</span><span class="o">::</span><span class="nc">istream_iterator</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">end</span>   <span class="p">{</span>    <span class="p">};</span>
+
+  <span class="c1">// It's that easy ;)</span>
+  <span class="k">return</span> <span class="p">{</span> <span class="n">begin</span><span class="p">,</span> <span class="n">end</span> <span class="p">};</span>
+<span class="p">}</span>
+</pre></div>
+
+<h2 id="CONTROLS">CONTROLS</h2>
+<p>When using nanomsg raw sockets (<code>nnxx::SP_RAW</code>), messages can be associated
+with control headers that provide meta informations relative to the underlying
+protocol (routing for example).<br/>
+In the basic C API provides the <code>nn_sendmsg</code> and <code>nn_recvmsg</code> for this purpose,
+which lets us retrieve the control information within the <code>nn_msghdr</code> object we
+pass to these functions.</p>
+<p>This feature is abstracted in nanomsgxx with the <code>nnxx::message_control</code> type,
+which we can get or set and receiving and sending messages, this is particulary
+useful when dealing with <code>nnxx::REP</code> sockets if we want to handle requests in
+parallel.</p>
+<div class="highlight"><pre><span class="nn">nnxx</span><span class="o">::</span><span class="nc">socket</span> <span class="n">s</span> <span class="p">{</span> <span class="nn">nnxx</span><span class="o">::</span><span class="no">SP_RAW</span><span class="p">,</span> <span class="nn">nnxx</span><span class="o">::</span><span class="no">REP</span> <span class="p">};</span>
+
+<span class="c1">// ...</span>
+
+<span class="nn">nnxx</span><span class="o">::</span><span class="nc">message_control</span> <span class="n">ctl1</span><span class="p">;</span>
+<span class="nn">nnxx</span><span class="o">::</span><span class="nc">message_control</span> <span class="n">ctl2</span><span class="p">;</span>
+<span class="nn">nnxx</span><span class="o">::</span><span class="nc">message</span> <span class="n">req1</span><span class="p">;</span>
+<span class="nn">nnxx</span><span class="o">::</span><span class="nc">message</span> <span class="n">req2</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">flags</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="c1">// Receiving messages and associated control headers.</span>
+<span class="n">req1</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">recv</span><span class="p">(</span><span class="n">flags</span><span class="p">,</span> <span class="n">ctl1</span><span class="p">);</span>
+<span class="n">req2</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">recv</span><span class="p">(</span><span class="n">flags</span><span class="p">,</span> <span class="n">ctl2</span><span class="p">);</span>
+
+<span class="c1">// ...</span>
+
+<span class="c1">// Sending responses in different order, it's a raw socket,</span>
+<span class="c1">// we're not bound to follow the end-to-end enforcements of</span>
+<span class="c1">// simple sockets.</span>
+<span class="n">s</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="nn">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">rep2</span><span class="p">),</span> <span class="n">flags</span><span class="p">,</span> <span class="nn">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">ctl2</span><span class="p">));</span>
+<span class="n">s</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="nn">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">rep1</span><span class="p">),</span> <span class="n">flags</span><span class="p">,</span> <span class="nn">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">ctl1</span><span class="p">));</span>
+</pre></div>
+
+<h2 id="SEE-ALSO">SEE ALSO</h2>
+<p><a class="man-ref" href="../nnxx/message.3.html">nnxx::message<span class="s">(3)</span></a><br/>
+<a class="man-ref" href="../nnxx/message.3.html">nnxx::message_control<span class="s">(3)</span></a><br/>
+<a class="man-ref" href="../nnxx/message.3.html">nnxx::message_istream<span class="s">(3)</span></a><br/>
+<a class="man-ref" href="../nnxx/message.3.html">nnxx::message_ostream<span class="s">(3)</span></a><br/>
+<a class="man-ref" href="../nanomsgxx.7.html">nanomsgxx<span class="s">(7)</span></a><br/>
+<a class="man-ref" href="design.7.html">nanomsgxx-design<span class="s">(7)</span></a><br/>
+<a class="man-ref" href="polling.7.html">nanomsgxx-polling<span class="s">(7)</span></a><br/>
+<a class="man-ref" href="sockets.7.html">nanomsgxx-sockets<span class="s">(7)</span></a><br/>
+<a class="man-ref" href="http://nanomsg.org/v0.3/nanomsg.7.html">nanomsg<span class="s">(7)</span></a></p>
+<h2 id="AUTHORS">AUTHORS</h2>
+<p>Achille Roussel</p>
+<ol class="man-decor man-foot man foot">
+<li class="tl">achille.roussel@gmail.com</li>
+<li class="tc">May 2014</li>
+<li class="tr">nanomsgxx-messages(7)</li>
+</ol>
+</div>
+</body>
+</html>
+

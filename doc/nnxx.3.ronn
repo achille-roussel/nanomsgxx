@@ -1,0 +1,172 @@
+nnxx(3) -- main nanomsgxx namespace
+===================================
+
+## SYNOPSIS
+
+**#include <nnxx/nn.h>**
+
+    using namespace nnxx;
+
+## DESCRIPTION
+
+The **nnxx** namespace is used as top-level namespace, it contains all types and
+symbols of the nanomsgxx library.
+
+## TYPES
+
+**message**    
+Message abstraction for zero-copy
+
+**message_control**  
+Protocol dependant control data
+
+**message_istream**  
+Parse messages using standard input streams
+
+**message_ostream**  
+Format messages using standard input streams
+
+**message_streambuf**  
+Stream buffer for message input and output streams
+
+**poll_entry**  
+Objects used to poll events on sockets
+
+**poll_vector**  
+Vector of poll_entry objects
+
+**ready_iterator**  
+Iterate over poll events marked as ready for reading or writing
+
+**ready_sequence**  
+Proxy object generating a begin and end ready_iterator
+
+**signal_error**  
+Exception thrown when an operation is interrupted by a signal
+
+**socket**  
+Abstraction of nanomsg sockets
+
+**symbol_properties**  
+Representation of a nanomsg symbol
+
+**term_error**  
+Exception thrown when the nanomsg library is terminating
+
+**timeout_error**  
+Exception thrown when an operation times out
+
+**with_linger**  
+Scope-based linger timeout setter
+
+**with_recv_timeout**  
+Scope-based receive timeout setter
+
+**with_send_timeout**  
+Scope-based send timeout setter
+
+## FUNCTIONS
+
+*const char \** **c_str**(*string*)  
+Convert types to c-string representations
+
+*void* **device**(*socket*, *socket*)  
+Sets up a proxy routing messages from a socket to another
+
+*milliseconds* **get_linger**(*socket*)  
+Gets the linger timeout on a socket
+
+*milliseconds* **get_recv_timeout**(*socket*)  
+Gets the receive timeout on a socket
+
+*milliseconds* **get_resend_interval**(*socket*)  
+Gets the resend timeout on a socket
+
+*milliseconds* **get_send_timeout**(*socket*)  
+Gets the send timeout on a socket
+
+*milliseconds* **get_surveyor_deadline**(*socket*)  
+Gets the surveyor timeout on a socket
+
+*void* **poll**(*poll_vector*, *milliseconds*, *flags*)  
+Polls for events available on sockets
+
+*recv_ready_sequence* **recv_ready**(*poll_vector*)  
+Get a sequence of poll entries ready for receive operations
+
+*send_ready_sequence* **send_ready**(*poll_vector*)  
+Get a sequence of poll entries ready for send operations
+
+*void* **set_linger**(*socket*, *milliseconds*)  
+Sets the linger timeout on a socket
+
+*void* **set_recv_timeout**(*socket*, *milliseconds*)  
+Sets the receive timeout on a socket
+
+*void* **set_resend_interval**(*socket*, *milliseconds*)  
+Sets the resend timeout on a socket
+
+*void* **set_send_timeout**(*socket*, *milliseconds*)  
+Sets the send timeout on a socket
+
+*void* **set_surveyor_deadline**(*socket*, *milliseconds*)  
+Sets the surveyor timeout on a socket
+
+*const char \** **strerror**(*code*)  
+Returns a human-readable representation of an error code
+
+*void* **subscribe**(*socket*, *topic*)  
+Subscribe a SUB socket to a topic
+
+*symbol_properties* **symbol**(*index*)  
+Returns informations on a nanomsg symbol
+
+*void* **term**()  
+Force all ongoing and future nanomsg operations to abort
+
+*void* **unsubscribe**(*socket*, *topic*)  
+Gets the current error status on the calling thread
+
+## SEE ALSO
+
+nnxx::message(3)  
+nnxx::message_control(3)  
+nnxx::message_istream(3)  
+nnxx::message_ostream(3)  
+nnxx::message_streambuf(3)  
+nnxx::poll_entry(3)  
+nnxx::poll_vector(3)  
+nnxx::ready_iterator(3)  
+nnxx::ready_sequence(3)  
+nnxx::signal_error(3)  
+nnxx::socket(3)  
+nnxx::symbol_properties(3)  
+nnxx::term_error(3)  
+nnxx::timeout_error(3)  
+nnxx::with_linger(3)  
+nnxx::with_recv_timeout(3)  
+nnxx::with_send_timeout(3)  
+nnxx::c_str(3)  
+nnxx::device(3)  
+nnxx::get_linger(3)  
+nnxx::get_send_timeout(3)  
+nnxx::get_surveyor_deadline(3)  
+nnxx::poll(3)  
+nnxx::recv_ready(3)  
+nnxx::send_ready(3)  
+nnxx::set_linger(3)  
+nnxx::set_recv_timeout(3)  
+nnxx::set_resend_interval(3)  
+nnxx::set_send_timeout(3)  
+nnxx::set_surveyor_deadline(3)  
+nnxx::strerror(3)  
+nnxx::subscribe(3)  
+nnxx::symbol(3)  
+nnxx::term(3)  
+nnxx::unsubscribe(3)  
+nnxx::this_thread(3)  
+nanomsgxx(7)  
+
+## AUTHORS
+
+Achille Roussel

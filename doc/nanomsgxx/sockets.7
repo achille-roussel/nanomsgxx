@@ -1,0 +1,189 @@
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "NANOMSGXX\-SOCKETS" "7" "May 2014" "achille.roussel@gmail.com" "nanomsgxx"
+.
+.SH "NAME"
+\fBnanomsgxx\-sockets\fR \- Nanomsgxx Sockets
+.
+.SH "DESCRIPTION"
+Sockets are one main component of the nanomsg API, they\'re used to exchanged messages between nodes and are reprented by descriptors\.
+.
+.br
+nanomsgxx uses the nnxx::socket type to wrap around such descriptors and provide automatic resource management and low level abstractions around the C API socket routines\.
+.
+.SH "SEND"
+The nnxx::socket type has a send member function that lets us send messages throught a socket, it comes with multiple signatures:
+.
+.IP "" 4
+.
+.nf
+
+class socket {
+
+  // \.\.\.
+
+  // Working with any memory buffer\.
+  int send(const void *b, size_t n, int f, message_control &&c);
+  int send(const void *b, size_t n, int f = 0);
+
+  // Working with C\-strings\.
+  int send(const char *s, int f, message_control &&c);
+  int send(const char *s, int f = 0);
+
+  // Working with any string\-like types\.
+  template < typename T >
+  int send(const T &s, int f, message_control &&c);
+  template < typename T >
+  int send(const T &s, int f = 0);
+
+  // Zero\-copy operations\.
+  int send(message &&m, int f, message_control &&c);
+  int send(message &&m, int f = 0);
+
+  // \.\.\.
+
+};
+.
+.fi
+.
+.IP "" 0
+.
+.P
+As you can see the type of the first argument specifies which version will be selected by the compiler, and other arguments are always the same:
+.
+.IP "\(bu" 4
+optional flags, that may be a combination of \fBnnxx::DONTWAIT\fR, \fBnnxx::NO_SIGNAL_ERROR\fR and \fBnnxx::NO_TIMEOUT_ERROR\fR
+.
+.IP "\(bu" 4
+optional \fBnnxx::message_control\fR instance providing meta\-information to the underlying procotol
+.
+.IP "" 0
+.
+.P
+The template versions of the send functions accept any type that can be iterated\.
+.
+.P
+The send functions return the number of bytes in the sent messages, or a negative value under some conditions if the flags argument isn\'t zero\.
+.
+.SH "RECEIVE"
+Receiving messages is just as easy as sending, using the recv member function that exists with these signatures:
+.
+.IP "" 4
+.
+.nf
+
+class socket {
+
+  // \.\.\.
+
+  // Working with any memory buffer\.
+  int recv(void *buf, size_t len, int flags, message_control &ctl);
+  int recv(void *buf, size_t len, int flags = 0);
+
+  // Working with any string\-like types\.
+  template < typename T >
+  T recv(int flags, message_control &ctl);
+  template < typename T >
+  T recv(int flags = 0);
+
+  // Zero\-copy operations\.
+  message recv(int flags, message_control &ctl);
+  message recv(nt flags = 0);
+
+  // \.\.\.
+
+};
+.
+.fi
+.
+.IP "" 0
+.
+.P
+As you can see the type of the first argument specifies which version will be selected by the compiler, and other arguments are always the same:
+.
+.IP "\(bu" 4
+optional flags, that may be a combination of \fBnnxx::DONTWAIT\fR, \fBnnxx::NO_SIGNAL_ERROR\fR and \fBnnxx::NO_TIMEOUT_ERROR\fR
+.
+.IP "\(bu" 4
+optional \fBnnxx::message_control\fR instance where meta\-information coming from the underlying protocol will be stored
+.
+.IP "" 0
+.
+.P
+The first version of recv functions return the number of bytes in the received message, or a negative value under some conditions if the flags argument isn\'t zero\.
+.
+.br
+The second version is templated, the template argument should be a sequence container (string, vector, list\.\.\. ) that accepts two iterators (start and end) as argument\. The third version return an instance \fBnnxx::message\fR carying a memory buffer with a message read from the socket, the object can be evaluated to false if something happened and the flags argument wasn\'t zero, for example:
+.
+.IP "" 4
+.
+.nf
+
+nnxx::message msg { s\.recv(nnxx::DONTWAIT) };
+
+if (!msg) {
+  // Check errno, it\'s probably be set to EAGAIN because
+  // no message could be read from the socket\.
+  // \.\.\.
+}
+.
+.fi
+.
+.IP "" 0
+.
+.SH "OPTIONS"
+Options can be set on sockets, some options apply to the socket properties, some other apply to the underlying protocol\. nnxx::socket provides member functions that wrap around the nn_setsockopt and nn_getsockopt routine:
+.
+.IP "" 4
+.
+.nf
+
+class socket {
+
+  // \.\.\.
+
+  void setopt(int lvl, int name, const void *val, size_t len);
+
+  template < typename T >
+  void setopt(int lvl, int name, const T &val);
+
+  void getopt(int lvl, int name, void *val, size_t *len) const;
+
+  template < typename T >
+  void getopt(int lvl, int name, T &val) const;
+
+  template < typename T >
+  T getopt(int lvl, int name) const;
+
+  // \.\.\.
+
+};
+.
+.fi
+.
+.IP "" 0
+.
+.P
+The templated version uses the other one and is a simple wrapper for convenience so the option type must match the one required by the nanomsg C API\.
+.
+.SH "SEE ALSO"
+nnxx::socket(3)
+.
+.br
+nanomsgxx(7)
+.
+.br
+nanomsgxx\-design(7)
+.
+.br
+nanomsgxx\-messages(7)
+.
+.br
+nanomsgxx\-polling(7)
+.
+.br
+nanomsg(7)
+.
+.SH "AUTHORS"
+Achille Roussel

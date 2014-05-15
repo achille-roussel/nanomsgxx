@@ -1,0 +1,172 @@
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "NANOMSGXX\-POLLING" "7" "May 2014" "achille.roussel@gmail.com" "nanomsgxx"
+.
+.SH "NAME"
+\fBnanomsgxx\-polling\fR \- Nanomsgxx Polling
+.
+.SH "DESCRIPTION"
+The nanomsg C API provides a powerful polling system that is mirrored on POSIX\'s polling interface\. C++ though doesn\'t have any sort of interface for polling events on file descriptors in the standard library, so nanomsgxx comes with its own API for polling on nanomsg sockets instead of integrating with an existing one\.
+.
+.br
+The wrapper is very small and mostly is syntaxing sugar on top of the C API\.
+.
+.SH "ENTRIES"
+Polling is done by passing a vector or nnxx::poll_entry objects to the \fBnnxx::poll\fR function, such objects are defined as:
+.
+.IP "" 4
+.
+.nf
+
+class poll_entry : public nn_pollfd {
+public:
+  poll_entry() noexcept;
+  poll_entry(int socket, int events) noexcept;
+  poll_entry(socket &socket, int events) noexcept;
+
+  void clear() noexcept;
+  void set(int socket, int events) noexcept;
+  void set(socket &socket, int events) noexcept;
+
+  bool is(const socket &s) const noexcept;
+  bool recv_ready() const noexcept;
+  bool send_ready() const noexcept;
+};
+.
+.fi
+.
+.IP "" 0
+.
+.P
+They are simple descriptors associtating sockets to a set of events that we wnat to wait for and will get filled with events that happened while calling \fBnnxx::poll\fR\. They inherit from nn_pollfd for compatibility with the C API, and simply add some useful operations\.
+.
+.br
+Read \fBnn_poll\fR\'s documentation to learn more about how the polling mechanism works\.
+.
+.SH "POLL"
+\fBnnxx::poll\fR is available in different versions that makes it easy to use in multiple situations\. The two main interfaces are as follow:
+.
+.IP "" 4
+.
+.nf
+
+poll_vector  poll(poll_vector &&, <timeout>, <flags>);
+poll_vector &poll(poll_vector  &, <timeout>, <flags>);
+.
+.fi
+.
+.IP "" 0
+.
+.P
+The first version accepts a temporary vector object that is used for polling the entries it contains and will be returned by the function with a move operation, so no extra memory will be allocated\.
+.
+.P
+The second version accepts a reference to a vector object allocated somewhere else in the program\. Based on the use case one may find useful to use one version or the other\.
+.
+.P
+The vector returned by nnxx::poll has its entries set with whatever events have been found on the sockets, the entries then should be iterated and checked to verify which events are available for which socket\.
+.
+.br
+nanomsgxx comes with two useful functions, \fBnnxx::recv_ready\fR and \fBnnxx::send_ready\fR, that return iterable objects that will filter entries that were marked by \fBnnxx::poll\fR as ready for receiving or sending messages\.
+.
+.br
+Here\'s an usage example:
+.
+.IP "" 4
+.
+.nf
+
+nnxx::socket s1 { /* \.\.\. */ };
+nnxx::socket s2 { /* \.\.\. */ };
+
+// \.\.\.
+
+// Polling the socket, nnxx::poll_vector can be initialized from a
+// std::initializer_list<nnxx::poll_entry>
+nnxx::poll_vector entries = nnxx::poll({
+    { s1, nnxx::EV_POLLIN },
+    { s2, nnxx::EV_POLLIN | nnxx::EV_POLLOUT },
+  });
+
+for (auto e : nnxx::recv_ready(entries)) {
+  // All entries enumerated here won\'t block on a receive operation\.
+}
+
+for (auto e : nnxx::send_ready(entries)) {
+  // All entries enumerated here won\'t block on a send operation\.
+}
+.
+.fi
+.
+.IP "" 0
+.
+.IP "\(bu" 4
+\fBNote\fR
+.
+.IP "" 0
+.
+.P
+The C API uses NN_POLIN and NN_POLOUT as event flags, so nanomsgxx should have named its constants \fBnnxx::POLLIN\fR and \fBnnxx::POLLOUT\fR, but these names are macros defined on POSIX systems supporting the poll interface and would cause compilation to fail\. That\'s why nanomsgxx uses \fBnnxx::EV_POLLIN\fR and \fBnnxx::EV_POLLOUT\fR instead\.
+.
+.IP "\(bu" 4
+\fBTimeouts\fR
+.
+.IP "" 0
+.
+.P
+Polling is by nature a blocking operation, so the API has to provides a way to set a timeout that will give the hand back to the program in case nothing happens for a while because we may have to do some other things once in a while\.
+.
+.P
+As described in the design section, exceptions are used to report timeouts in the nanomsgxx API\.
+.
+.br
+A timeout can be specified as second argument to the nnxx::poll function, it may be give as a std::chrono::duration (if we want to set how long the function should wait), or as a std::chrono::time_point (if we want to set when the function should return)\.
+.
+.br
+Here\'s how we\'d handle a timeout:
+.
+.IP "" 4
+.
+.nf
+
+nnxx::poll_vector entries;
+
+// \.\.\.
+
+try {
+  // Polls for events, waits at most one second\.
+  entries = nnxx::poll({
+      { s1, nnxx::EV_POLLIN },
+      { s2, nnxx::EV_POLLIN | nnxx::EV_POLLOUT },
+    },
+    std::chrono::second(1));
+}
+catch (const nnxx::timeout_error &) {
+  // Nothing happened for more than one second\.
+}
+.
+.fi
+.
+.IP "" 0
+.
+.SH "SEE ALSO"
+nnxx::poll(3)
+.
+.br
+nanomsgxx(7)
+.
+.br
+nanomsgxx\-design(7)
+.
+.br
+nanomsgxx\-messages(7)
+.
+.br
+nanomsgxx\-sockets(7)
+.
+.br
+nanomsg(7)
+.
+.SH "AUTHORS"
+Achille Roussel

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta http-equiv="content-type" value="text/html;charset=utf8">
+<meta name="generator" value="Ronn/v0.7.3 (http://github.com/rtomayko/ronn/tree/0.7.3)">
+<title>nanomsgxx-sockets(7) - Nanomsgxx Sockets</title>
+<style media="all" type="text/css">
+  /* style: man */
+  body#manpage {margin:0}
+  .mp {max-width:100ex;padding:0 9ex 1ex 4ex}
+  .mp p,.mp pre,.mp ul,.mp ol,.mp dl {margin:0 0 20px 0}
+  .mp h2 {margin:10px 0 0 0}
+  .mp > p,.mp > pre,.mp > ul,.mp > ol,.mp > dl {margin-left:8ex}
+  .mp h3 {margin:0 0 0 4ex}
+  .mp dt {margin:0;clear:left}
+  .mp dt.flush {float:left;width:8ex}
+  .mp dd {margin:0 0 0 9ex}
+  .mp h1,.mp h2,.mp h3,.mp h4 {clear:left}
+  .mp pre {margin-bottom:20px}
+  .mp pre+h2,.mp pre+h3 {margin-top:22px}
+  .mp h2+pre,.mp h3+pre {margin-top:5px}
+  .mp img {display:block;margin:auto}
+  .mp h1.man-title {display:none}
+  .mp,.mp code,.mp pre,.mp tt,.mp kbd,.mp samp,.mp h3,.mp h4 {font-family:monospace;font-size:14px;line-height:1.42857142857143}
+  .mp h2 {font-size:16px;line-height:1.25}
+  .mp h1 {font-size:20px;line-height:2}
+  .mp {text-align:justify;background:#fff}
+  .mp,.mp code,.mp pre,.mp pre code,.mp tt,.mp kbd,.mp samp {color:#131211}
+  .mp h1,.mp h2,.mp h3,.mp h4 {color:#030201}
+  .mp u {text-decoration:underline}
+  .mp code,.mp strong,.mp b {font-weight:bold;color:#131211}
+  .mp em,.mp var {font-style:italic;color:#232221;text-decoration:none}
+  .mp a,.mp a:link,.mp a:hover,.mp a code,.mp a pre,.mp a tt,.mp a kbd,.mp a samp {color:#0000ff}
+  .mp b.man-ref {font-weight:normal;color:#434241}
+  .mp pre {padding:0 4ex}
+  .mp pre code {font-weight:normal;color:#434241}
+  .mp h2+pre,h3+pre {padding-left:0}
+  ol.man-decor,ol.man-decor li {margin:3px 0 10px 0;padding:0;float:left;width:33%;list-style-type:none;text-transform:uppercase;color:#999;letter-spacing:1px}
+  ol.man-decor {width:100%}
+  ol.man-decor li.tl {text-align:left}
+  ol.man-decor li.tc {text-align:center;letter-spacing:4px}
+  ol.man-decor li.tr {text-align:right;float:right}
+  </style>
+<style media="all" type="text/css">
+  /* style: dark */
+  .mp,body#manpage {background:#080706;color:#888}
+  .mp,.mp code,.mp pre,.mp pre code,.mp tt,.mp kbd,.mp samp {color:#aaa}
+  .mp h1,.mp h2,.mp h3,.mp h4 {color:#fff}
+  .man-decor,.man-decor ol li {color:#666}
+  .mp code,.mp strong,.mp b {color:#fff}
+  .mp em,.mp var,.mp u {color:#ddd}
+  .mp pre code {color:#ddd}
+  .mp a,.mp a:link,.mp a:hover,.mp a code,.mp a pre,.mp a tt,.mp a kbd,.mp a samp {color:#fff}
+  </style>
+<style media="all" type="text/css">
+  /* style: nnxx */
+  .mp pre {border: 1px solid dimgray;padding: 1em;overflow: hidden}
+  .highlight {margin-left: 8ex}
+  </style>
+<style media="all" type="text/css">
+  /* style: highlight-dark */
+  .highlight .hll {background-color: #49483e}
+  .highlight {background: #272822;color: white}
+  .highlight .c {color: salmon} 
+  .highlight .err {color: #960050;background-color: #1e0010} 
+  .highlight .k {color: aliceblue;font-weight: bold} 
+  .highlight .l {color: white} 
+  .highlight .n {color: white} 
+  .highlight .o {color: lightyellow} 
+  .highlight .p {color: lightyellow} 
+  .highlight .cm {color: salmon} 
+  .highlight .cp {color: salmon} 
+  .highlight .c1 {color: salmon} 
+  .highlight .cs {color: salmon} 
+  .highlight .ge {font-style: italic} 
+  .highlight .gs {font-weight: bold} 
+  .highlight .kc {color: aliceblue;font-weight: bold} 
+  .highlight .kd {color: aliceblue;font-weight: bold} 
+  .highlight .kn {color: #f92672} 
+  .highlight .kp {color: aliceblue;font-weight: bold} 
+  .highlight .kr {color: aliceblue;font-weight: bold} 
+  .highlight .kt {color: #A9FC63} 
+  .highlight .ld {color: #A9FC63} 
+  .highlight .m {color: white} 
+  .highlight .s {color: #A9FC63} 
+  .highlight .na {color: white} 
+  .highlight .nb {color: white} 
+  .highlight .nc {color: #A9FC63} 
+  .highlight .no {color: white} 
+  .highlight .nd {color: white} 
+  .highlight .ni {color: white} 
+  .highlight .ne {color: white} 
+  .highlight .nf {color: white} 
+  .highlight .nl {color: white} 
+  .highlight .nn {color: violet} 
+  .highlight .nx {color: white} 
+  .highlight .py {color: white} 
+  .highlight .nt {color: white} 
+  .highlight .nv {color: white} 
+  .highlight .ow {color: lightyellow} 
+  .highlight .w {color: white} 
+  .highlight .mf {color: white} 
+  .highlight .mh {color: white} 
+  .highlight .mi {color: white} 
+  .highlight .mo {color: white} 
+  .highlight .sb {color: #A9FC63} 
+  .highlight .sc {color: #A9FC63} 
+  .highlight .sd {color: #A9FC63} 
+  .highlight .s2 {color: #A9FC63} 
+  .highlight .se {color: white} 
+  .highlight .sh {color: #A9FC63} 
+  .highlight .si {color: #A9FC63} 
+  .highlight .sx {color: #A9FC63} 
+  .highlight .sr {color: #A9FC63} 
+  .highlight .s1 {color: #A9FC63} 
+  .highlight .ss {color: #A9FC63} 
+  .highlight .bp {color: white} 
+  .highlight .vc {color: white} 
+  .highlight .vg {color: white} 
+  .highlight .vi {color: white} 
+  .highlight .il {color: white} 
+  .mp {color: lightgray}
+  </style>
+</meta></meta></head>
+<!--
+  The following styles are deprecated and will be removed at some point:
+  div#man, div#man ol.man, div#man ol.head, div#man ol.man.
+
+  The .man-page, .man-decor, .man-head, .man-foot, .man-title, and
+  .man-navigation should be used instead.
+-->
+<body id="manpage">
+<div class="mp" id="man">
+<div class="man-navigation" style="display:none">
+<a href="#NAME">NAME</a>
+<a href="#DESCRIPTION">DESCRIPTION</a>
+<a href="#SEND">SEND</a>
+<a href="#RECEIVE">RECEIVE</a>
+<a href="#OPTIONS">OPTIONS</a>
+<a href="#SEE-ALSO">SEE ALSO</a>
+<a href="#AUTHORS">AUTHORS</a>
+</div>
+<ol class="man-decor man-head man head">
+<li class="tl">nanomsgxx-sockets(7)</li>
+<li class="tc">nanomsgxx</li>
+<li class="tr">nanomsgxx-sockets(7)</li>
+</ol>
+<h2 id="NAME">NAME</h2>
+<p class="man-name">
+<code>nanomsgxx-sockets</code> - <span class="man-whatis">Nanomsgxx Sockets</span>
+</p>
+<h2 id="DESCRIPTION">DESCRIPTION</h2>
+<p>Sockets are one main component of the nanomsg API, they're used to exchanged
+messages between nodes and are reprented by descriptors.<br/>
+nanomsgxx uses the nnxx::socket type to wrap around such descriptors and provide
+automatic resource management and low level abstractions around the C API socket
+routines.</p>
+<h2 id="SEND">SEND</h2>
+<p>The nnxx::socket type has a send member function that lets us send messages
+throught a socket, it comes with multiple signatures:</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">socket</span> <span class="p">{</span>
+
+  <span class="c1">// ...</span>
+
+  <span class="c1">// Working with any memory buffer.</span>
+  <span class="kt">int</span> <span class="n">send</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">f</span><span class="p">,</span> <span class="nc">message_control</span> <span class="o">&amp;&amp;</span><span class="n">c</span><span class="p">);</span>
+  <span class="kt">int</span> <span class="nf">send</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">f</span> <span class="o">=</span> <span class="mi">0</span><span class="p">);</span>
+
+  <span class="c1">// Working with C-strings.</span>
+  <span class="kt">int</span> <span class="nf">send</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">f</span><span class="p">,</span> <span class="nc">message_control</span> <span class="o">&amp;&amp;</span><span class="n">c</span><span class="p">);</span>
+  <span class="kt">int</span> <span class="nf">send</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">f</span> <span class="o">=</span> <span class="mi">0</span><span class="p">);</span>
+
+  <span class="c1">// Working with any string-like types.</span>
+  <span class="k">template</span> <span class="o">&lt;</span> <span class="k">typename</span> <span class="no">T</span> <span class="o">&gt;</span>
+  <span class="kt">int</span> <span class="n">send</span><span class="p">(</span><span class="k">const</span> <span class="no">T</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">f</span><span class="p">,</span> <span class="nc">message_control</span> <span class="o">&amp;&amp;</span><span class="n">c</span><span class="p">);</span>
+  <span class="k">template</span> <span class="o">&lt;</span> <span class="k">typename</span> <span class="no">T</span> <span class="o">&gt;</span>
+  <span class="kt">int</span> <span class="n">send</span><span class="p">(</span><span class="k">const</span> <span class="no">T</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">f</span> <span class="o">=</span> <span class="mi">0</span><span class="p">);</span>
+
+  <span class="c1">// Zero-copy operations.</span>
+  <span class="kt">int</span> <span class="nf">send</span><span class="p">(</span><span class="nc">message</span> <span class="o">&amp;&amp;</span><span class="n">m</span><span class="p">,</span> <span class="kt">int</span> <span class="n">f</span><span class="p">,</span> <span class="nc">message_control</span> <span class="o">&amp;&amp;</span><span class="n">c</span><span class="p">);</span>
+  <span class="kt">int</span> <span class="nf">send</span><span class="p">(</span><span class="nc">message</span> <span class="o">&amp;&amp;</span><span class="n">m</span><span class="p">,</span> <span class="kt">int</span> <span class="n">f</span> <span class="o">=</span> <span class="mi">0</span><span class="p">);</span>
+
+  <span class="c1">// ...</span>
+
+<span class="p">};</span>
+</pre></div>
+
+<p>As you can see the type of the first argument specifies which version will be
+selected by the compiler, and other arguments are always the same:</p>
+<ul>
+<li>optional flags, that may be a combination of <code>nnxx::DONTWAIT</code>, <code>nnxx::NO_SIGNAL_ERROR</code> and <code>nnxx::NO_TIMEOUT_ERROR</code></li>
+<li>optional <code>nnxx::message_control</code> instance providing meta-information to the underlying procotol</li>
+</ul>
+<p>The template versions of the send functions accept any type that can be iterated.</p>
+<p>The send functions return the number of bytes in the sent messages, or a negative
+value under some conditions if the flags argument isn't zero.</p>
+<h2 id="RECEIVE">RECEIVE</h2>
+<p>Receiving messages is just as easy as sending, using the recv member function
+that exists with these signatures:</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">socket</span> <span class="p">{</span>
+
+  <span class="c1">// ...</span>
+
+  <span class="c1">// Working with any memory buffer.</span>
+  <span class="kt">int</span> <span class="n">recv</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">len</span><span class="p">,</span> <span class="kt">int</span> <span class="n">flags</span><span class="p">,</span> <span class="nc">message_control</span> <span class="o">&amp;</span><span class="n">ctl</span><span class="p">);</span>
+  <span class="kt">int</span> <span class="nf">recv</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">len</span><span class="p">,</span> <span class="kt">int</span> <span class="n">flags</span> <span class="o">=</span> <span class="mi">0</span><span class="p">);</span>
+
+  <span class="c1">// Working with any string-like types.</span>
+  <span class="k">template</span> <span class="o">&lt;</span> <span class="k">typename</span> <span class="no">T</span> <span class="o">&gt;</span>
+  <span class="no">T</span> <span class="n">recv</span><span class="p">(</span><span class="kt">int</span> <span class="n">flags</span><span class="p">,</span> <span class="nc">message_control</span> <span class="o">&amp;</span><span class="n">ctl</span><span class="p">);</span>
+  <span class="k">template</span> <span class="o">&lt;</span> <span class="k">typename</span> <span class="no">T</span> <span class="o">&gt;</span>
+  <span class="no">T</span> <span class="n">recv</span><span class="p">(</span><span class="kt">int</span> <span class="n">flags</span> <span class="o">=</span> <span class="mi">0</span><span class="p">);</span>
+
+  <span class="c1">// Zero-copy operations.</span>
+  <span class="nc">message</span> <span class="nf">recv</span><span class="p">(</span><span class="kt">int</span> <span class="n">flags</span><span class="p">,</span> <span class="nc">message_control</span> <span class="o">&amp;</span><span class="n">ctl</span><span class="p">);</span>
+  <span class="nc">message</span> <span class="nf">recv</span><span class="p">(</span><span class="n">nt</span> <span class="n">flags</span> <span class="o">=</span> <span class="mi">0</span><span class="p">);</span>
+
+  <span class="c1">// ...</span>
+
+<span class="p">};</span>
+</pre></div>
+
+<p>As you can see the type of the first argument specifies which version will be
+selected by the compiler, and other arguments are always the same:</p>
+<ul>
+<li>optional flags, that may be a combination of <code>nnxx::DONTWAIT</code>, <code>nnxx::NO_SIGNAL_ERROR</code> and <code>nnxx::NO_TIMEOUT_ERROR</code></li>
+<li>optional <code>nnxx::message_control</code> instance where meta-information coming from the underlying protocol will be stored</li>
+</ul>
+<p>The first version of recv functions return the number of bytes in the received
+message, or a negative value under some conditions if the flags argument isn't
+zero.<br/>
+The second version is templated, the template argument should be a sequence
+container (string, vector, list... ) that accepts two iterators (start and end)
+as argument. The third version return an instance <code>nnxx::message</code> carying a
+memory buffer with a message read from the socket, the object can be evaluated
+to false if something happened and the flags argument wasn't zero, for example:</p>
+<div class="highlight"><pre><span class="nn">nnxx</span><span class="o">::</span><span class="nc">message</span> <span class="n">msg</span> <span class="p">{</span> <span class="n">s</span><span class="p">.</span><span class="n">recv</span><span class="p">(</span><span class="nn">nnxx</span><span class="o">::</span><span class="no">DONTWAIT</span><span class="p">)</span> <span class="p">};</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">msg</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Check errno, it's probably be set to EAGAIN because</span>
+  <span class="c1">// no message could be read from the socket.</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
+
+<h2 id="OPTIONS">OPTIONS</h2>
+<p>Options can be set on sockets, some options apply to the socket properties, some
+other apply to the underlying protocol. nnxx::socket provides member functions
+that wrap around the nn_setsockopt and nn_getsockopt routine:</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">socket</span> <span class="p">{</span>
+
+  <span class="c1">// ...</span>
+
+  <span class="kt">void</span> <span class="n">setopt</span><span class="p">(</span><span class="kt">int</span> <span class="n">lvl</span><span class="p">,</span> <span class="kt">int</span> <span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">val</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">len</span><span class="p">);</span>
+
+  <span class="k">template</span> <span class="o">&lt;</span> <span class="k">typename</span> <span class="no">T</span> <span class="o">&gt;</span>
+  <span class="kt">void</span> <span class="n">setopt</span><span class="p">(</span><span class="kt">int</span> <span class="n">lvl</span><span class="p">,</span> <span class="kt">int</span> <span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="no">T</span> <span class="o">&amp;</span><span class="n">val</span><span class="p">);</span>
+
+  <span class="kt">void</span> <span class="n">getopt</span><span class="p">(</span><span class="kt">int</span> <span class="n">lvl</span><span class="p">,</span> <span class="kt">int</span> <span class="n">name</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">val</span><span class="p">,</span> <span class="kt">size_t</span> <span class="o">*</span><span class="n">len</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+  <span class="k">template</span> <span class="o">&lt;</span> <span class="k">typename</span> <span class="no">T</span> <span class="o">&gt;</span>
+  <span class="kt">void</span> <span class="n">getopt</span><span class="p">(</span><span class="kt">int</span> <span class="n">lvl</span><span class="p">,</span> <span class="kt">int</span> <span class="n">name</span><span class="p">,</span> <span class="no">T</span> <span class="o">&amp;</span><span class="n">val</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+  <span class="k">template</span> <span class="o">&lt;</span> <span class="k">typename</span> <span class="no">T</span> <span class="o">&gt;</span>
+  <span class="no">T</span> <span class="n">getopt</span><span class="p">(</span><span class="kt">int</span> <span class="n">lvl</span><span class="p">,</span> <span class="kt">int</span> <span class="n">name</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+  <span class="c1">// ...</span>
+
+<span class="p">};</span>
+</pre></div>
+
+<p>The templated version uses the other one and is a simple wrapper for convenience
+so the option type must match the one required by the nanomsg C API.</p>
+<h2 id="SEE-ALSO">SEE ALSO</h2>
+<p><a class="man-ref" href="../nnxx/socket.3.html">nnxx::socket<span class="s">(3)</span></a><br/>
+<a class="man-ref" href="../nanomsgxx.7.html">nanomsgxx<span class="s">(7)</span></a><br/>
+<a class="man-ref" href="design.7.html">nanomsgxx-design<span class="s">(7)</span></a><br/>
+<a class="man-ref" href="messages.7.html">nanomsgxx-messages<span class="s">(7)</span></a><br/>
+<a class="man-ref" href="polling.7.html">nanomsgxx-polling<span class="s">(7)</span></a><br/>
+<a class="man-ref" href="http://nanomsg.org/v0.3/nanomsg.7.html">nanomsg<span class="s">(7)</span></a></p>
+<h2 id="AUTHORS">AUTHORS</h2>
+<p>Achille Roussel</p>
+<ol class="man-decor man-foot man foot">
+<li class="tl">achille.roussel@gmail.com</li>
+<li class="tc">May 2014</li>
+<li class="tr">nanomsgxx-sockets(7)</li>
+</ol>
+</div>
+</body>
+</html>
+

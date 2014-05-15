@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta http-equiv="content-type" value="text/html;charset=utf8">
+<meta name="generator" value="Ronn/v0.7.3 (http://github.com/rtomayko/ronn/tree/0.7.3)">
+<title>nanomsgxx-polling(7) - Nanomsgxx Polling</title>
+<style media="all" type="text/css">
+  /* style: man */
+  body#manpage {margin:0}
+  .mp {max-width:100ex;padding:0 9ex 1ex 4ex}
+  .mp p,.mp pre,.mp ul,.mp ol,.mp dl {margin:0 0 20px 0}
+  .mp h2 {margin:10px 0 0 0}
+  .mp > p,.mp > pre,.mp > ul,.mp > ol,.mp > dl {margin-left:8ex}
+  .mp h3 {margin:0 0 0 4ex}
+  .mp dt {margin:0;clear:left}
+  .mp dt.flush {float:left;width:8ex}
+  .mp dd {margin:0 0 0 9ex}
+  .mp h1,.mp h2,.mp h3,.mp h4 {clear:left}
+  .mp pre {margin-bottom:20px}
+  .mp pre+h2,.mp pre+h3 {margin-top:22px}
+  .mp h2+pre,.mp h3+pre {margin-top:5px}
+  .mp img {display:block;margin:auto}
+  .mp h1.man-title {display:none}
+  .mp,.mp code,.mp pre,.mp tt,.mp kbd,.mp samp,.mp h3,.mp h4 {font-family:monospace;font-size:14px;line-height:1.42857142857143}
+  .mp h2 {font-size:16px;line-height:1.25}
+  .mp h1 {font-size:20px;line-height:2}
+  .mp {text-align:justify;background:#fff}
+  .mp,.mp code,.mp pre,.mp pre code,.mp tt,.mp kbd,.mp samp {color:#131211}
+  .mp h1,.mp h2,.mp h3,.mp h4 {color:#030201}
+  .mp u {text-decoration:underline}
+  .mp code,.mp strong,.mp b {font-weight:bold;color:#131211}
+  .mp em,.mp var {font-style:italic;color:#232221;text-decoration:none}
+  .mp a,.mp a:link,.mp a:hover,.mp a code,.mp a pre,.mp a tt,.mp a kbd,.mp a samp {color:#0000ff}
+  .mp b.man-ref {font-weight:normal;color:#434241}
+  .mp pre {padding:0 4ex}
+  .mp pre code {font-weight:normal;color:#434241}
+  .mp h2+pre,h3+pre {padding-left:0}
+  ol.man-decor,ol.man-decor li {margin:3px 0 10px 0;padding:0;float:left;width:33%;list-style-type:none;text-transform:uppercase;color:#999;letter-spacing:1px}
+  ol.man-decor {width:100%}
+  ol.man-decor li.tl {text-align:left}
+  ol.man-decor li.tc {text-align:center;letter-spacing:4px}
+  ol.man-decor li.tr {text-align:right;float:right}
+  </style>
+<style media="all" type="text/css">
+  /* style: dark */
+  .mp,body#manpage {background:#080706;color:#888}
+  .mp,.mp code,.mp pre,.mp pre code,.mp tt,.mp kbd,.mp samp {color:#aaa}
+  .mp h1,.mp h2,.mp h3,.mp h4 {color:#fff}
+  .man-decor,.man-decor ol li {color:#666}
+  .mp code,.mp strong,.mp b {color:#fff}
+  .mp em,.mp var,.mp u {color:#ddd}
+  .mp pre code {color:#ddd}
+  .mp a,.mp a:link,.mp a:hover,.mp a code,.mp a pre,.mp a tt,.mp a kbd,.mp a samp {color:#fff}
+  </style>
+<style media="all" type="text/css">
+  /* style: nnxx */
+  .mp pre {border: 1px solid dimgray;padding: 1em;overflow: hidden}
+  .highlight {margin-left: 8ex}
+  </style>
+<style media="all" type="text/css">
+  /* style: highlight-dark */
+  .highlight .hll {background-color: #49483e}
+  .highlight {background: #272822;color: white}
+  .highlight .c {color: salmon} 
+  .highlight .err {color: #960050;background-color: #1e0010} 
+  .highlight .k {color: aliceblue;font-weight: bold} 
+  .highlight .l {color: white} 
+  .highlight .n {color: white} 
+  .highlight .o {color: lightyellow} 
+  .highlight .p {color: lightyellow} 
+  .highlight .cm {color: salmon} 
+  .highlight .cp {color: salmon} 
+  .highlight .c1 {color: salmon} 
+  .highlight .cs {color: salmon} 
+  .highlight .ge {font-style: italic} 
+  .highlight .gs {font-weight: bold} 
+  .highlight .kc {color: aliceblue;font-weight: bold} 
+  .highlight .kd {color: aliceblue;font-weight: bold} 
+  .highlight .kn {color: #f92672} 
+  .highlight .kp {color: aliceblue;font-weight: bold} 
+  .highlight .kr {color: aliceblue;font-weight: bold} 
+  .highlight .kt {color: #A9FC63} 
+  .highlight .ld {color: #A9FC63} 
+  .highlight .m {color: white} 
+  .highlight .s {color: #A9FC63} 
+  .highlight .na {color: white} 
+  .highlight .nb {color: white} 
+  .highlight .nc {color: #A9FC63} 
+  .highlight .no {color: white} 
+  .highlight .nd {color: white} 
+  .highlight .ni {color: white} 
+  .highlight .ne {color: white} 
+  .highlight .nf {color: white} 
+  .highlight .nl {color: white} 
+  .highlight .nn {color: violet} 
+  .highlight .nx {color: white} 
+  .highlight .py {color: white} 
+  .highlight .nt {color: white} 
+  .highlight .nv {color: white} 
+  .highlight .ow {color: lightyellow} 
+  .highlight .w {color: white} 
+  .highlight .mf {color: white} 
+  .highlight .mh {color: white} 
+  .highlight .mi {color: white} 
+  .highlight .mo {color: white} 
+  .highlight .sb {color: #A9FC63} 
+  .highlight .sc {color: #A9FC63} 
+  .highlight .sd {color: #A9FC63} 
+  .highlight .s2 {color: #A9FC63} 
+  .highlight .se {color: white} 
+  .highlight .sh {color: #A9FC63} 
+  .highlight .si {color: #A9FC63} 
+  .highlight .sx {color: #A9FC63} 
+  .highlight .sr {color: #A9FC63} 
+  .highlight .s1 {color: #A9FC63} 
+  .highlight .ss {color: #A9FC63} 
+  .highlight .bp {color: white} 
+  .highlight .vc {color: white} 
+  .highlight .vg {color: white} 
+  .highlight .vi {color: white} 
+  .highlight .il {color: white} 
+  .mp {color: lightgray}
+  </style>
+</meta></meta></head>
+<!--
+  The following styles are deprecated and will be removed at some point:
+  div#man, div#man ol.man, div#man ol.head, div#man ol.man.
+
+  The .man-page, .man-decor, .man-head, .man-foot, .man-title, and
+  .man-navigation should be used instead.
+-->
+<body id="manpage">
+<div class="mp" id="man">
+<div class="man-navigation" style="display:none">
+<a href="#NAME">NAME</a>
+<a href="#DESCRIPTION">DESCRIPTION</a>
+<a href="#ENTRIES">ENTRIES</a>
+<a href="#POLL">POLL</a>
+<a href="#SEE-ALSO">SEE ALSO</a>
+<a href="#AUTHORS">AUTHORS</a>
+</div>
+<ol class="man-decor man-head man head">
+<li class="tl">nanomsgxx-polling(7)</li>
+<li class="tc">nanomsgxx</li>
+<li class="tr">nanomsgxx-polling(7)</li>
+</ol>
+<h2 id="NAME">NAME</h2>
+<p class="man-name">
+<code>nanomsgxx-polling</code> - <span class="man-whatis">Nanomsgxx Polling</span>
+</p>
+<h2 id="DESCRIPTION">DESCRIPTION</h2>
+<p>The nanomsg C API provides a powerful polling system that is mirrored on POSIX's
+polling interface. C++ though doesn't have any sort of interface for polling
+events on file descriptors in the standard library, so nanomsgxx comes with its
+own API for polling on nanomsg sockets instead of integrating with an existing one.<br/>
+The wrapper is very small and mostly is syntaxing sugar on top of the C API.</p>
+<h2 id="ENTRIES">ENTRIES</h2>
+<p>Polling is done by passing a vector or nnxx::poll_entry objects to the <code>nnxx::poll</code>
+function, such objects are defined as:</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">poll_entry</span> <span class="o">:</span> <span class="k">public</span> <span class="nc">nn_pollfd</span> <span class="p">{</span>
+<span class="nl">public:</span>
+  <span class="nc">poll_entry</span><span class="p">()</span> <span class="k">noexcept</span><span class="p">;</span>
+  <span class="nc">poll_entry</span><span class="p">(</span><span class="kt">int</span> <span class="nc">socket</span><span class="p">,</span> <span class="kt">int</span> <span class="n">events</span><span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+  <span class="nc">poll_entry</span><span class="p">(</span><span class="nc">socket</span> <span class="o">&amp;</span><span class="nc">socket</span><span class="p">,</span> <span class="kt">int</span> <span class="n">events</span><span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+
+  <span class="kt">void</span> <span class="n">clear</span><span class="p">()</span> <span class="k">noexcept</span><span class="p">;</span>
+  <span class="kt">void</span> <span class="n">set</span><span class="p">(</span><span class="kt">int</span> <span class="nc">socket</span><span class="p">,</span> <span class="kt">int</span> <span class="n">events</span><span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+  <span class="kt">void</span> <span class="n">set</span><span class="p">(</span><span class="nc">socket</span> <span class="o">&amp;</span><span class="nc">socket</span><span class="p">,</span> <span class="kt">int</span> <span class="n">events</span><span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+
+  <span class="kt">bool</span> <span class="n">is</span><span class="p">(</span><span class="k">const</span> <span class="nc">socket</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">)</span> <span class="k">const</span> <span class="k">noexcept</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="n">recv_ready</span><span class="p">()</span> <span class="k">const</span> <span class="k">noexcept</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="n">send_ready</span><span class="p">()</span> <span class="k">const</span> <span class="k">noexcept</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+
+<p>They are simple descriptors associtating sockets to a set of events that we wnat
+to wait for and will get filled with events that happened while calling <code>nnxx::poll</code>.
+They inherit from nn_pollfd for compatibility with the C API, and simply add some
+useful operations.<br/>
+Read <code>nn_poll</code>'s documentation to learn more about how the polling mechanism works.</p>
+<h2 id="POLL">POLL</h2>
+<p><code>nnxx::poll</code> is available in different versions that makes it easy to use in
+multiple situations. The two main interfaces are as follow:</p>
+<div class="highlight"><pre><span class="nc">poll_vector</span>  <span class="nf">poll</span><span class="p">(</span><span class="nc">poll_vector</span> <span class="o">&amp;&amp;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">timeout</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">flags</span><span class="o">&gt;</span><span class="p">);</span>
+<span class="nc">poll_vector</span> <span class="o">&amp;</span><span class="n">poll</span><span class="p">(</span><span class="nc">poll_vector</span>  <span class="o">&amp;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">timeout</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">flags</span><span class="o">&gt;</span><span class="p">);</span>
+</pre></div>
+
+<p>The first version accepts a temporary vector object that is used for polling the
+entries it contains and will be returned by the function with a move operation,
+so no extra memory will be allocated.</p>
+<p>The second version accepts a reference to a vector object allocated somewhere
+else in the program. Based on the use case one may find useful to use one version
+or the other.</p>
+<p>The vector returned by nnxx::poll has its entries set with whatever events have
+been found on the sockets, the entries then should be iterated and checked to
+verify which events are available for which socket.<br/>
+nanomsgxx comes with two useful functions, <code>nnxx::recv_ready</code> and <code>nnxx::send_ready</code>,
+that return iterable objects that will filter entries that were marked by <code>nnxx::poll</code>
+as ready for receiving or sending messages.<br/>
+Here's an usage example:</p>
+<div class="highlight"><pre><span class="nn">nnxx</span><span class="o">::</span><span class="nc">socket</span> <span class="n">s1</span> <span class="p">{</span> <span class="cm">/* ... */</span> <span class="p">};</span>
+<span class="nn">nnxx</span><span class="o">::</span><span class="nc">socket</span> <span class="n">s2</span> <span class="p">{</span> <span class="cm">/* ... */</span> <span class="p">};</span>
+
+<span class="c1">// ...</span>
+
+<span class="c1">// Polling the socket, nnxx::poll_vector can be initialized from a</span>
+<span class="c1">// std::initializer_list&lt;nnxx::poll_entry&gt;</span>
+<span class="nn">nnxx</span><span class="o">::</span><span class="nc">poll_vector</span> <span class="n">entries</span> <span class="o">=</span> <span class="nn">nnxx</span><span class="o">::</span><span class="n">poll</span><span class="p">({</span>
+    <span class="p">{</span> <span class="n">s1</span><span class="p">,</span> <span class="nn">nnxx</span><span class="o">::</span><span class="no">EV_POLLIN</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="n">s2</span><span class="p">,</span> <span class="nn">nnxx</span><span class="o">::</span><span class="no">EV_POLLIN</span> <span class="o">|</span> <span class="nn">nnxx</span><span class="o">::</span><span class="no">EV_POLLOUT</span> <span class="p">},</span>
+  <span class="p">});</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">e</span> <span class="o">:</span> <span class="nn">nnxx</span><span class="o">::</span><span class="n">recv_ready</span><span class="p">(</span><span class="n">entries</span><span class="p">))</span> <span class="p">{</span>
+  <span class="c1">// All entries enumerated here won't block on a receive operation.</span>
+<span class="p">}</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">e</span> <span class="o">:</span> <span class="nn">nnxx</span><span class="o">::</span><span class="n">send_ready</span><span class="p">(</span><span class="n">entries</span><span class="p">))</span> <span class="p">{</span>
+  <span class="c1">// All entries enumerated here won't block on a send operation.</span>
+<span class="p">}</span>
+</pre></div>
+
+<ul>
+<li><strong>Note</strong></li>
+</ul>
+<p>The C API uses NN_POLIN and NN_POLOUT as event flags, so nanomsgxx should have
+named its constants <code>nnxx::POLLIN</code> and <code>nnxx::POLLOUT</code>, but these names are macros
+defined on POSIX systems supporting the poll interface and would cause compilation
+to fail. That's why nanomsgxx uses <code>nnxx::EV_POLLIN</code> and <code>nnxx::EV_POLLOUT</code> instead.</p>
+<ul>
+<li><strong>Timeouts</strong></li>
+</ul>
+<p>Polling is by nature a blocking operation, so the API has to provides a way to set
+a timeout that will give the hand back to the program in case nothing happens for
+a while because we may have to do some other things once in a while.</p>
+<p>As described in the design section, exceptions are used to report timeouts in the
+nanomsgxx API.<br/>
+A timeout can be specified as second argument to the nnxx::poll function, it may
+be give as a std::chrono::duration (if we want to set how long the function should
+wait), or as a std::chrono::time_point (if we want to set when the function should
+return).<br/>
+Here's how we'd handle a timeout:</p>
+<div class="highlight"><pre><span class="nn">nnxx</span><span class="o">::</span><span class="nc">poll_vector</span> <span class="n">entries</span><span class="p">;</span>
+
+<span class="c1">// ...</span>
+
+<span class="k">try</span> <span class="p">{</span>
+  <span class="c1">// Polls for events, waits at most one second.</span>
+  <span class="n">entries</span> <span class="o">=</span> <span class="nn">nnxx</span><span class="o">::</span><span class="n">poll</span><span class="p">({</span>
+      <span class="p">{</span> <span class="n">s1</span><span class="p">,</span> <span class="nn">nnxx</span><span class="o">::</span><span class="no">EV_POLLIN</span> <span class="p">},</span>
+      <span class="p">{</span> <span class="n">s2</span><span class="p">,</span> <span class="nn">nnxx</span><span class="o">::</span><span class="no">EV_POLLIN</span> <span class="o">|</span> <span class="nn">nnxx</span><span class="o">::</span><span class="no">EV_POLLOUT</span> <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="nn">std</span><span class="o">::</span><span class="nn">chrono</span><span class="o">::</span><span class="nc">second</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+<span class="p">}</span>
+<span class="k">catch</span> <span class="p">(</span><span class="k">const</span> <span class="nn">nnxx</span><span class="o">::</span><span class="nc">timeout_error</span> <span class="o">&amp;</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Nothing happened for more than one second.</span>
+<span class="p">}</span>
+</pre></div>
+
+<h2 id="SEE-ALSO">SEE ALSO</h2>
+<p><a class="man-ref" href="../nnxx/poll.3.html">nnxx::poll<span class="s">(3)</span></a><br/>
+<a class="man-ref" href="../nanomsgxx.7.html">nanomsgxx<span class="s">(7)</span></a><br/>
+<a class="man-ref" href="design.7.html">nanomsgxx-design<span class="s">(7)</span></a><br/>
+<a class="man-ref" href="messages.7.html">nanomsgxx-messages<span class="s">(7)</span></a><br/>
+<a class="man-ref" href="sockets.7.html">nanomsgxx-sockets<span class="s">(7)</span></a><br/>
+<a class="man-ref" href="http://nanomsg.org/v0.3/nanomsg.7.html">nanomsg<span class="s">(7)</span></a></p>
+<h2 id="AUTHORS">AUTHORS</h2>
+<p>Achille Roussel</p>
+<ol class="man-decor man-foot man foot">
+<li class="tl">achille.roussel@gmail.com</li>
+<li class="tc">May 2014</li>
+<li class="tr">nanomsgxx-polling(7)</li>
+</ol>
+</div>
+</body>
+</html>
+

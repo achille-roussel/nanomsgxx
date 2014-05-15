@@ -1,0 +1,12 @@
+nnxx::this_thread(3) -- namespace for local thread related functions
+====================================================================
+
+
+## SEE ALSO
+
+nnxx(3)  
+nanomsgxx(7)  
+
+## AUTHORS
+
+Achille Roussel

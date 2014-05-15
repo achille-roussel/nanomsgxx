@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta http-equiv="content-type" value="text/html;charset=utf8">
+<meta name="generator" value="Ronn/v0.7.3 (http://github.com/rtomayko/ronn/tree/0.7.3)">
+<title>nanomsgxx-design(7) - Nanomsgxx Design</title>
+<style media="all" type="text/css">
+  /* style: man */
+  body#manpage {margin:0}
+  .mp {max-width:100ex;padding:0 9ex 1ex 4ex}
+  .mp p,.mp pre,.mp ul,.mp ol,.mp dl {margin:0 0 20px 0}
+  .mp h2 {margin:10px 0 0 0}
+  .mp > p,.mp > pre,.mp > ul,.mp > ol,.mp > dl {margin-left:8ex}
+  .mp h3 {margin:0 0 0 4ex}
+  .mp dt {margin:0;clear:left}
+  .mp dt.flush {float:left;width:8ex}
+  .mp dd {margin:0 0 0 9ex}
+  .mp h1,.mp h2,.mp h3,.mp h4 {clear:left}
+  .mp pre {margin-bottom:20px}
+  .mp pre+h2,.mp pre+h3 {margin-top:22px}
+  .mp h2+pre,.mp h3+pre {margin-top:5px}
+  .mp img {display:block;margin:auto}
+  .mp h1.man-title {display:none}
+  .mp,.mp code,.mp pre,.mp tt,.mp kbd,.mp samp,.mp h3,.mp h4 {font-family:monospace;font-size:14px;line-height:1.42857142857143}
+  .mp h2 {font-size:16px;line-height:1.25}
+  .mp h1 {font-size:20px;line-height:2}
+  .mp {text-align:justify;background:#fff}
+  .mp,.mp code,.mp pre,.mp pre code,.mp tt,.mp kbd,.mp samp {color:#131211}
+  .mp h1,.mp h2,.mp h3,.mp h4 {color:#030201}
+  .mp u {text-decoration:underline}
+  .mp code,.mp strong,.mp b {font-weight:bold;color:#131211}
+  .mp em,.mp var {font-style:italic;color:#232221;text-decoration:none}
+  .mp a,.mp a:link,.mp a:hover,.mp a code,.mp a pre,.mp a tt,.mp a kbd,.mp a samp {color:#0000ff}
+  .mp b.man-ref {font-weight:normal;color:#434241}
+  .mp pre {padding:0 4ex}
+  .mp pre code {font-weight:normal;color:#434241}
+  .mp h2+pre,h3+pre {padding-left:0}
+  ol.man-decor,ol.man-decor li {margin:3px 0 10px 0;padding:0;float:left;width:33%;list-style-type:none;text-transform:uppercase;color:#999;letter-spacing:1px}
+  ol.man-decor {width:100%}
+  ol.man-decor li.tl {text-align:left}
+  ol.man-decor li.tc {text-align:center;letter-spacing:4px}
+  ol.man-decor li.tr {text-align:right;float:right}
+  </style>
+<style media="all" type="text/css">
+  /* style: dark */
+  .mp,body#manpage {background:#080706;color:#888}
+  .mp,.mp code,.mp pre,.mp pre code,.mp tt,.mp kbd,.mp samp {color:#aaa}
+  .mp h1,.mp h2,.mp h3,.mp h4 {color:#fff}
+  .man-decor,.man-decor ol li {color:#666}
+  .mp code,.mp strong,.mp b {color:#fff}
+  .mp em,.mp var,.mp u {color:#ddd}
+  .mp pre code {color:#ddd}
+  .mp a,.mp a:link,.mp a:hover,.mp a code,.mp a pre,.mp a tt,.mp a kbd,.mp a samp {color:#fff}
+  </style>
+<style media="all" type="text/css">
+  /* style: nnxx */
+  .mp pre {border: 1px solid dimgray;padding: 1em;overflow: hidden}
+  .highlight {margin-left: 8ex}
+  </style>
+<style media="all" type="text/css">
+  /* style: highlight-dark */
+  .highlight .hll {background-color: #49483e}
+  .highlight {background: #272822;color: white}
+  .highlight .c {color: salmon} 
+  .highlight .err {color: #960050;background-color: #1e0010} 
+  .highlight .k {color: aliceblue;font-weight: bold} 
+  .highlight .l {color: white} 
+  .highlight .n {color: white} 
+  .highlight .o {color: lightyellow} 
+  .highlight .p {color: lightyellow} 
+  .highlight .cm {color: salmon} 
+  .highlight .cp {color: salmon} 
+  .highlight .c1 {color: salmon} 
+  .highlight .cs {color: salmon} 
+  .highlight .ge {font-style: italic} 
+  .highlight .gs {font-weight: bold} 
+  .highlight .kc {color: aliceblue;font-weight: bold} 
+  .highlight .kd {color: aliceblue;font-weight: bold} 
+  .highlight .kn {color: #f92672} 
+  .highlight .kp {color: aliceblue;font-weight: bold} 
+  .highlight .kr {color: aliceblue;font-weight: bold} 
+  .highlight .kt {color: #A9FC63} 
+  .highlight .ld {color: #A9FC63} 
+  .highlight .m {color: white} 
+  .highlight .s {color: #A9FC63} 
+  .highlight .na {color: white} 
+  .highlight .nb {color: white} 
+  .highlight .nc {color: #A9FC63} 
+  .highlight .no {color: white} 
+  .highlight .nd {color: white} 
+  .highlight .ni {color: white} 
+  .highlight .ne {color: white} 
+  .highlight .nf {color: white} 
+  .highlight .nl {color: white} 
+  .highlight .nn {color: violet} 
+  .highlight .nx {color: white} 
+  .highlight .py {color: white} 
+  .highlight .nt {color: white} 
+  .highlight .nv {color: white} 
+  .highlight .ow {color: lightyellow} 
+  .highlight .w {color: white} 
+  .highlight .mf {color: white} 
+  .highlight .mh {color: white} 
+  .highlight .mi {color: white} 
+  .highlight .mo {color: white} 
+  .highlight .sb {color: #A9FC63} 
+  .highlight .sc {color: #A9FC63} 
+  .highlight .sd {color: #A9FC63} 
+  .highlight .s2 {color: #A9FC63} 
+  .highlight .se {color: white} 
+  .highlight .sh {color: #A9FC63} 
+  .highlight .si {color: #A9FC63} 
+  .highlight .sx {color: #A9FC63} 
+  .highlight .sr {color: #A9FC63} 
+  .highlight .s1 {color: #A9FC63} 
+  .highlight .ss {color: #A9FC63} 
+  .highlight .bp {color: white} 
+  .highlight .vc {color: white} 
+  .highlight .vg {color: white} 
+  .highlight .vi {color: white} 
+  .highlight .il {color: white} 
+  .mp {color: lightgray}
+  </style>
+</meta></meta></head>
+<!--
+  The following styles are deprecated and will be removed at some point:
+  div#man, div#man ol.man, div#man ol.head, div#man ol.man.
+
+  The .man-page, .man-decor, .man-head, .man-foot, .man-title, and
+  .man-navigation should be used instead.
+-->
+<body id="manpage">
+<div class="mp" id="man">
+<div class="man-navigation" style="display:none">
+<a href="#NAME">NAME</a>
+<a href="#DESCRIPTION">DESCRIPTION</a>
+<a href="#CONSTANTS">CONSTANTS</a>
+<a href="#STRINGS">STRINGS</a>
+<a href="#OBJECTS">OBJECTS</a>
+<a href="#EXCEPTIONS">EXCEPTIONS</a>
+<a href="#SEE-ALSO">SEE ALSO</a>
+<a href="#AUTHORS">AUTHORS</a>
+</div>
+<ol class="man-decor man-head man head">
+<li class="tl">nanomsgxx-design(7)</li>
+<li class="tc">nanomsgxx</li>
+<li class="tr">nanomsgxx-design(7)</li>
+</ol>
+<h2 id="NAME">NAME</h2>
+<p class="man-name">
+<code>nanomsgxx-design</code> - <span class="man-whatis">Nanomsgxx Design</span>
+</p>
+<h2 id="DESCRIPTION">DESCRIPTION</h2>
+<p>This chapter exposes the main design decisions that were made when developping
+nanomsgxx.</p>
+<h2 id="CONSTANTS">CONSTANTS</h2>
+<p>nanomsg uses many constants to represent protocols, socket domains, options,
+flags... Since C++ syntax is mostly compatible with C, standard nanomsg constants
+(NN) can be simply used wherever constants are expected in the C++ API.
+However nanomsgxx ports all constants within the nnxx namespace, removing the
+leading <code>NN_</code>. For example the <code>NN_MSG</code> constant in the C API is ported by the
+<code>nnxx::MSG</code> symbol. This applies to almost all constants, except in a few cases
+where it conflicts with some existing symbols (more on that later).</p>
+<h2 id="STRINGS">STRINGS</h2>
+<p>nanomsgxx functions accept string arguments in some cases, to bind or connect
+to a node for example. Everywhere a string is expected the functions are designed
+to receive any object that can be converted to a C-string (null-terminted char
+sequence), this includes:</p>
+<ul>
+<li>objects of <code>const char *</code> type, or implicitly converted to this pointer type</li>
+<li>objects of <code>std::string</code> type, or any other specialization of <code>std::basic_string</code></li>
+<li>any object with a c_str member function returning a <code>const char *</code></li>
+</ul>
+<p>This feature can be extended by providing a c_str function for new types, for example:</p>
+<div class="highlight"><pre><span class="k">namespace</span> <span class="nn">X</span> <span class="p">{</span>
+  <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">c_str</span><span class="p">(</span><span class="k">const</span> <span class="n">other_string_type</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">s</span><span class="p">.</span><span class="n">c_string</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<h2 id="OBJECTS">OBJECTS</h2>
+<p>The nanomsgxx API provides a few object types that abstracts concepts of the C
+API, while trying to stay as close as possible it adds a few extra types to
+integrate with the C++ standard library and take advantages of the rich features
+of the language.</p>
+<ul>
+<li><strong>Moveable Objects</strong></li>
+</ul>
+<p>All types in the nanomsgxx API provide a move constructor and a move assignment
+operator, these are powerful features of C++11 and the library makes heavy use
+of it to provide an easy resource management model, as well as protecting the
+user from mis-using the library in some places.</p>
+<ul>
+<li><strong>Member vs Non-Member Functions</strong></li>
+</ul>
+<p>Member functions are used of nanomsgxx objects to provide operations that are
+part of the object's identity, providing the low-level pieces on which extensions
+can be built.<br/>
+For example the <code>nnxx::socket</code> type will have the recv and send member functions
+because receiving and sending messages are the core features of the this type,
+but protocol extensions such as turning on or off Nagle's algorithm for TCP
+connections will be provided as a non-member function because it's not an
+operation that can be performed on any socket type.</p>
+<h2 id="EXCEPTIONS">EXCEPTIONS</h2>
+<p>The nanomsg library uses the POSIX mechanism to report errors, setting errno
+to some error number and returning a nagative number from the function.
+C++ exceptions are used to report these conditions and almost all exceptions
+thrown by the nanomsgxx functions are sub-classes of <code>std::system_error</code>, so the
+original error number that was generated by the underlying nanomsg routine can
+be accessed through the caught exception.</p>
+<ul>
+<li><strong>Signals</strong></li>
+</ul>
+<p>When a program receives a signal it may cause any ongoing system call to be
+cancelled to execute a signal handler instead, in that case the systeam call
+terminates with the EINTR error code. While nanomsg mirrors this behavior,
+nanomsgxx reports these conditions with the <code>nnxx::signal_error</code> exception.<br/>
+This can be deactivated on a per-call basis by passing <code>nnxx::NO_SIGNAL_ERROR</code>
+in the flags argument on any blocking call, you should then refer to the
+documentation of each function to understand how to handle this case.</p>
+<ul>
+<li><strong>Timeouts</strong></li>
+</ul>
+<p>nanomsg's API lets the user define a timeout for any blocking operation
+(typically receiving or sending messages), and reports any timeout in the
+operation with a <code>nnxx::timeout_error</code> exception.<br/>
+This can be deactivated on a per-call basis by passing <code>nnxx::NO_TIMEOUT_ERROR</code>
+in the flags argument on any blocking call, you should then refer to the
+documentation of each function to understand how to handle this case.</p>
+<ul>
+<li><strong>Termination</strong></li>
+</ul>
+<p>When the program is about to exit it is supposed to inform the nanomsg library
+by calling nn_term, making any future or pending calls to nanomsg routines
+failing and setting errno to ETERM. While this is still reported with an
+exception in nanomsgxx it's on case where the exception thrown isn't a sub-class
+of <code>std::system_error</code>. The <code>nnxx::term_error</code> exception is instead a sub-class of
+<code>std::logic_error</code>. That allows the program to handle this condition away from
+local error handling logic.</p>
+<ul>
+<li><strong>Memory Allocation</strong></li>
+</ul>
+<p>The nanomsg library uses dynamic memory allocations in some places, if these
+fail for whatever reasons the functions report the error with the ENOMEM errno
+code.<br/>
+This is another case where nanomsgxx will report an error through an exception
+that is not a subclass of <code>std::system_error</code>. The C++ standard library provides
+the <code>std::bad_alloc</code> exception for this purpose, in order to easily integrate with
+programs that are written for standard C++ nanomsgxx also reports memory
+allocation failures by throwing an instance of <code>std::bad_alloc</code>.</p>
+<h2 id="SEE-ALSO">SEE ALSO</h2>
+<p><a class="man-ref" href="../nanomsgxx.7.html">nanomsgxx<span class="s">(7)</span></a><br/>
+<a class="man-ref" href="messages.7.html">nanomsgxx-messages<span class="s">(7)</span></a><br/>
+<a class="man-ref" href="polling.7.html">nanomsgxx-polling<span class="s">(7)</span></a><br/>
+<a class="man-ref" href="sockets.7.html">nanomsgxx-sockets<span class="s">(7)</span></a><br/>
+<a class="man-ref" href="http://nanomsg.org/v0.3/nanomsg.7.html">nanomsg<span class="s">(7)</span></a></p>
+<h2 id="AUTHORS">AUTHORS</h2>
+<p>Achille Roussel</p>
+<ol class="man-decor man-foot man foot">
+<li class="tl">achille.roussel@gmail.com</li>
+<li class="tc">May 2014</li>
+<li class="tr">nanomsgxx-design(7)</li>
+</ol>
+</div>
+</body>
+</html>
+

@@ -1,0 +1,90 @@
+#!/usr/bin/env python
+from bs4 import BeautifulSoup
+from pygments import highlight
+from pygments.lexers import CppLexer
+from pygments.token import Keyword
+from pygments.token import Name
+from pygments.formatters import HtmlFormatter
+import argparse
+import sys
+
+class Lexer(CppLexer):
+
+    EXTRA_CLASSES = (
+        'istream_iterator',
+        'message',
+        'message_control',
+        'message_istream',
+        'message_ostream',
+        'message_streambuf',
+        'millisecond',
+        'poll_vector',
+        'poll_entry',
+        'nn_pollfd',
+        'second',
+        'socket',
+        'timeout_error',
+        'vector',
+    )
+
+    EXTRA_FUNCTIONS = (
+        'recv_int_vector',
+    )
+
+    EXTRA_NAMESPACES = (
+        'chrono',
+        'nnxx',
+        'std',
+        'X',
+    )
+
+    EXTRA_KEYWORDS = (
+        'noexcept',
+        'try',
+    )
+
+    def get_tokens_unprocessed(self, text):
+        for index, token, value in super(Lexer, self).get_tokens_unprocessed(text):
+            if token is not Name:
+                yield index, token, value
+                continue
+
+            if value in self.EXTRA_KEYWORDS:
+                yield index, Keyword, value
+
+            elif value in self.EXTRA_NAMESPACES:
+                yield index, Name.Namespace, value
+
+            elif value in self.EXTRA_CLASSES:
+                yield index, Name.Class, value
+
+            elif value in self.EXTRA_FUNCTIONS:
+                yield index, Name.Function, value
+
+            elif is_constant(value):
+                yield index, Name.Constant, value
+
+            else:
+                yield index, Name, value
+
+def is_constant(s):
+    for c in s:
+        if c != '_' and not c.isupper():
+            return False
+    return True
+
+def parse_arguments():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-s', '--style', default='default', help='The Pygments style to use')
+    return parser.parse_args()
+
+args  = parse_arguments()
+style = args.style
+doc   = BeautifulSoup(sys.stdin)
+
+for pre in doc.find_all('pre'):
+    code = pre.find('code')
+    data = code.string
+    pre.replace_with(BeautifulSoup(highlight(data, Lexer(), HtmlFormatter(style=style))))
+
+print doc

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta http-equiv="content-type" value="text/html;charset=utf8">
+<meta name="generator" value="Ronn/v0.7.3 (http://github.com/rtomayko/ronn/tree/0.7.3)">
+<title>nanomsgxx(7) - C++11 binding for nanomsg</title>
+<style media="all" type="text/css">
+  /* style: man */
+  body#manpage {margin:0}
+  .mp {max-width:100ex;padding:0 9ex 1ex 4ex}
+  .mp p,.mp pre,.mp ul,.mp ol,.mp dl {margin:0 0 20px 0}
+  .mp h2 {margin:10px 0 0 0}
+  .mp > p,.mp > pre,.mp > ul,.mp > ol,.mp > dl {margin-left:8ex}
+  .mp h3 {margin:0 0 0 4ex}
+  .mp dt {margin:0;clear:left}
+  .mp dt.flush {float:left;width:8ex}
+  .mp dd {margin:0 0 0 9ex}
+  .mp h1,.mp h2,.mp h3,.mp h4 {clear:left}
+  .mp pre {margin-bottom:20px}
+  .mp pre+h2,.mp pre+h3 {margin-top:22px}
+  .mp h2+pre,.mp h3+pre {margin-top:5px}
+  .mp img {display:block;margin:auto}
+  .mp h1.man-title {display:none}
+  .mp,.mp code,.mp pre,.mp tt,.mp kbd,.mp samp,.mp h3,.mp h4 {font-family:monospace;font-size:14px;line-height:1.42857142857143}
+  .mp h2 {font-size:16px;line-height:1.25}
+  .mp h1 {font-size:20px;line-height:2}
+  .mp {text-align:justify;background:#fff}
+  .mp,.mp code,.mp pre,.mp pre code,.mp tt,.mp kbd,.mp samp {color:#131211}
+  .mp h1,.mp h2,.mp h3,.mp h4 {color:#030201}
+  .mp u {text-decoration:underline}
+  .mp code,.mp strong,.mp b {font-weight:bold;color:#131211}
+  .mp em,.mp var {font-style:italic;color:#232221;text-decoration:none}
+  .mp a,.mp a:link,.mp a:hover,.mp a code,.mp a pre,.mp a tt,.mp a kbd,.mp a samp {color:#0000ff}
+  .mp b.man-ref {font-weight:normal;color:#434241}
+  .mp pre {padding:0 4ex}
+  .mp pre code {font-weight:normal;color:#434241}
+  .mp h2+pre,h3+pre {padding-left:0}
+  ol.man-decor,ol.man-decor li {margin:3px 0 10px 0;padding:0;float:left;width:33%;list-style-type:none;text-transform:uppercase;color:#999;letter-spacing:1px}
+  ol.man-decor {width:100%}
+  ol.man-decor li.tl {text-align:left}
+  ol.man-decor li.tc {text-align:center;letter-spacing:4px}
+  ol.man-decor li.tr {text-align:right;float:right}
+  </style>
+<style media="all" type="text/css">
+  /* style: dark */
+  .mp,body#manpage {background:#080706;color:#888}
+  .mp,.mp code,.mp pre,.mp pre code,.mp tt,.mp kbd,.mp samp {color:#aaa}
+  .mp h1,.mp h2,.mp h3,.mp h4 {color:#fff}
+  .man-decor,.man-decor ol li {color:#666}
+  .mp code,.mp strong,.mp b {color:#fff}
+  .mp em,.mp var,.mp u {color:#ddd}
+  .mp pre code {color:#ddd}
+  .mp a,.mp a:link,.mp a:hover,.mp a code,.mp a pre,.mp a tt,.mp a kbd,.mp a samp {color:#fff}
+  </style>
+<style media="all" type="text/css">
+  /* style: nnxx */
+  .mp pre {border: 1px solid dimgray;padding: 1em;overflow: hidden}
+  .highlight {margin-left: 8ex}
+  </style>
+<style media="all" type="text/css">
+  /* style: highlight-dark */
+  .highlight .hll {background-color: #49483e}
+  .highlight {background: #272822;color: white}
+  .highlight .c {color: salmon} 
+  .highlight .err {color: #960050;background-color: #1e0010} 
+  .highlight .k {color: aliceblue;font-weight: bold} 
+  .highlight .l {color: white} 
+  .highlight .n {color: white} 
+  .highlight .o {color: lightyellow} 
+  .highlight .p {color: lightyellow} 
+  .highlight .cm {color: salmon} 
+  .highlight .cp {color: salmon} 
+  .highlight .c1 {color: salmon} 
+  .highlight .cs {color: salmon} 
+  .highlight .ge {font-style: italic} 
+  .highlight .gs {font-weight: bold} 
+  .highlight .kc {color: aliceblue;font-weight: bold} 
+  .highlight .kd {color: aliceblue;font-weight: bold} 
+  .highlight .kn {color: #f92672} 
+  .highlight .kp {color: aliceblue;font-weight: bold} 
+  .highlight .kr {color: aliceblue;font-weight: bold} 
+  .highlight .kt {color: #A9FC63} 
+  .highlight .ld {color: #A9FC63} 
+  .highlight .m {color: white} 
+  .highlight .s {color: #A9FC63} 
+  .highlight .na {color: white} 
+  .highlight .nb {color: white} 
+  .highlight .nc {color: #A9FC63} 
+  .highlight .no {color: white} 
+  .highlight .nd {color: white} 
+  .highlight .ni {color: white} 
+  .highlight .ne {color: white} 
+  .highlight .nf {color: white} 
+  .highlight .nl {color: white} 
+  .highlight .nn {color: violet} 
+  .highlight .nx {color: white} 
+  .highlight .py {color: white} 
+  .highlight .nt {color: white} 
+  .highlight .nv {color: white} 
+  .highlight .ow {color: lightyellow} 
+  .highlight .w {color: white} 
+  .highlight .mf {color: white} 
+  .highlight .mh {color: white} 
+  .highlight .mi {color: white} 
+  .highlight .mo {color: white} 
+  .highlight .sb {color: #A9FC63} 
+  .highlight .sc {color: #A9FC63} 
+  .highlight .sd {color: #A9FC63} 
+  .highlight .s2 {color: #A9FC63} 
+  .highlight .se {color: white} 
+  .highlight .sh {color: #A9FC63} 
+  .highlight .si {color: #A9FC63} 
+  .highlight .sx {color: #A9FC63} 
+  .highlight .sr {color: #A9FC63} 
+  .highlight .s1 {color: #A9FC63} 
+  .highlight .ss {color: #A9FC63} 
+  .highlight .bp {color: white} 
+  .highlight .vc {color: white} 
+  .highlight .vg {color: white} 
+  .highlight .vi {color: white} 
+  .highlight .il {color: white} 
+  .mp {color: lightgray}
+  </style>
+</meta></meta></head>
+<!--
+  The following styles are deprecated and will be removed at some point:
+  div#man, div#man ol.man, div#man ol.head, div#man ol.man.
+
+  The .man-page, .man-decor, .man-head, .man-foot, .man-title, and
+  .man-navigation should be used instead.
+-->
+<body id="manpage">
+<div class="mp" id="man">
+<div class="man-navigation" style="display:none">
+<a href="#NAME">NAME</a>
+<a href="#SYNOPSIS">SYNOPSIS</a>
+<a href="#DESCRIPTION">DESCRIPTION</a>
+<a href="#LICENSE">LICENSE</a>
+<a href="#INSTALL">INSTALL</a>
+<a href="#RESOURCES">RESOURCES</a>
+<a href="#SEE-ALSO">SEE ALSO</a>
+<a href="#AUTHORS">AUTHORS</a>
+</div>
+<ol class="man-decor man-head man head">
+<li class="tl">nanomsgxx(7)</li>
+<li class="tc">nanomsgxx</li>
+<li class="tr">nanomsgxx(7)</li>
+</ol>
+<h2 id="NAME">NAME</h2>
+<p class="man-name">
+<code>nanomsgxx</code> - <span class="man-whatis">C++11 binding for nanomsg</span>
+</p>
+<h2 id="SYNOPSIS">SYNOPSIS</h2>
+<p>c++ -std=c++11 [flags] files <strong>-lnanomsgxx</strong> [libraries]</p>
+<h2 id="DESCRIPTION">DESCRIPTION</h2>
+<p><strong>nanomsgxx</strong> is a binding of the <strong>nanomsg</strong> library for C++11, it is designed
+to take full advantage of C++11 features in order to make the code safe and easy
+to read and write.</p>
+<h2 id="LICENSE">LICENSE</h2>
+<p><strong>nanomsgxx</strong> is released under the MIT license, you should have got a copy of
+the license along with the sources.</p>
+<h2 id="INSTALL">INSTALL</h2>
+<p><strong>nanomsgxx</strong> build is driven by <strong>waf</strong>.</p>
+<p>waf is packaged with nanomsgxx, all you need a python interpreter, then run
+these commands:</p>
+<p><strong>
+./waf configure<br/>
+./waf build<br/>
+./waf install</strong></p>
+<p>The library and headers will be installed on your system and you'll be able to
+link your programs with <strong>-lnanomsgxx</strong>.</p>
+<h2 id="RESOURCES">RESOURCES</h2>
+<p><a href="http://nanomsg.org/index.html">Nanomsg</a><br/>
+<a href="http://docs.waf.googlecode.com/git/book_17/single.html">The Waf Book</a><br/>
+<a href="http://opensource.org/licenses/MIT">MIT License</a></p>
+<h2 id="SEE-ALSO">SEE ALSO</h2>
+<p><a class="man-ref" href="nnxx.3.html">nnxx<span class="s">(3)</span></a><br/>
+<a class="man-ref" href="nnxx/this_thread.3.html">nnxx::this_thread<span class="s">(3)</span></a><br/>
+<a class="man-ref" href="nanomsgxx/design.7.html">nanomsgxx-design<span class="s">(7)</span></a><br/>
+<a class="man-ref" href="nanomsgxx/messages.7.html">nanomsgxx-messages<span class="s">(7)</span></a><br/>
+<a class="man-ref" href="nanomsgxx/sockets.7.html">nanomsgxx-sockets<span class="s">(7)</span></a><br/>
+<a class="man-ref" href="nanomsgxx/polling.7.html">nanomsgxx-polling<span class="s">(7)</span></a><br/>
+<a class="man-ref" href="http://nanomsg.org/v0.3/nanomsg.7.html">nanomsg<span class="s">(7)</span></a></p>
+<h2 id="AUTHORS">AUTHORS</h2>
+<p>Achille Roussel</p>
+<ol class="man-decor man-foot man foot">
+<li class="tl">achille.roussel@gmail.com</li>
+<li class="tc">May 2014</li>
+<li class="tr">nanomsgxx(7)</li>
+</ol>
+</div>
+</body>
+</html>
+
