@@ -115,8 +115,6 @@ allocation failures by throwing an instance of `std::bad_alloc`.
 
 nanomsgxx(7)  
 nanomsgxx-messages(7)  
-nanomsgxx-polling(7)  
-nanomsgxx-sockets(7)  
 nanomsg(7)
 
 ## AUTHORS

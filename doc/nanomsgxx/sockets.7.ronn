@@ -143,9 +143,6 @@ so the option type must match the one required by the nanomsg C API.
 
 nnxx::socket(3)  
 nanomsgxx(7)  
-nanomsgxx-design(7)  
-nanomsgxx-messages(7)  
-nanomsgxx-polling(7)  
 nanomsg(7)  
 
 ## AUTHORS
