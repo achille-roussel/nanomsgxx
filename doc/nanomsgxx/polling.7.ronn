@@ -43,8 +43,8 @@ Read `nn_poll`'s documentation to learn more about how the polling mechanism wor
 multiple situations. The two main interfaces are as follow:
 
 ```
-poll_vector  poll(poll_vector &&, <optional timeout>, <optional flags>);
-poll_vector &poll(poll_vector  &, <optional timeout>, <optional flags>);
+poll_vector  poll(poll_vector &&, <timeout>, <flags>);
+poll_vector &poll(poll_vector  &, <timeout>, <flags>);
 ```
 
 The first version accepts a temporary vector object that is used for polling the

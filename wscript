@@ -68,5 +68,4 @@ def options(waf):
     add_bool('--shared', 'build shared library (default)')
     add_bool('--notests', 'turn off tests')
     add_bool('--nodoc', 'turn off documentation')
-    waf.add_option('--install-html-path', nargs=1, default='/usr/share/doc/nanomsgxx', help='where to install html doc')
-
+    waf.recurse('doc')

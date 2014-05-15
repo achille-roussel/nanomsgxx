@@ -8,14 +8,18 @@ import os
 class ronn(Task):
 
     def make_ronn_command(self):
-        return [
+        cmd = [
             'RONN_STYLE=' + self.env.basename,
             'ronn',
             '--organization', "'achille.roussel@gmail.com'",
             '--manual', 'nanomsgxx',
-            '--style', 'dark,nnxx,highlight',
             self.inputs[0].abspath(),
         ]
+        if self.env.docstyle == 'dark':
+            cmd += ['--style', 'dark,nnxx,highlight-dark']
+        else:
+            cmd += ['--style', 'nnxx,highlight-light']
+        return cmd
 
     def make_mv_command(self):
         return [
@@ -87,5 +91,11 @@ def build(waf):
     waf.install_files(waf.env.install_html_path, html_files)
 
 def configure(waf):
+    assert waf.options.docstyle in ('dark', 'light')
     waf.find_program('cat')
     waf.find_program('ronn')
+    waf.env.docstyle = waf.options.docstyle
+
+def options(waf):
+    waf.add_option('--docstyle', nargs=1, default='light', help='the doc style (dark or light)')
+    waf.add_option('--install-html-path', nargs=1, default='/usr/share/doc/nanomsgxx', help='where to install html doc')

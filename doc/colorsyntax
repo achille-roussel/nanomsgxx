@@ -27,6 +27,10 @@ class Lexer(CppLexer):
         'vector',
     )
 
+    EXTRA_FUNCTIONS = (
+        'recv_int_vector',
+    )
+
     EXTRA_NAMESPACES = (
         'chrono',
         'nnxx',
@@ -53,6 +57,9 @@ class Lexer(CppLexer):
 
             elif value in self.EXTRA_CLASSES:
                 yield index, Name.Class, value
+
+            elif value in self.EXTRA_FUNCTIONS:
+                yield index, Name.Function, value
 
             elif is_constant(value):
                 yield index, Name.Constant, value
