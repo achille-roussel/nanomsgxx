@@ -55,6 +55,7 @@
   </style>
 <style media="all" type="text/css">
   /* style: nnxx */
+  #man {margin: auto;max-width: 100ex}
   .mp pre {border: 1px solid dimgray;padding: 1em;overflow: hidden}
   .highlight {margin-left: 8ex}
   </style>
@@ -174,7 +175,7 @@ sequence), this includes:</p>
 </ul>
 <p>This feature can be extended by providing a c_str function for new types, for example:</p>
 <div class="highlight"><pre><span class="k">namespace</span> <span class="nn">X</span> <span class="p">{</span>
-  <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">c_str</span><span class="p">(</span><span class="k">const</span> <span class="n">other_string_type</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">c_str</span><span class="p">(</span><span class="k">const</span> <span class="nc">other_string_type</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="n">s</span><span class="p">.</span><span class="n">c_string</span><span class="p">();</span>
   <span class="p">}</span>
 <span class="p">}</span>
@@ -253,8 +254,6 @@ allocation failures by throwing an instance of <code>std::bad_alloc</code>.</p>
 <h2 id="SEE-ALSO">SEE ALSO</h2>
 <p><a class="man-ref" href="../nanomsgxx.7.html">nanomsgxx<span class="s">(7)</span></a><br/>
 <a class="man-ref" href="messages.7.html">nanomsgxx-messages<span class="s">(7)</span></a><br/>
-<a class="man-ref" href="polling.7.html">nanomsgxx-polling<span class="s">(7)</span></a><br/>
-<a class="man-ref" href="sockets.7.html">nanomsgxx-sockets<span class="s">(7)</span></a><br/>
 <a class="man-ref" href="http://nanomsg.org/v0.3/nanomsg.7.html">nanomsg<span class="s">(7)</span></a></p>
 <h2 id="AUTHORS">AUTHORS</h2>
 <p>Achille Roussel</p>

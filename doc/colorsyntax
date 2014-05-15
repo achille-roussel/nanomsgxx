@@ -18,6 +18,7 @@ class Lexer(CppLexer):
         'message_ostream',
         'message_streambuf',
         'millisecond',
+        'other_string_type',
         'poll_vector',
         'poll_entry',
         'nn_pollfd',
