@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 import os
+import sys
 
 APPNAME = 'nanomsgxx'
 VERSION = '0.1'
@@ -51,8 +52,12 @@ def configure(waf):
     if waf.options.nodoc:
         waf.env.with_doc = False
     else:
-        waf.recurse('doc')
         waf.env.with_doc = True
+        try:
+            waf.recurse('doc')
+        except Exception:
+            sys.stderr.write('Disabling documentation build...\n')
+            waf.env.with_doc = False
     waf.env.install_html_path = waf.options.install_html_path
 
 def dist(waf):

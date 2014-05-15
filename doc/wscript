@@ -92,10 +92,14 @@ def build(waf):
 
 def configure(waf):
     assert waf.options.docstyle in ('dark', 'light')
+    waf.load('python')
     waf.find_program('cat')
     waf.find_program('ronn')
+    waf.check_python_version((2,6,0))
+    waf.check_python_module('bs4')
+    waf.check_python_module('pygments')
     waf.env.docstyle = waf.options.docstyle
 
 def options(waf):
-    waf.add_option('--docstyle', nargs=1, default='light', help='the doc style (dark or light)')
+    waf.add_option('--docstyle', nargs=1, default='dark', help='the doc style (dark or light)')
     waf.add_option('--install-html-path', nargs=1, default='/usr/share/doc/nanomsgxx', help='where to install html doc')
