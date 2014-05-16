@@ -125,7 +125,8 @@ def build(waf):
         waf.add_to_group(gzip_task)
 
     if waf.env.install_html_path:
-        waf.install_files(waf.env.install_html_path, html_files)
+        for hf in html_files:
+            waf.install_as(os.path.join(waf.env.install_html_path, relative_parent_path(waf, hf), hf.name), hf)
 
     if waf.env.install_man_path:
         for gf in gzip_files:
