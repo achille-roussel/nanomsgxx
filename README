@@ -3,6 +3,8 @@ nanomsgxx
 
 nanomsgxx is a binding of the nanomsg library for C++11.
 
+*The library is still under development and changes may be brought to the API.* 
+
 
 Building and installing
 -----------------------
