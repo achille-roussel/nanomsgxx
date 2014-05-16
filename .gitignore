@@ -30,9 +30,12 @@ build/*
 \#*\#
 
 # Doc
+doc/*.gz
 doc/*.html
 doc/*.[1-9]
+doc/nnxx/*.gz
 doc/nnxx/*.html
 doc/nnxx/*.[1-9]
+doc/nanomsgxx/*.gz
 doc/nanomsgxx/*.html
 doc/nanomsgxx/*.[1-9]

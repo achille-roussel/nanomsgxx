@@ -56,15 +56,43 @@ class ronn(Task):
     def run(self):
         return self.exec_command(' '.join(self.make_command()))
 
+class gzip(Task):
+
+    def run(self):
+        return self.exec_command('gzip -c %s > %s' % (
+            self.inputs[0].abspath(),
+            self.outputs[0].abspath(),
+        ))
+
+def relative_parent_path(waf, file_node):
+    return file_node.parent.abspath()[len(waf.path.abspath()):].lstrip('/')
+
 def html_output_file(waf, input_file):
     name = input_file.name.replace('.ronn', '.html')
-    path = input_file.parent.abspath()[len(waf.path.abspath()):]
+    path = relative_parent_path(waf, input_file)
     return waf.path.make_node(os.path.join(path, name))
 
 def roff_output_file(waf, input_file):
     name = input_file.name.replace('.ronn', '')
-    path = input_file.parent.abspath()[len(waf.path.abspath()):]
+    path = relative_parent_path(waf, input_file)
     return waf.path.make_node(os.path.join(path, name))
+
+def gzip_output_file(waf, input_file):
+    name = input_file.name + '.gz'
+    path = relative_parent_path(waf, input_file)
+    return waf.path.make_node(os.path.join(path, name))
+
+def gzip_install_file(waf, gzip_file):
+    name = gzip_file.name
+    path = relative_parent_path(waf, gzip_file)
+    symbol, section, _ = name.split('.')
+    if len(path) == 0:
+        where = name
+    elif path == 'nnxx':
+        where = 'nnxx::' + name
+    else:
+        where = 'nanomsgxx-' + name
+    return os.path.join('man' + section, where)
 
 def build(waf):
     waf.env.basename = waf.path.abspath()
@@ -75,6 +103,7 @@ def build(waf):
     idx_files   = waf.path.ant_glob('**/index.txt')
     html_files  = []
     roff_files  = []
+    gzip_files  = []
 
     for input_file in waf.path.ant_glob('**/*.ronn'):
         html_file = html_output_file(waf, input_file)
@@ -88,18 +117,34 @@ def build(waf):
         ronn_task.set_outputs([html_file, roff_file])
         waf.add_to_group(ronn_task)
 
-    waf.install_files(waf.env.install_html_path, html_files)
+        gzip_file = gzip_output_file(waf, roff_file)
+        gzip_task = gzip(env=waf.env)
+        gzip_task.set_inputs([roff_file])
+        gzip_task.set_outputs([gzip_file])
+        gzip_files.append(gzip_file)
+        waf.add_to_group(gzip_task)
+
+    if waf.env.install_html_path:
+        waf.install_files(waf.env.install_html_path, html_files)
+
+    if waf.env.install_man_path:
+        for gf in gzip_files:
+            waf.install_as(os.path.join(waf.env.install_man_path, gzip_install_file(waf, gf)), gf)
 
 def configure(waf):
     assert waf.options.docstyle in ('dark', 'light')
     waf.load('python')
     waf.find_program('cat')
+    waf.find_program('gzip')
     waf.find_program('ronn')
     waf.check_python_version((2,6,0))
     waf.check_python_module('bs4')
     waf.check_python_module('pygments')
     waf.env.docstyle = waf.options.docstyle
+    waf.env.install_html_path = waf.options.install_html_path
+    waf.env.install_man_path = waf.options.install_man_path
 
 def options(waf):
     waf.add_option('--docstyle', nargs=1, default='dark', help='the doc style (dark or light)')
-    waf.add_option('--install-html-path', nargs=1, default='/usr/share/doc/nanomsgxx', help='where to install html doc')
+    waf.add_option('--install-html-path', nargs=1, default='/usr/local/share/doc/nanomsgxx', help='where to install html doc')
+    waf.add_option('--install-man-path', nargs=1, default='/usr/local/share/man', help='where to install man pages')
