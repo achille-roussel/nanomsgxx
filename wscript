@@ -52,12 +52,6 @@ def configure(waf):
     waf.recurse('src/ext')
     waf.recurse('src/nnxx')
 
-    if not waf.options.notests:
-        waf.recurse('tests')
-
-    if waf.options.strip:
-        waf.find_program('strip')
-
     if waf.options.nodoc:
         waf.env.with_doc = False
     else:

@@ -14,6 +14,8 @@ class strip(Task):
 
 def configure(waf):
     waf.check_cxx(lib='nanomsg')
+    if waf.options.strip:
+        waf.find_program('strip')
 
 def build(waf):
     conf = copy(waf.env.CXX_CONF_KWARGS)
