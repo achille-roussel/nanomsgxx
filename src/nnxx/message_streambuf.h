@@ -28,6 +28,7 @@
 #include <streambuf>
 #include <nnxx/message.h>
 
+// Detect usage of libc++
 #ifdef _LIBCPP_VERSION
 # define NNXX_LIBCPP 1
 #else
@@ -37,7 +38,7 @@
 namespace nnxx {
 
   template < typename Char, typename Traits = std::char_traits<Char> >
-  class basic_message_streambuf : public std::basic_streambuf<Char, Traits> {
+  class NNXX_EXPORT basic_message_streambuf : public std::basic_streambuf<Char, Traits> {
     typedef typename std::basic_streambuf<Char, Traits> base_type;
     typedef typename std::streamsize                    streamsize;
   public:
@@ -83,7 +84,7 @@ namespace nnxx {
 
   typedef basic_message_streambuf<char> message_streambuf;
 
-  extern template class basic_message_streambuf<char>;
+  extern template class NNXX_EXPORT basic_message_streambuf<char>;
 
 }
 

@@ -26,10 +26,11 @@
 #define NNXX_MESSAGE_CONTROL_H
 
 #include <ext/nn_ext.h>
+#include <nnxx/def.h>
 
 namespace nnxx {
 
-  class message_control : public nn_msgctl {
+  class NNXX_EXPORT message_control : public nn_msgctl {
   public:
     message_control() noexcept;
     message_control(message_control &&a) noexcept;
@@ -47,21 +48,16 @@ namespace nnxx {
     size_t hash() const noexcept;
   };
 
-  void swap(message_control &a1, message_control &a2) noexcept;
+  NNXX_EXPORT void swap(message_control &a1, message_control &a2) noexcept;
 
-  int compare(const message_control &a1, const message_control &a2) noexcept;
+  NNXX_EXPORT int compare(const message_control &a1, const message_control &a2) noexcept;
 
-  bool operator==(const message_control &a1, const message_control &a2) noexcept;
-
-  bool operator!=(const message_control &a1, const message_control &a2) noexcept;
-
-  bool operator<(const message_control &a1, const message_control &a2) noexcept;
-
-  bool operator>(const message_control &a1, const message_control &a2) noexcept;
-
-  bool operator<=(const message_control &a1, const message_control &a2) noexcept;
-
-  bool operator>=(const message_control &a1, const message_control &a2) noexcept;
+  NNXX_EXPORT bool operator==(const message_control &a1, const message_control &a2) noexcept;
+  NNXX_EXPORT bool operator!=(const message_control &a1, const message_control &a2) noexcept;
+  NNXX_EXPORT bool operator<(const message_control &a1, const message_control &a2) noexcept;
+  NNXX_EXPORT bool operator>(const message_control &a1, const message_control &a2) noexcept;
+  NNXX_EXPORT bool operator<=(const message_control &a1, const message_control &a2) noexcept;
+  NNXX_EXPORT bool operator>=(const message_control &a1, const message_control &a2) noexcept;
 
   struct message_control_hash {
     size_t operator()(const message_control &ctl) const noexcept

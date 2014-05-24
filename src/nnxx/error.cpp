@@ -33,11 +33,11 @@ namespace nnxx {
   { return strerror(ETERM); }
 
   timeout_error::timeout_error():
-    std::system_error(std::make_error_code(std::errc(ETIMEDOUT)), strerror(ETIMEDOUT))
+    system_error(make_error_code(errc(ETIMEDOUT)), strerror(ETIMEDOUT))
   { }
 
   signal_error::signal_error():
-    std::system_error(std::make_error_code(std::errc(EINTR)), strerror(EINTR))
+    system_error(make_error_code(errc(EINTR)), strerror(EINTR))
   { }
 
   namespace this_thread {

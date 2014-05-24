@@ -36,23 +36,19 @@ struct nn_msgctl {
   size_t ctl_len;
 };
 
-extern void nn_msgctl_init (struct nn_msgctl *ctl);
+void nn_msgctl_init (struct nn_msgctl *ctl);
 
-extern void nn_msgctl_term (struct nn_msgctl *ctl);
+void nn_msgctl_term (struct nn_msgctl *ctl);
 
-extern int nn_msgctl_copy (struct nn_msgctl *to,
-                                  const struct nn_msgctl *from);
+int nn_msgctl_copy (struct nn_msgctl *to, const struct nn_msgctl *from);
 
-extern int nn_msgctl_cmp (const struct nn_msgctl *ctl1,
-                                 const struct nn_msgctl *ctl2);
+int nn_msgctl_cmp (const struct nn_msgctl *ctl1, const struct nn_msgctl *ctl2);
 
-extern size_t nn_msgctl_hash (const struct nn_msgctl *ctl);
+size_t nn_msgctl_hash (const struct nn_msgctl *ctl);
 
-extern int nn_recvfrom (int s, void *buf, size_t buflen, int flags,
-                        struct nn_msgctl *ctl);
+int nn_recvfrom (int s, void *buf, size_t buflen, int flags, struct nn_msgctl *ctl);
 
-extern int nn_sendto (int s, const void *buf, size_t buflen, int flags,
-                      const struct nn_msgctl *ctl);
+int nn_sendto (int s, const void *buf, size_t buflen, int flags, const struct nn_msgctl *ctl);
 
 #ifdef __cplusplus
 }

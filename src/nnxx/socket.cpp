@@ -43,7 +43,7 @@ namespace nnxx {
 
     else if (!(flags & DONTWAIT)) {
       if (!(flags & NO_TIMEOUT_ERROR)) {
-        throw timeout_error{ };
+        throw_error(ETIMEDOUT);
       }
     }
 

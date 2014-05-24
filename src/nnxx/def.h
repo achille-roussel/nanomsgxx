@@ -22,59 +22,21 @@
  * SOFTWARE.
  */
 
-#ifndef NNXX_EXCEPTION_H
-#define NNXX_EXCEPTION_H
+#ifndef NNXX_DEF_H
+#define NNXX_DEF_H
 
-#include <cerrno>
-#include <utility>
-#include <system_error>
-#include <nnxx/def.h>
+// Define dummy version of NNXX_EXPORT for platforms that don't support any of
+// __declspec or __attribute__
+#define NNXX_EXPORT
 
-namespace nnxx {
-  using std::errc;
+#if NNXX_HAS_DECLSPEC
+#undef  NNXX_EXPORT
+#define NNXX_EXPORT __declspec(dllexport)
+#endif // NNXX_HAS_DECLSPEC
 
-  class NNXX_EXPORT term_error : public std::exception {
-  public:
-    const char *what() const noexcept;
-  };
+#if NNXX_HAS_ATTRIBUTE_VISIBILITY
+#undef  NNXX_EXPORT
+#define NNXX_EXPORT __attribute__((visibility("default")))
+#endif // NNXX_HAS_ATTRIBUTE_VISIBILITY
 
-  class NNXX_EXPORT timeout_error : public std::system_error {
-  public:
-    timeout_error();
-  };
-
-  class NNXX_EXPORT signal_error : public std::system_error {
-  public:
-    signal_error();
-  };
-
-  namespace this_thread {
-  NNXX_EXPORT int  get_errno() noexcept;
-  NNXX_EXPORT errc get_errc()  noexcept;
-  }
-
-  NNXX_EXPORT const char *strerror()         noexcept;
-  NNXX_EXPORT const char *strerror(int code) noexcept;
-
-  void throw_error();
-  void throw_error(int code);
-
-  inline void *check_error(void *ptr)
-  {
-    if (ptr == nullptr) {
-      throw_error();
-    }
-    return ptr;
-  }
-
-  inline int check_error(int code)
-  {
-    if (code < 0) {
-      throw_error();
-    }
-    return code;
-  }
-
-}
-
-#endif // NNXX_EXCEPTION_H
+#endif // NNXX_DEF_H

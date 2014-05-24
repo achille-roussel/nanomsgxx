@@ -41,13 +41,13 @@ namespace nnxx {
     SURVEYOR_DEADLINE = NN_SURVEYOR_DEADLINE,
   };
 
-  milliseconds get_surveyor_deadline(const socket &s);
+  NNXX_EXPORT milliseconds get_surveyor_deadline(const socket &s);
 
   template < typename Duration >
   Duration get_surveyor_deadline(const socket &s)
   { return std::chrono::duration_cast<Duration>(get_surveyor_deadline(s)); }
 
-  void set_surveyor_deadline(socket &s, milliseconds t);
+  NNXX_EXPORT void set_surveyor_deadline(socket &s, milliseconds t);
 
   template < typename Rep, typename Period >
   void set_surveyor_deadline(socket &s, const std::chrono::duration<Rep, Period> &t)

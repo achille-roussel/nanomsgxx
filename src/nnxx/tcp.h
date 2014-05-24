@@ -26,6 +26,7 @@
 #define NNXX_TCP_H
 
 #include <nanomsg/tcp.h>
+#include <nnxx/def.h>
 
 namespace nnxx {
 
@@ -35,9 +36,9 @@ namespace nnxx {
     TCP_NODELAY = NN_TCP_NODELAY,
   };
 
-  bool get_tcp_no_delay(const socket &s);
+  NNXX_EXPORT bool get_tcp_no_delay(const socket &s);
 
-  void set_tcp_no_delay(socket &s, bool enable);
+  NNXX_EXPORT void set_tcp_no_delay(socket &s, bool enable);
 
 }
 
