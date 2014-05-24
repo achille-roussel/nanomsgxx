@@ -8,7 +8,9 @@ from waflib.Task import Task
 class strip(Task):
 
     def run(self):
-        return self.exec_command('strip -x src/nnxx/' + self.env.libnanomsgxx_name)
+        cmd = 'strip -x src/nnxx/' + self.env.libnanomsgxx_name
+        print cmd
+        return self.exec_command(cmd)
 
 def configure(waf):
     waf.check_cxx(lib='nanomsg')
