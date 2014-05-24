@@ -42,8 +42,7 @@ def build(waf):
     # Run strip after the build was complete
     if waf.env.with_strip:
         strip_task = strip(env=waf.env)
-        for t in waf.env.nnxx.tasks:
-            strip_task.set_run_after(t)
+        strip_task.set_inputs([waf.path.find_or_declare(waf.env.libnanomsgxx_name)])
         waf.add_to_group(strip_task)
 
     # Define which files will be installed
