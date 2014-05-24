@@ -30,7 +30,7 @@
 
 namespace nnxx {
 
-  typedef struct NNXX_EXPORT nn_pollfd pollfd;
+  typedef struct nn_pollfd pollfd;
 
   enum {
     SOCKADDR_MAX = NN_SOCKADDR_MAX,
