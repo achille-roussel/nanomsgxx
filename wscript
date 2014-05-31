@@ -8,7 +8,7 @@ VERSION = '0.1'
 
 def build(waf):
     cflags   = ['-W', '-Wall', '-Wextra', '-fvisibility=hidden']
-    cxxflags = ['-W', '-Wall', '-Wextra', '-std=c++11', '-fvisibility=hidden']
+    cxxflags = ['-W', '-Wall', '-Wextra', '-std=c++11']
     defines  = []
     includes = [os.path.join(waf.path.abspath(), 'src')]
     libpath  = ['src/ext', 'src/nnxx']
@@ -45,10 +45,6 @@ def build(waf):
 
 def configure(waf):
     waf.load('compiler_c compiler_cxx c_config waf_unit_test')
-
-    check_attribute_visibility(waf)
-    check_declspec(waf)
-
     waf.recurse('src/ext')
     waf.recurse('src/nnxx')
 
@@ -80,19 +76,3 @@ def options(waf):
     add_bool('--nodoc', 'turn off documentation')
     add_bool('--strip', 'runs the \'strip\' utility on the build')
     waf.recurse('doc')
-
-def check_attribute_visibility(waf):
-    waf.check_cxx(
-        define_name = 'NNXX_HAS_ATTRIBUTE_VISIBILITY',
-        mandatory   = False,
-        msg         = "Checking for '__attribute__((visibility ...))'",
-        fragment    = '__attribute__((visibility("hidden"))) void f() {} int main() { return 0; }',
-    )
-
-def check_declspec(waf):
-    waf.check_cxx(
-        define_name = 'NNXX_HAS_DECLSPEC',
-        mandatory   = False,
-        msg         = "Checking for '__declspec(dllexport)'",
-        fragment    = '__declspec(dllexport) void f() {} int main() { return 0; }',
-    )

@@ -63,7 +63,7 @@ namespace nnxx {
   class message;
   class message_control;
 
-  class NNXX_EXPORT socket {
+  class socket {
   public:
     socket() noexcept;
     socket(socket &&s) noexcept;
@@ -150,7 +150,7 @@ namespace nnxx {
     int m_fd;
   };
 
-  NNXX_EXPORT void swap(socket &s1, socket &s2) noexcept;
+  void swap(socket &s1, socket &s2) noexcept;
 
 }
 

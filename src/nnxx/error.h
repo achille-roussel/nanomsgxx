@@ -28,33 +28,32 @@
 #include <cerrno>
 #include <utility>
 #include <system_error>
-#include <nnxx/def.h>
 
 namespace nnxx {
   using std::errc;
 
-  class NNXX_EXPORT term_error : public std::exception {
+  class term_error : public std::exception {
   public:
     const char *what() const noexcept;
   };
 
-  class NNXX_EXPORT timeout_error : public std::system_error {
+  class timeout_error : public std::system_error {
   public:
     timeout_error();
   };
 
-  class NNXX_EXPORT signal_error : public std::system_error {
+  class signal_error : public std::system_error {
   public:
     signal_error();
   };
 
   namespace this_thread {
-  NNXX_EXPORT int  get_errno() noexcept;
-  NNXX_EXPORT errc get_errc()  noexcept;
+  int  get_errno() noexcept;
+  errc get_errc()  noexcept;
   }
 
-  NNXX_EXPORT const char *strerror()         noexcept;
-  NNXX_EXPORT const char *strerror(int code) noexcept;
+  const char *strerror()         noexcept;
+  const char *strerror(int code) noexcept;
 
   void throw_error();
   void throw_error(int code);

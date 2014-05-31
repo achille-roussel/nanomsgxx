@@ -31,7 +31,7 @@
 namespace nnxx {
 
   template < typename Char, typename Traits = std::char_traits<Char> >
-  class NNXX_EXPORT basic_message_ostream : public std::basic_ostream<Char, Traits> {
+  class basic_message_ostream : public std::basic_ostream<Char, Traits> {
     typedef typename std::basic_ostream<Char, Traits> base_type;
     typedef basic_message_streambuf<Char, Traits>     message_streambuf;
   public:
@@ -71,7 +71,7 @@ namespace nnxx {
 
   typedef basic_message_ostream<char> message_ostream;
 
-  extern template class NNXX_EXPORT basic_message_ostream<char>;
+  extern template class basic_message_ostream<char>;
 
 }
 

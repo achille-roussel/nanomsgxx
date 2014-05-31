@@ -35,7 +35,7 @@ namespace nnxx {
 
   class socket;
 
-  class NNXX_EXPORT poll_entry : public pollfd {
+  class poll_entry : public pollfd {
   public:
     poll_entry() noexcept;
     poll_entry(int s, int ev) noexcept;
@@ -52,13 +52,13 @@ namespace nnxx {
 
   typedef std::vector<poll_entry> poll_vector;
 
-  NNXX_EXPORT bool operator==(const poll_entry &e, const socket &s) noexcept;
-  NNXX_EXPORT bool operator!=(const poll_entry &e, const socket &s) noexcept;
-  NNXX_EXPORT bool operator==(const socket &s, const poll_entry &e) noexcept;
-  NNXX_EXPORT bool operator!=(const socket &s, const poll_entry &e) noexcept;
+  bool operator==(const poll_entry &e, const socket &s) noexcept;
+  bool operator!=(const poll_entry &e, const socket &s) noexcept;
+  bool operator==(const socket &s, const poll_entry &e) noexcept;
+  bool operator!=(const socket &s, const poll_entry &e) noexcept;
 
   template < int Event, typename Iterator >
-  class NNXX_EXPORT ready_iterator :
+  class ready_iterator :
     public std::iterator<typename std::input_iterator_tag,
                          typename Iterator::value_type,
                          typename Iterator::difference_type,
@@ -94,7 +94,7 @@ namespace nnxx {
   };
 
   template < int Event, typename Vector >
-  class NNXX_EXPORT ready_sequence
+  class ready_sequence
   {
   public:
     typedef Vector vector_type;
@@ -119,13 +119,13 @@ namespace nnxx {
   typedef ready_sequence<EV_POLLIN , poll_vector const>           const_recv_ready_sequence;
   typedef ready_sequence<EV_POLLOUT, poll_vector const>           const_send_ready_sequence;
 
-  NNXX_EXPORT poll_vector poll(poll_vector &&entries);
-  NNXX_EXPORT poll_vector poll(poll_vector &&entries, time_point timeout, int flags = 0);
-  NNXX_EXPORT poll_vector poll(poll_vector &&entries, duration timeout, int flags = 0);
+  poll_vector poll(poll_vector &&entries);
+  poll_vector poll(poll_vector &&entries, time_point timeout, int flags = 0);
+  poll_vector poll(poll_vector &&entries, duration timeout, int flags = 0);
 
-  NNXX_EXPORT poll_vector &poll(poll_vector &entries);
-  NNXX_EXPORT poll_vector &poll(poll_vector &entries, time_point timeout, int flags = 0);
-  NNXX_EXPORT poll_vector &poll(poll_vector &entries, duration timeout, int flags = 0);
+  poll_vector &poll(poll_vector &entries);
+  poll_vector &poll(poll_vector &entries, time_point timeout, int flags = 0);
+  poll_vector &poll(poll_vector &entries, duration timeout, int flags = 0);
 
   template < typename Rep, typename Period >
   poll_vector &poll(poll_vector &entries,
@@ -153,20 +153,20 @@ namespace nnxx {
   { return poll(std::forward<poll_vector>(entries),
                 std::chrono::time_point_cast<time_point>(timeout), flags); }
 
-  NNXX_EXPORT       recv_ready_sequence recv_ready(poll_vector       &entries) noexcept;
-  NNXX_EXPORT const_recv_ready_sequence recv_ready(poll_vector const &entries) noexcept;
+        recv_ready_sequence recv_ready(poll_vector       &entries) noexcept;
+  const_recv_ready_sequence recv_ready(poll_vector const &entries) noexcept;
 
-  NNXX_EXPORT       send_ready_sequence send_ready(poll_vector       &entries) noexcept;
-  NNXX_EXPORT const_send_ready_sequence send_ready(poll_vector const &entries) noexcept;
+        send_ready_sequence send_ready(poll_vector       &entries) noexcept;
+  const_send_ready_sequence send_ready(poll_vector const &entries) noexcept;
 
-  extern template class NNXX_EXPORT ready_iterator<EV_POLLIN , poll_vector::iterator>;
-  extern template class NNXX_EXPORT ready_iterator<EV_POLLOUT, poll_vector::iterator>;
-  extern template class NNXX_EXPORT ready_iterator<EV_POLLIN , poll_vector::const_iterator>;
-  extern template class NNXX_EXPORT ready_iterator<EV_POLLOUT, poll_vector::const_iterator>;
-  extern template class NNXX_EXPORT ready_sequence<EV_POLLIN , poll_vector>;
-  extern template class NNXX_EXPORT ready_sequence<EV_POLLOUT, poll_vector>;
-  extern template class NNXX_EXPORT ready_sequence<EV_POLLIN , poll_vector const>;
-  extern template class NNXX_EXPORT ready_sequence<EV_POLLOUT, poll_vector const>;
+  extern template class ready_iterator<EV_POLLIN , poll_vector::iterator>;
+  extern template class ready_iterator<EV_POLLOUT, poll_vector::iterator>;
+  extern template class ready_iterator<EV_POLLIN , poll_vector::const_iterator>;
+  extern template class ready_iterator<EV_POLLOUT, poll_vector::const_iterator>;
+  extern template class ready_sequence<EV_POLLIN , poll_vector>;
+  extern template class ready_sequence<EV_POLLOUT, poll_vector>;
+  extern template class ready_sequence<EV_POLLIN , poll_vector const>;
+  extern template class ready_sequence<EV_POLLOUT, poll_vector const>;
 
 }
 

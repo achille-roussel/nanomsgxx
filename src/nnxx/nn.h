@@ -26,7 +26,6 @@
 #define NNXX_NN_H
 
 #include <nanomsg/nn.h>
-#include <nnxx/def.h>
 
 namespace nnxx {
 
@@ -84,19 +83,19 @@ namespace nnxx {
     NO_TIMEOUT_ERROR = 1 << 15,
   };
 
-  struct NNXX_EXPORT symbol_properties : public nn_symbol_properties {
+  struct symbol_properties : public nn_symbol_properties {
     operator bool () const noexcept { return name != nullptr; }
   };
 
-  NNXX_EXPORT symbol_properties symbol(int cst);
+  symbol_properties symbol(int cst);
 
-  NNXX_EXPORT void term();
+  void term();
 
-  NNXX_EXPORT void device(class socket &s);
+  void device(class socket &s);
 
-  NNXX_EXPORT void device(class socket &s1, class socket &s2);
+  void device(class socket &s1, class socket &s2);
 
-  NNXX_EXPORT int poll(pollfd *fds, int nfds, int timeout);
+  int poll(pollfd *fds, int nfds, int timeout);
 
   template < typename T >
   inline const char *c_str(const T &s) noexcept(noexcept(s.c_str()))

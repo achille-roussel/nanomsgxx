@@ -27,7 +27,6 @@
 
 #include <nanomsg/reqrep.h>
 #include <nnxx/chrono.h>
-#include <nnxx/def.h>
 
 namespace nnxx {
 
@@ -42,13 +41,13 @@ namespace nnxx {
     REQ_RESEND_IVL = NN_REQ_RESEND_IVL,
   };
 
-  NNXX_EXPORT milliseconds get_resend_interval(const socket &s);
+  milliseconds get_resend_interval(const socket &s);
 
   template < typename Duration >
   Duration get_resend_interval(const socket &s)
   { return std::chrono::duration_cast<Duration>(get_resend_interval(s)); }
 
-  NNXX_EXPORT void set_resend_interval(socket &s, milliseconds i);
+  void set_resend_interval(socket &s, milliseconds i);
 
   template < typename Rep, typename Period >
   void set_resend_interval(socket &s,

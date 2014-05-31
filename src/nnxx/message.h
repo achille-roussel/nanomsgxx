@@ -32,7 +32,7 @@
 
 namespace nnxx {
 
-  class NNXX_EXPORT message {
+  class message {
   public:
     typedef void const * const_pointer;
     typedef void       * pointer;
@@ -79,23 +79,23 @@ namespace nnxx {
     explicit message(pointer, size_type) noexcept;
   };
 
-  NNXX_EXPORT void swap(message &m1, message &m2) noexcept;
+  void swap(message &m1, message &m2) noexcept;
 
-  NNXX_EXPORT message make_message_from(message::pointer data, message::size_type size) noexcept;
+  message make_message_from(message::pointer data, message::size_type size) noexcept;
 
-  NNXX_EXPORT message copy(const message &msg, message::size_type size = 0, int type = 0);
+  message copy(const message &msg, message::size_type size = 0, int type = 0);
 
-  NNXX_EXPORT message::size_type copy(const message &from, message &to) noexcept;
-  NNXX_EXPORT message::size_type copy(const message &from,
+  message::size_type copy(const message &from, message &to) noexcept;
+  message::size_type copy(const message &from,
                                       message &to,
                                       message::size_type from_offset,
                                       message::size_type to_offset,
                                       message::size_type size) noexcept;
 
-  NNXX_EXPORT std::string to_string(const message &msg);
+  std::string to_string(const message &msg);
 
   template < typename Iterator >
-  NNXX_EXPORT message make_message(Iterator first, Iterator last)
+  message make_message(Iterator first, Iterator last)
   {
     typedef typename std::iterator_traits<Iterator> traits;
     typedef typename traits::value_type   type;
@@ -110,7 +110,7 @@ namespace nnxx {
   }
 
   template < typename Iterable >
-  NNXX_EXPORT message make_message(Iterable &&obj)
+  message make_message(Iterable &&obj)
   {
     using std::begin;
     using std::end;
@@ -118,7 +118,7 @@ namespace nnxx {
   }
 
   template < typename Char, typename Traits >
-  NNXX_EXPORT std::basic_ostream<Char, Traits> &
+  std::basic_ostream<Char, Traits> &
   operator <<(std::basic_ostream<Char, Traits> &out, const message &msg)
   {
     const auto data = static_cast<const Char *>(msg.data());
@@ -127,7 +127,7 @@ namespace nnxx {
     return out;
   }
 
-  extern template NNXX_EXPORT std::ostream &operator<<(std::ostream &, const message &);
+  extern template std::ostream &operator<<(std::ostream &, const message &);
 
 }
 

@@ -31,9 +31,9 @@ namespace nnxx {
 
   class socket;
 
-  NNXX_EXPORT milliseconds get_linger(const socket &s);
-  NNXX_EXPORT milliseconds get_recv_timeout(const socket &s);
-  NNXX_EXPORT milliseconds get_send_timeout(const socket &s);
+  milliseconds get_linger(const socket &s);
+  milliseconds get_recv_timeout(const socket &s);
+  milliseconds get_send_timeout(const socket &s);
 
   template < typename Duration >
   Duration get_linger(const socket &s)
@@ -47,9 +47,9 @@ namespace nnxx {
   Duration get_send_timeout(const socket &s)
   { return std::chrono::duration_cast<Duration>(get_send_timeout(s)); }
 
-  NNXX_EXPORT void set_linger(socket &s, milliseconds t);
-  NNXX_EXPORT void set_recv_timeout(socket &s, milliseconds t);
-  NNXX_EXPORT void set_send_timeout(socket &s, milliseconds t);
+  void set_linger(socket &s, milliseconds t);
+  void set_recv_timeout(socket &s, milliseconds t);
+  void set_send_timeout(socket &s, milliseconds t);
 
   template < typename Rep, typename Period >
   void set_linger(socket &s, const std::chrono::duration<Rep, Period> &t)
@@ -63,7 +63,7 @@ namespace nnxx {
   void set_send_timeout(socket &s, const std::chrono::duration<Rep, Period> &t)
   { set_send_timeout(s, std::chrono::duration_cast<milliseconds>(t)); }
 
-  class NNXX_EXPORT with_linger {
+  class with_linger {
   public:
     with_linger(socket &s, milliseconds t);
 
@@ -86,7 +86,7 @@ namespace nnxx {
     milliseconds m_old_timeout;
   };
 
-  class NNXX_EXPORT with_recv_timeout {
+  class with_recv_timeout {
   public:
     with_recv_timeout(socket &s, milliseconds t);
 
@@ -109,7 +109,7 @@ namespace nnxx {
     milliseconds m_old_timeout;
   };
 
-  class NNXX_EXPORT with_send_timeout {
+  class with_send_timeout {
   public:
     with_send_timeout(socket &s, milliseconds t);
 
