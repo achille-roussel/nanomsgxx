@@ -24,40 +24,25 @@
 
 #include <algorithm>
 #include <string>
-#include <thread>
 #include <vector>
 #include <nnxx/message>
 #include <nnxx/socket>
 #include <nnxx/testing>
 
-static std::vector<std::string> messages = {
-  "Hello", "World!", "How", "are", "you?",
-};
-
 int main() {
-  std::thread t1 { []() {
-      nnxx::socket s { nnxx::SP, nnxx::PAIR };
-      s.bind("inproc://test");
-      std::copy(messages.begin(), messages.end(), std::back_inserter(s));
-    } };
+  const std::vector<std::string> messages { "Hello World!" };
 
-  std::thread t2 { []() {
-      nnxx::socket s { nnxx::SP, nnxx::PAIR };
-      s.connect("inproc://test");
+  nnxx::socket s1 { nnxx::SP, nnxx::PAIR };
+  nnxx::socket s2 { nnxx::SP, nnxx::PAIR };
+  s1.bind("inproc://test");
+  s2.connect("inproc://test");
 
-      int i = 0;
+  std::copy(messages.begin(), messages.end(), std::back_inserter(s1));
 
-      for (const nnxx::message &msg : s) {
-        const auto str = to_string(msg);
-        nnxx_assert(str == messages[i++]);
+  for (const nnxx::message &msg : s2) {
+    nnxx_check(to_string(msg) == messages[0]);
+    break;
+  }
 
-        if (str == (*messages.rbegin())) {
-          break;
-        }
-      }
-    } };
-
-  t1.join();
-  t2.join();
   return nnxx::unittest::result;
 }
