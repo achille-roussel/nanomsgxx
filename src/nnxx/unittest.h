@@ -30,7 +30,7 @@
 
 namespace nnxx { namespace unittest {
 
-  int result = EXIT_SUCCESS;
+  volatile int result = EXIT_SUCCESS;
 
   } }
 

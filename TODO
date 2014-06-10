@@ -2,6 +2,4 @@ With no specific order
 - Windows support
 - pkg-config support
 - finish writing documentation
-- add message_iterator to read messages from socket objects
-- add push_back to socket so we can use output iterators throught back_inserter (also requires socket to define some types)
 - add version

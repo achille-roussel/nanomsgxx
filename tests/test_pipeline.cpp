@@ -22,10 +22,9 @@
  * SOFTWARE.
  */
 
-#include <nnxx/message.h>
-#include <nnxx/pipeline.h>
-#include <nnxx/socket.h>
-#include <nnxx/unittest.h>
+#include <nnxx/message>
+#include <nnxx/socket>
+#include <nnxx/testing>
 
 int main() {
   nnxx::socket s1 { nnxx::SP, nnxx::PUSH };

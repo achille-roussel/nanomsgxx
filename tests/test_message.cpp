@@ -24,8 +24,8 @@
 
 #include <cstring>
 #include <utility>
-#include <nnxx/message.h>
-#include <nnxx/unittest.h>
+#include <nnxx/message>
+#include <nnxx/testing>
 
 int main() {
   nnxx::message m1;

@@ -25,7 +25,7 @@
 #include <string.h>
 #include <nanomsg/reqrep.h>
 #include <ext/nn_ext.h>
-#include <nnxx/unittest.h>
+#include <nnxx/testing>
 
 int main() {
   struct nn_msgctl ctl1;

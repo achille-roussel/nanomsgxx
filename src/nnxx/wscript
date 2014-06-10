@@ -46,4 +46,4 @@ def build(waf):
         waf.add_to_group(strip_task)
 
     # Define which files will be installed
-    waf.install_files('${PREFIX}/include/nnxx', waf.path.ant_glob('*.h *.hpp'))
+    waf.install_files('${PREFIX}/include/nnxx', waf.path.ant_glob('*.h *.hpp message socket testing'))

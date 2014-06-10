@@ -55,8 +55,8 @@ namespace nnxx {
   const char *strerror()         noexcept;
   const char *strerror(int code) noexcept;
 
-  void throw_error();
-  void throw_error(int code);
+  [[noreturn]] void throw_error();
+  [[noreturn]] void throw_error(int code);
 
   inline void *check_error(void *ptr)
   {

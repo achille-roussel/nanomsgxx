@@ -22,26 +22,9 @@
  * SOFTWARE.
  */
 
-#include <nnxx/message>
-#include <nnxx/socket>
-#include <nnxx/testing>
+#ifndef NNXX_TESTING
+#define NNXX_TESTING
 
-int main() {
-  nnxx::socket s { nnxx::SP, nnxx::PAIR };
+#include <nnxx/unittest.h>
 
-  s.bind("inproc://test");
-
-  // Set a timeout of receive operations peformed in this scope.
-  try { nnxx::with_recv_timeout _ { s, std::chrono::milliseconds(10) };
-    s.recv();
-    nnxx_assert(false);
-  }
-  catch (const nnxx::timeout_error &) {
-  }
-  catch (const std::exception &) {
-    nnxx_assert(false);
-  }
-
-  return nnxx::unittest::result;
-}
-
+#endif // NNXX_TESTING

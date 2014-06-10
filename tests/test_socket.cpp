@@ -22,8 +22,8 @@
  * SOFTWARE.
  */
 
-#include <nnxx/socket.h>
-#include <nnxx/unittest.h>
+#include <nnxx/socket>
+#include <nnxx/testing>
 
 int main() {
   nnxx::socket s;

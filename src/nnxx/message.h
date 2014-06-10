@@ -40,8 +40,8 @@ namespace nnxx {
     typedef char const * const_iterator;
     typedef size_t       size_type;
 
-    message() noexcept;
     explicit message(size_type size, int type = 0);
+    message() noexcept;
     message(message &&m) noexcept;
     message(message const &) = delete;
 

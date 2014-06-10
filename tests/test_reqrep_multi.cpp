@@ -22,11 +22,9 @@
  * SOFTWARE.
  */
 
-#include <nnxx/message.h>
-#include <nnxx/message_control.h>
-#include <nnxx/reqrep.h>
-#include <nnxx/socket.h>
-#include <nnxx/unittest.h>
+#include <nnxx/message>
+#include <nnxx/socket>
+#include <nnxx/testing>
 
 int main() {
   nnxx::socket s1 { nnxx::SP_RAW, nnxx::REP };

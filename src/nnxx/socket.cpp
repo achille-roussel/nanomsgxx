@@ -27,6 +27,7 @@
 #include <nnxx/error.h>
 #include <nnxx/message.h>
 #include <nnxx/message_control.h>
+#include <nnxx/message_iterator.h>
 #include <nnxx/socket.h>
 
 namespace nnxx {
@@ -243,6 +244,12 @@ namespace nnxx {
 
   int socket::fd() const noexcept
   { return m_fd; }
+
+  socket::iterator socket::begin()
+  { return { *this }; }
+
+  socket::iterator socket::end()
+  { return { }; }
 
   void swap(socket &s1, socket &s2) noexcept
   { s1.swap(s2); }

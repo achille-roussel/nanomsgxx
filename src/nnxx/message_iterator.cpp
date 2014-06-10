@@ -22,26 +22,56 @@
  * SOFTWARE.
  */
 
-#include <nnxx/message>
-#include <nnxx/socket>
-#include <nnxx/testing>
+#include <nnxx/message_iterator.h>
+#include <nnxx/error.h>
+#include <nnxx/socket.h>
 
-int main() {
-  nnxx::socket s { nnxx::SP, nnxx::PAIR };
+namespace nnxx {
 
-  s.bind("inproc://test");
+  message_iterator::message_iterator() noexcept:
+    m_socket(nullptr),
+    m_message()
+  { }
 
-  // Set a timeout of receive operations peformed in this scope.
-  try { nnxx::with_recv_timeout _ { s, std::chrono::milliseconds(10) };
-    s.recv();
-    nnxx_assert(false);
+  message_iterator::message_iterator(socket &s):
+    m_socket(&s),
+    m_message(s.recv())
+  { }
+
+  bool message_iterator::operator==(const message_iterator &it) const noexcept
+  { return m_socket == it.m_socket; }
+
+  bool message_iterator::operator!=(const message_iterator &it) const noexcept
+  { return m_socket != it.m_socket; }
+
+  message_iterator::pointer message_iterator::operator->() noexcept
+  { return &m_message; }
+
+  message_iterator::reference message_iterator::operator*() noexcept
+  { return m_message; }
+
+  message_iterator &message_iterator::operator++()
+  {
+    try {
+      m_message = m_socket->recv();
+    }
+    catch (const timeout_error &) {
+      m_socket = nullptr;
+    }
+    catch (...) {
+      m_socket = nullptr;
+      throw;
+    }
+    return *this;
   }
-  catch (const nnxx::timeout_error &) {
-  }
-  catch (const std::exception &) {
-    nnxx_assert(false);
+
+  message_iterator message_iterator::operator++(int)
+  {
+    message_iterator tmp;
+    tmp.m_socket  = m_socket;
+    tmp.m_message = std::move(m_message);
+    ++(*this);
+    return tmp;
   }
 
-  return nnxx::unittest::result;
 }
-

@@ -22,12 +22,9 @@
  * SOFTWARE.
  */
 
-#include <nnxx/error.h>
-#include <nnxx/pair.h>
-#include <nnxx/poll.h>
-#include <nnxx/message.h>
-#include <nnxx/socket.h>
-#include <nnxx/unittest.h>
+#include <nnxx/message>
+#include <nnxx/socket>
+#include <nnxx/testing>
 
 int main() {
   nnxx::socket s1 { nnxx::SP, nnxx::PAIR };

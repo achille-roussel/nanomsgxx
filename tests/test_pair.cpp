@@ -22,22 +22,42 @@
  * SOFTWARE.
  */
 
-#include <nnxx/message.h>
-#include <nnxx/pair.h>
-#include <nnxx/socket.h>
-#include <nnxx/unittest.h>
+#include <algorithm>
+#include <string>
+#include <thread>
+#include <vector>
+#include <nnxx/message>
+#include <nnxx/socket>
+#include <nnxx/testing>
+
+static std::vector<std::string> messages = {
+  "Hello", "World!", "How", "are", "you?",
+};
 
 int main() {
-  nnxx::socket s1 { nnxx::SP, nnxx::PAIR };
-  nnxx::socket s2 { nnxx::SP, nnxx::PAIR };
+  std::thread t1 { []() {
+      nnxx::socket s { nnxx::SP, nnxx::PAIR };
+      s.bind("inproc://test");
+      std::copy(messages.begin(), messages.end(), std::back_inserter(s));
+    } };
 
-  s1.bind("inproc://test");
-  s2.connect("inproc://test");
+  std::thread t2 { []() {
+      nnxx::socket s { nnxx::SP, nnxx::PAIR };
+      s.connect("inproc://test");
 
-  nnxx_check(s1.send("Hello World!") == 12);
-  nnxx_check(to_string(s2.recv()) == "Hello World!");
+      int i = 0;
 
-  nnxx_check(s2.send("Hello World!") == 12);
-  nnxx_check(to_string(s1.recv()) == "Hello World!");
+      for (const nnxx::message &msg : s) {
+        const auto str = to_string(msg);
+        nnxx_assert(str == messages[i++]);
+
+        if (str == (*messages.rbegin())) {
+          break;
+        }
+      }
+    } };
+
+  t1.join();
+  t2.join();
   return nnxx::unittest::result;
 }

@@ -62,9 +62,17 @@ namespace nnxx {
 
   class message;
   class message_control;
+  class message_iterator;
 
   class socket {
   public:
+    typedef message          value_type;
+    typedef message *        pointer;
+    typedef message &        reference;
+    typedef message_iterator iterator;
+    typedef message const *  const_pointer;
+    typedef message const &  const_reference;
+
     socket() noexcept;
     socket(socket &&s) noexcept;
     socket(socket const &) = delete;
@@ -146,11 +154,77 @@ namespace nnxx {
 
     int fd() const noexcept;
 
+    iterator begin();
+    iterator end();
+
   private:
     int m_fd;
   };
 
   void swap(socket &s1, socket &s2) noexcept;
+
+}
+
+#include <iterator>
+
+namespace std {
+
+  template < >
+  class back_insert_iterator<nnxx::socket>
+    : public std::iterator<std::output_iterator_tag, void, void, void, void> {
+  public:
+    typedef typename std::output_iterator_tag iterator_category;
+    typedef void difference_type;
+    typedef void value_type;
+    typedef void pointer;
+    typedef void reference;
+
+    back_insert_iterator(nnxx::socket &s) noexcept;
+    back_insert_iterator(back_insert_iterator      &&) = default;
+    back_insert_iterator(back_insert_iterator const &) = default;
+
+    template < typename T >
+    back_insert_iterator &operator=(T &&obj);
+    back_insert_iterator &operator=(back_insert_iterator      &&) = default;
+    back_insert_iterator &operator=(back_insert_iterator const &) = default;
+
+    back_insert_iterator &operator*();
+    back_insert_iterator &operator++();
+    back_insert_iterator &operator++(int);
+
+  private:
+    nnxx::socket *m_socket;
+  };
+
+  inline
+  back_insert_iterator<nnxx::socket>::
+  back_insert_iterator(nnxx::socket &s) noexcept:
+    m_socket(&s)
+  { }
+
+  template < typename T >
+  inline
+  back_insert_iterator<nnxx::socket> &
+  back_insert_iterator<nnxx::socket>::operator=(T &&obj)
+  {
+    m_socket->send(std::forward<T>(obj));
+    return *this;
+  }
+
+  inline
+  back_insert_iterator<nnxx::socket> &
+  back_insert_iterator<nnxx::socket>::operator*()
+  { return *this; }
+
+  inline
+  back_insert_iterator<nnxx::socket> &
+  back_insert_iterator<nnxx::socket>::operator++()
+  { return *this; }
+
+  inline
+  back_insert_iterator<nnxx::socket> &
+  back_insert_iterator<nnxx::socket>::operator++(int)
+  { return *this; }
 
 }
 

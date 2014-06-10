@@ -22,26 +22,22 @@
  * SOFTWARE.
  */
 
-#include <nnxx/message>
-#include <nnxx/socket>
-#include <nnxx/testing>
+#ifndef NNXX_SOCKET
+#define NNXX_SOCKET
 
-int main() {
-  nnxx::socket s { nnxx::SP, nnxx::PAIR };
+#include <nnxx/bus.h>
+#include <nnxx/error.h>
+#include <nnxx/inproc.h>
+#include <nnxx/ipc.h>
+#include <nnxx/pair.h>
+#include <nnxx/pipeline.h>
+#include <nnxx/poll.h>
+#include <nnxx/pubsub.h>
+#include <nnxx/reqrep.h>
+#include <nnxx/socket.h>
+#include <nnxx/survey.h>
+#include <nnxx/tcp.h>
+#include <nnxx/timeout.h>
 
-  s.bind("inproc://test");
-
-  // Set a timeout of receive operations peformed in this scope.
-  try { nnxx::with_recv_timeout _ { s, std::chrono::milliseconds(10) };
-    s.recv();
-    nnxx_assert(false);
-  }
-  catch (const nnxx::timeout_error &) {
-  }
-  catch (const std::exception &) {
-    nnxx_assert(false);
-  }
-
-  return nnxx::unittest::result;
-}
+#endif // NNXX_SOCKET
 

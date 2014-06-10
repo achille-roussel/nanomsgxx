@@ -24,9 +24,8 @@
 
 #include <iostream>
 #include <system_error>
-#include <nnxx/message.h>
-#include <nnxx/pair.h>
-#include <nnxx/socket.h>
+#include <nnxx/message>
+#include <nnxx/socket>
 
 int main() {
   try {
