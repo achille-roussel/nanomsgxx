@@ -69,6 +69,14 @@ namespace nnxx {
     return *this;
   }
 
+  void message::resize(size_type size)
+  {
+    if (size != m_size) {
+      m_data = check_error(nn_reallocmsg(m_data, size));
+      m_size = size;
+    }
+  }
+
   void message::swap(message &m) noexcept
   {
     using std::swap;

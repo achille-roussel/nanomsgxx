@@ -52,6 +52,8 @@ namespace nnxx {
 
     operator bool () const noexcept;
 
+    void resize(size_type size);
+
     void swap(message &m) noexcept;
 
     void detach() noexcept;

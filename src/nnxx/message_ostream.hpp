@@ -33,7 +33,7 @@ namespace nnxx {
   { return m_buffer.msg(type); }
 
   template < typename Char, typename Traits >
-  message basic_message_ostream<Char, Traits>::move_msg() noexcept
+  message basic_message_ostream<Char, Traits>::move_msg()
   { return m_buffer.move_msg(); }
 
 #if NNXX_LIBCPP

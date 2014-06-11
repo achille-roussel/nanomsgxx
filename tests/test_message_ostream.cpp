@@ -32,8 +32,9 @@ int main() {
 
   s << "Hello World! ";
   s << 42;
-  m = std::move(s.move_msg());
+  m = s.move_msg();
 
+  nnxx_check(m.size() == 15);
   nnxx_check(std::strncmp(reinterpret_cast<char *>(m.data()), "Hello World! 42", 15) == 0);
   return nnxx::unittest::result;
 }

@@ -56,7 +56,7 @@ namespace nnxx {
 
     void    msg(message &&m) noexcept;
     message msg(int type = 0);
-    message move_msg() noexcept;
+    message move_msg();
 
   private:
     message_streambuf m_buffer;

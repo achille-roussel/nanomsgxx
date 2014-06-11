@@ -55,9 +55,11 @@ namespace nnxx {
   { return copy(m_msg, this->pptr() - this->pbase(), type); }
 
   template < typename Char, typename Traits >
-  message basic_message_streambuf<Char, Traits>::move_msg() noexcept
+  message basic_message_streambuf<Char, Traits>::move_msg()
   {
-    message m { std::move(m_msg) };
+    message m;
+    m_msg.resize(this->pptr() - this->pbase());
+    m_msg.swap(m);
     clear();
     return m;
   }
@@ -89,7 +91,7 @@ namespace nnxx {
       m_msg = message{ m_base_size * sizeof(char_type) };
     }
     else {
-      m_msg = copy(m_msg, 2 * sizeof(char_type) * m_msg.size());
+      m_msg.resize(2 * sizeof(char_type) * m_msg.size());
     }
 
     const auto b = reinterpret_cast<char_type *>(m_msg.data());

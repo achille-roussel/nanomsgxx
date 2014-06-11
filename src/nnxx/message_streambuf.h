@@ -66,7 +66,7 @@ namespace nnxx {
     void clear() noexcept;
 
     message msg(int type = 0);
-    message move_msg() noexcept;
+    message move_msg();
 
   protected:
     streamsize xsputn(const char_type *, streamsize);
