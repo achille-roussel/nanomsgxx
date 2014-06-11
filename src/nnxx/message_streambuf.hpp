@@ -91,7 +91,7 @@ namespace nnxx {
       m_msg = message{ m_base_size * sizeof(char_type) };
     }
     else {
-      m_msg.resize(2 * sizeof(char_type) * m_msg.size());
+      m_msg.resize(2 * m_msg.size());
     }
 
     const auto b = reinterpret_cast<char_type *>(m_msg.data());
