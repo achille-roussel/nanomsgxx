@@ -52,6 +52,10 @@ namespace nnxx {
 
   typedef std::vector<poll_entry> poll_vector;
 
+  poll_entry wait_recv(socket &s) noexcept;
+  poll_entry wait_send(socket &s) noexcept;
+  poll_entry wait_any(socket &s)  noexcept;
+
   bool operator==(const poll_entry &e, const socket &s) noexcept;
   bool operator!=(const poll_entry &e, const socket &s) noexcept;
   bool operator==(const socket &s, const poll_entry &e) noexcept;

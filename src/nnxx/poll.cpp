@@ -28,6 +28,15 @@
 
 namespace nnxx {
 
+  poll_entry wait_recv(socket &s) noexcept
+  { return { s, EV_POLLIN }; }
+
+  poll_entry wait_send(socket &s) noexcept
+  { return { s, EV_POLLOUT }; }
+
+  poll_entry wait_any(socket &s) noexcept
+  { return { s, EV_POLLIN | EV_POLLOUT }; }
+
   template < int Event, typename Iterator >
   ready_iterator<Event, Iterator>::
   ready_iterator(base_iterator_type first, base_iterator_type last):
