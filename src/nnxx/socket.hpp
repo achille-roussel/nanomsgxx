@@ -28,14 +28,6 @@
 
 namespace nnxx {
 
-  template < typename String >
-  endpoint socket::bind(const String &addr)
-  { return bind(c_str(addr)); }
-
-  template < typename String >
-  endpoint socket::connect(const String &addr)
-  { return connect(c_str(addr)); }
-
   template < typename T >
   void socket::setopt(int level, int option, const T &val)
   { setopt(level, option, &val, sizeof(val)); }

@@ -25,6 +25,7 @@
 #ifndef NNXX_SOCKET_H
 #define NNXX_SOCKET_H
 
+#include <string>
 #include <nnxx/nn.h>
 
 // Some system define DOMAIN in math.h, this constant is defined for internal use
@@ -95,13 +96,11 @@ namespace nnxx {
 
     endpoint bind(const char *addr);
 
-    template < typename String >
-    endpoint bind(const String &addr);
+    endpoint bind(const std::string &addr);
 
     endpoint connect(const char *addr);
 
-    template < typename String >
-    endpoint connect(const String &addr);
+    endpoint connect(const std::string &addr);
 
     void shutdown(endpoint how);
 

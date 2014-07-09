@@ -107,8 +107,14 @@ namespace nnxx {
   endpoint socket::bind(const char *addr)
   { return check_error(nn_bind(m_fd, addr)); }
 
+  endpoint socket::bind(const std::string &addr)
+  { return bind(addr.c_str()); }
+
   endpoint socket::connect(const char *addr)
   { return check_error(nn_connect(m_fd, addr)); }
+
+  endpoint socket::connect(const std::string &addr)
+  { return connect(addr.c_str()); }
 
   void socket::shutdown(endpoint how)
   { check_error(nn_shutdown(m_fd, how)); }
