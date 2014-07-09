@@ -34,10 +34,22 @@ namespace nnxx {
   void subscribe(socket &s, const char *topic)
   { subscribe(s, topic, std::strlen(topic)); }
 
+  void subscribe(socket &s, const std::string &topic)
+  { subscribe(s, topic.data(), topic.size()); }
+
+  void subscribe(socket &s)
+  { subscribe(s, "", 0); }
+
   void unsubscribe(socket &s, const void *topic, size_t topiclen)
   { s.setopt(SUB, SUB_UNSUBSCRIBE, topic, topiclen); }
 
   void unsubscribe(socket &s, const char *topic)
   { unsubscribe(s, topic, std::strlen(topic)); }
+
+  void unsubscribe(socket &s, const std::string &topic)
+  { unsubscribe(s, topic.data(), topic.size()); }
+
+  void unsubscribe(socket &s)
+  { unsubscribe(s, "", 0); }
 
 }

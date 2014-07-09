@@ -25,6 +25,7 @@
 #ifndef NNXX_PUBSUB_H
 #define NNXX_PUBSUB_H
 
+#include <string>
 #include <nanomsg/pubsub.h>
 #include <nnxx/nn.h>
 
@@ -44,19 +45,19 @@ namespace nnxx {
 
   void subscribe(socket &s, const void *topic, size_t topiclen);
 
-  void subscribe(socket &s, const char *topic = "");
+  void subscribe(socket &s, const char *topic);
 
-  template < typename String >
-  void subscribe(socket &s, const String &topic)
-  { subscribe(s, c_str(topic)); }
+  void subscribe(socket &s, const std::string &topic);
+
+  void subscribe(socket &s);
 
   void unsubscribe(socket &s, const void *topic, size_t topiclen);
 
-  void unsubscribe(socket &s, const char *topic = "");
+  void unsubscribe(socket &s, const char *topic);
 
-  template < typename String >
-  void unsubscribe(socket &s, const String &topic)
-  { unsubscribe(s, c_str(topic)); }
+  void unsubscribe(socket &s, const std::string &topic);
+
+  void unsubscribe(socket &s);
 
 }
 
