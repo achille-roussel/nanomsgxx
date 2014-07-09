@@ -16,3 +16,4 @@ def build(waf):
     })
     waf.env.nnext = waf.stlib(**conf)
     waf.env.nnext.post()
+    waf.install_files('${PREFIX}/include/nanomsg/ext', waf.path.ant_glob('*.h'))

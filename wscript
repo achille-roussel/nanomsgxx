@@ -11,7 +11,7 @@ def build(waf):
     cxxflags = ['-W', '-Wall', '-Wextra', '-std=c++11']
     defines  = []
     includes = [os.path.join(waf.path.abspath(), 'src')]
-    libpath  = ['src/ext', 'src/nnxx']
+    libpath  = ['src/nanomsg/ext', 'src/nnxx']
 
     if waf.options.debug:
         cflags   += ['-g3']
@@ -36,7 +36,7 @@ def build(waf):
         'cxxflags': cxxflags,
     }
 
-    waf.recurse('src/ext')
+    waf.recurse('src/nanomsg/ext')
     waf.recurse('src/nnxx')
     if not waf.options.notests:
         waf.recurse('tests')
@@ -45,7 +45,7 @@ def build(waf):
 
 def configure(waf):
     waf.load('compiler_c compiler_cxx c_config waf_unit_test')
-    waf.recurse('src/ext')
+    waf.recurse('src/nanomsg/ext')
     waf.recurse('src/nnxx')
 
     if waf.options.nodoc:
