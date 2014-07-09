@@ -22,7 +22,7 @@ def build(waf):
     conf.update({
         'lib'   : ['nanomsgext', 'nanomsg'],
         'source': waf.path.ant_glob('*.cpp'),
-        'target': 'nanomsgxx',
+        'target': 'nnxx',
     })
 
     # Generate tasks for building either a static or shared library

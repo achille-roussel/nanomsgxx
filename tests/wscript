@@ -10,7 +10,7 @@ def configure(waf):
 
 def build(waf):
     features  = ['cxx', 'cxxprogram', 'test']
-    lib       = ['nanomsg', 'nanomsgext', 'nanomsgxx']
+    lib       = ['nanomsg', 'nanomsgext', 'nnxx']
     for f in waf.path.ant_glob('*.cpp'):
         source = str(f)
         target = str(f)[:-4]
