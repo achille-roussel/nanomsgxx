@@ -43,6 +43,8 @@ def build(waf):
     if waf.env.with_doc:
         waf.recurse('doc')
 
+    waf(source='libnnxx.pc.in', install_path='${LIBDIR}/pkgconfig/')
+
 def configure(waf):
     waf.load('compiler_c compiler_cxx c_config waf_unit_test')
     waf.recurse('src/nanomsg/ext')
