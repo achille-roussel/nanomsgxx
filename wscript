@@ -42,7 +42,7 @@ def build(waf):
         waf.recurse('tests')
     if waf.env.with_doc:
         waf.recurse('doc')
-    if not waf.options.nopkgconfig:
+    if waf.env.with_pkgconfig:
         waf(source='libnnxx.pc.in', install_path='${LIBDIR}/pkgconfig/')
 
 def configure(waf):
@@ -60,6 +60,7 @@ def configure(waf):
             sys.stderr.write('Disabling documentation build...\n')
             waf.env.with_doc = False
 
+    waf.env.with_pkconfig = not waf.options.nopkgconfig
     waf.env.with_strip = waf.options.strip
     waf.env.install_html_path = waf.options.install_html_path
 
