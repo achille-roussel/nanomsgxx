@@ -42,6 +42,8 @@ def build(waf):
         waf.recurse('tests')
     if waf.env.with_doc:
         waf.recurse('doc')
+    if not waf.options.nopkgconfig:
+        waf(source='libnnxx.pc.in', install_path='${LIBDIR}/pkgconfig/')
 
 def configure(waf):
     waf.load('compiler_c compiler_cxx c_config waf_unit_test')
@@ -74,5 +76,6 @@ def options(waf):
     add_bool('--shared', 'build shared library (default)')
     add_bool('--notests', 'turn off tests')
     add_bool('--nodoc', 'turn off documentation')
+    add_bool('--nopkgconfig', 'turn off pkg-config support')
     add_bool('--strip', 'runs the \'strip\' utility on the build')
     waf.recurse('doc')

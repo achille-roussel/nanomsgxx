@@ -1,0 +1,11 @@
+prefix=@prefix@
+libdir=@libdir@
+includedir=${prefix}/include
+
+Name: Nanomsgxx
+Description: Nanomsg binding for C++11
+URL: https://github.com/achille-roussel/nanomsgxx
+Version: 0.1
+Requires: libnanomsg
+Libs: -L${libdir} -lnnxx
+Cflags: -I${includedir}
