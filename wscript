@@ -60,7 +60,7 @@ def configure(waf):
             sys.stderr.write('Disabling documentation build...\n')
             waf.env.with_doc = False
 
-    waf.env.with_pkconfig = not waf.options.nopkgconfig
+    waf.env.with_pkgconfig = not waf.options.nopkgconfig
     waf.env.with_strip = waf.options.strip
     waf.env.install_html_path = waf.options.install_html_path
 
