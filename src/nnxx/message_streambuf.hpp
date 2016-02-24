@@ -53,9 +53,11 @@ namespace nnxx {
   template < typename Char, typename Traits >
   message basic_message_streambuf<Char, Traits>::msg(int type)
   { message m(this->pptr() - this->pbase(), type);
-    m_msg.resize(this->pptr() - this->pbase());
-    m_msg.swap(m);
-    clear();
+
+    std::copy(reinterpret_cast<const char_type *>(this->pbase()),
+         reinterpret_cast<const char_type *>(this->pptr()),
+         reinterpret_cast<char_type *>(m.data()));
+
     return m;}
 
   template < typename Char, typename Traits >
