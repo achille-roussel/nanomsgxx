@@ -3,7 +3,7 @@ nanomsgxx(7) -- C++11 binding for nanomsg
 
 ## SYNOPSIS
 
-c++ -std=c++11 [flags] files **-lnanomsgxx** [libraries]
+c++ -std=c++11 [flags] files **-lnnxx** [libraries]
 
 ## DESCRIPTION
 
@@ -29,7 +29,7 @@ these commands:
 ./waf install**
 
 The library and headers will be installed on your system and you'll be able to
-link your programs with **-lnanomsgxx**.
+link your programs with **-lnnxx**.
 
 ## RESOURCES
 
