@@ -76,14 +76,22 @@ namespace nnxx {
   basic_message_streambuf<Char, Traits>::xsputn(const char_type *s, streamsize n)
   {
     using std::copy;
+    streamsize ret = 0;
 
-    if (n > static_cast<streamsize>(this->epptr() - this->pptr())) {
-      overflow(traits_type::eof());
+    while (ret < n) {
+      streamsize buflen = static_cast<streamsize>(this->epptr() - this->pptr());
+
+      if (buflen) {
+	streamsize len = std::min(buflen, n - ret);
+	copy(s, s + len, this->pptr());
+	this->pbump(len);
+	ret += len;
+	s += len;
+      }
+      if (ret < n)
+	overflow(traits_type::eof());
     }
-
-    copy(s, s + n, this->pptr());
-    this->pbump(n);
-    return n;
+    return ret;
   }
 
   template < typename Char, typename Traits >
