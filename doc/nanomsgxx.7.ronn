@@ -34,7 +34,7 @@ link your programs with **-lnnxx**.
 ## RESOURCES
 
 [Nanomsg](http://nanomsg.org/index.html)  
-[The Waf Book](http://docs.waf.googlecode.com/git/book_17/single.html)  
+[The Waf Book](https://waf.io/book/)  
 [MIT License](http://opensource.org/licenses/MIT)
 
 ## SEE ALSO
