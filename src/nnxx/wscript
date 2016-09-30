@@ -9,7 +9,7 @@ class strip(Task):
 
     def run(self):
         cmd = 'strip -x src/nnxx/' + self.env.libnanomsgxx_name
-        print cmd
+        print(cmd)
         return self.exec_command(cmd)
 
 def configure(waf):
