@@ -12,6 +12,7 @@ def build(waf):
     features  = ['cxx', 'cxxprogram', 'test']
     lib       = ['nanomsg', 'nanomsgext', 'nnxx']
     for f in waf.path.ant_glob('*.cpp'):
+        f = f.path_from(waf.path)
         source = str(f)
         target = str(f)[:-4]
         conf   = copy(waf.env.CXX_CONF_KWARGS)
