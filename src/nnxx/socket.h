@@ -53,6 +53,8 @@ namespace nnxx {
     SNDPRIO           = NN_SNDPRIO,
     IPV4ONLY          = NN_IPV4ONLY,
     SOCKET_NAME       = NN_SOCKET_NAME,
+    RCVMAXSIZE        = NN_RCVMAXSIZE,
+    MAXTTL            = NN_MAXTTL,
   };
 
   enum {
