@@ -121,7 +121,6 @@ namespace nnxx {
     return ~traits_type::eof();
   }
 
-#if NNXX_LIBCPP
   template < typename Char, typename Traits >
   basic_message_streambuf<Char, Traits>::
   basic_message_streambuf(basic_message_streambuf &&m) noexcept:
@@ -148,7 +147,6 @@ namespace nnxx {
     swap(m_base_size, m.m_base_size);
     swap(m_msg, m.m_msg);
   }
-#endif // NNXX_LIBCPP
 
 }
 

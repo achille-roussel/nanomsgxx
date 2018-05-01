@@ -36,7 +36,6 @@ namespace nnxx {
   message basic_message_ostream<Char, Traits>::move_msg()
   { return m_buffer.move_msg(); }
 
-#if NNXX_LIBCPP
   template < typename Char, typename Traits >
   basic_message_ostream<Char, Traits>::
   basic_message_ostream(basic_message_ostream &&m) noexcept:
@@ -64,7 +63,6 @@ namespace nnxx {
     base_type::swap(m);
     swap(m_buffer, m.m_buffer);
   }
-#endif // NNXX_LIBCPP
 
 }
 
