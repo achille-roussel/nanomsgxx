@@ -28,7 +28,6 @@ namespace nnxx {
   void basic_message_istream<Char, Traits>::msg(message &&m) noexcept
   { m_buffer.msg(std::move(m)); }
 
-#if NNXX_LIBCPP
   template < typename Char, typename Traits >
   basic_message_istream<Char, Traits>::
   basic_message_istream(basic_message_istream &&m) noexcept:
@@ -56,7 +55,6 @@ namespace nnxx {
     base_type::swap(m);
     swap(m_buffer, m.m_buffer);
   }
-#endif // NNXX_LIBCPP
 
 }
 

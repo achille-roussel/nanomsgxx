@@ -48,11 +48,9 @@ namespace nnxx {
     ~basic_message_istream();
     basic_message_istream &operator=(basic_message_istream const &&) = delete;
 
-#if NNXX_LIBCPP
     basic_message_istream(basic_message_istream &&m) noexcept;
     basic_message_istream &operator=(basic_message_istream &&m) noexcept;
-    void swap(basic_message_istream &m) noexcept; 
-#endif // NNXX_LIBCPP
+    void swap(basic_message_istream &m) noexcept;
 
     void msg(message &&m) noexcept;
 
@@ -60,12 +58,10 @@ namespace nnxx {
     message_streambuf m_buffer;
   };
 
-#if NNXX_LIBCPP
   template < typename Char, typename Traits >
   void swap(basic_message_istream<Char, Traits> &m1,
             basic_message_istream<Char, Traits> &m2) noexcept
   { m1.swap(m2); }
-#endif // NNXX_LIBCPP
 
   typedef basic_message_istream<char> message_istream;
 
