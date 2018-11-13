@@ -9,11 +9,14 @@ nanomsgxx is a binding of the nanomsg library for C++11.
 Building and installing
 -----------------------
 
+### Building and installing with waf
+
 nanomsgxx's build is driven by waf, you can get more information about
 what waf is and how it works [here](https://waf.io/book/).
 
 waf is packaged with nanomsgxx, all you should need is a python interpreter and
 running these commands:
+
 ```
 ./waf configure
 ./waf build
@@ -23,6 +26,45 @@ running these commands:
 The library and headers will be installed on your system and you'll be able to
 link your program against **libnanomsgxx**.
 
+### Building and installing with CMake
+
+nanomsgxx also supports CMake builds on various architectures (tested with Windows 10 + VisualStudio2017 and Ubuntu16.04 + g++/clang/c++).
+
+- install [CMake](https://cmake.org/) and a *CMake generator*, e.g. [GNU make](https://www.gnu.org/software/make/). See [here](https://cmake.org/cmake/help/latest/manual/cmake-generators.7.html) for a list of available CMake generators and how to use them.
+
+#### On Linux
+
+```bash
+mkdir -p build && cd $_
+
+# available build types: Debug, Release
+# install location may be adapted with -DCMAKE_INSTALL_PREFIX=path/to/install/nanomsgxx
+cmake -DCMAKE_BUILD_TYPE=Release ..
+
+# build example with GNU make
+make
+
+# run tests
+make test
+
+# install to default location (warning: uninstalling is not that easy)
+sudo make install
+sudo ldconfig
+
+```
+
+#### On Windows using Visual Studio 2017
+
+Since VisualStudio 2017 CMake is supported (see this [tutorial](https://blogs.msdn.microsoft.com/vcblog/2016/10/05/cmake-support-in-visual-studio/)).
+
+```cmd
+mkdir build
+cd build
+
+cmake -G "Visual Studio 15 2017" ..
+```
+
+This will generate a VisualStudio 2017 `nanomsgxx.sln` file in folder `build/`. Building project `ALL_BUILD` will build the whole solution. Building project `INSTALL` (with VS2017 started as administrator) will install the project.
 
 Getting started
 ---------------
