@@ -71,7 +71,7 @@ This will generate a VisualStudio 2017 `nanomsgxx.sln` file in folder `build/`. 
 - Via the exported CMake configuration:
 
   ```cmake
-  find_package(NANOMSGXX CONFIG REQUIRED)
+  find_package(nnxx CONFIG REQUIRED)
   ```
 
 - Via PkgConfig (Linux):
@@ -79,7 +79,7 @@ This will generate a VisualStudio 2017 `nanomsgxx.sln` file in folder `build/`. 
   ```cmake
   find_package(PkgConfig REQUIRED)
 
-  pkg_check_modules(NANOMSGXX REQUIRED libnnxx)
+  pkg_check_modules(nnxx REQUIRED libnnxx)
   
   ```
 
@@ -87,12 +87,12 @@ Both cases allow to use the following variables for including and linking:
 
 ```cmake
   # The following lines describe, which variables can be used
-  if (${NANOMSGXX_FOUND})
-  message(STATUS "nanomsgxx (v ${NANOMSGXX_VERSION}) found in '${NANOMSGXX_DIR}' with")
-  message(STATUS "include directories: ${NANOMSGXX_INCLUDE_DIRS}")
-  message(STATUS "libraries to link against: ${NANOMSGXX_LIBRARIES}")
+  if (${nnxx_FOUND})
+  message(STATUS "nanomsgxx (v ${nnxx_VERSION}) found in '${nnxx_DIR}' with")
+  message(STATUS "include directories: ${nnxx_INCLUDE_DIRS}")
+  message(STATUS "libraries to link against: ${nnxx_LIBRARIES}")
   message(STATUS "----------------------------------------")
-  endif(${NANOMSGXX_FOUND})
+  endif(${nnxx_FOUND})
 ```
 
 Getting started
