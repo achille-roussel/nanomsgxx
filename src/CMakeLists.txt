@@ -15,6 +15,10 @@ IF(!nanomsg_FOUND)
     ENDIF()
 ENDIF()
 
+set(CMAKE_INSTALL_BINDIR "bin")
+set(CMAKE_INSTALL_INCLUDEDIR "include")
+set(CMAKE_INSTALL_LIBDIR "lib")
+
 
 set(NANOMSG_SRCS ./nanomsg/ext/nnxx_ext.c)
 
@@ -34,8 +38,7 @@ set(NNXX_SRCS   ./nnxx/error.cpp
                 ./nnxx/tcp.cpp
                 ./nnxx/timeout.cpp)
 
-set(NNXX_HDRS   ./nanomsg/ext/nnxx_ext.h
-                ./nnxx/bus.h
+set(NNXX_HDRS   ./nnxx/bus.h
                 ./nnxx/chrono.h
                 ./nnxx/error.h
                 ./nnxx/inproc.h
@@ -56,12 +59,61 @@ set(NNXX_HDRS   ./nanomsg/ext/nnxx_ext.h
                 ./nnxx/survey.h
                 ./nnxx/tcp.h
                 ./nnxx/timeout.h
-                ./nnxx/unittest.h)
+                ./nnxx/unittest.h
+                ./nnxx/message_istream.hpp
+                ./nnxx/message_ostream.hpp
+                ./nnxx/message_streambuf.hpp
+                ./nnxx/socket.hpp)
 
-add_library(${PROJECT_NAME} ${NANOMSG_SRCS} ${NNXX_SRCS})
+if (NNXX_STATIC_LIB)
+    add_library(${PROJECT_NAME} STATIC ${NANOMSG_SRCS} ${NNXX_SRCS})
+    set(PACKAGE_LINK_LIBRARIES ${PROJECT_NAME})
+else()
+    set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+    add_library(${PROJECT_NAME} SHARED ${NANOMSG_SRCS} ${NNXX_SRCS})
+    set(PACKAGE_LINK_LIBRARIES ${PROJECT_NAME} nanomsg)
+    
+endif()
+
 add_library(lib::nnxx ALIAS ${PROJECT_NAME})
-target_include_directories(${PROJECT_NAME} PUBLIC "." ${NANOMSG_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME} PUBLIC nanomsg)
 
-install(TARGETS ${PROJECT_NAME} DESTINATION lib)
-install(FILES ${NNXX_HDRS} DESTINATION include/nnxx)
+target_include_directories(${PROJECT_NAME} PUBLIC   ${NANOMSG_INCLUDE_DIRS} 
+                                                    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+                                                    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+
+
+# Generate and install CMake package:
+install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(FILES ${NNXX_HDRS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
+
+include(CMakePackageConfigHelpers)
+set(PACKAGE_INSTALL_DESTINATION
+    ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}-${VERSION}
+)
+install(EXPORT ${PROJECT_NAME}
+        DESTINATION ${PACKAGE_INSTALL_DESTINATION}
+)
+write_basic_package_version_file(
+    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake
+    VERSION ${VERSION}
+    COMPATIBILITY AnyNewerVersion
+)
+configure_package_config_file(
+    ${CMAKE_SOURCE_DIR}/cmake/${PROJECT_NAME}-config.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake
+    INSTALL_DESTINATION ${PACKAGE_INSTALL_DESTINATION}
+    PATH_VARS CMAKE_INSTALL_PREFIX
+)
+install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake
+    DESTINATION ${PACKAGE_INSTALL_DESTINATION}
+)
+
+# Generate and install PkgConfig file:
+set(prefix ${CMAKE_INSTALL_PREFIX})
+set(libdir ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})
+CONFIGURE_FILE("../libnnxx.pc.in" "${CMAKE_CURRENT_BINARY_DIR}/libnnxx.pc" @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/libnnxx.pc" 
+        DESTINATION "${libdir}/pkgconfig")

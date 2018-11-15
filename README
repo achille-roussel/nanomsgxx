@@ -66,6 +66,35 @@ cmake -G "Visual Studio 15 2017" ..
 
 This will generate a VisualStudio 2017 `nanomsgxx.sln` file in folder `build/`. Building project `ALL_BUILD` will build the whole solution. Building project `INSTALL` (with VS2017 started as administrator) will install the project.
 
+#### Integrate nanomsgxx in your CMake project
+
+- Via the exported CMake configuration:
+
+  ```cmake
+  find_package(NANOMSGXX CONFIG REQUIRED)
+  ```
+
+- Via PkgConfig (Linux):
+
+  ```cmake
+  find_package(PkgConfig REQUIRED)
+
+  pkg_check_modules(NANOMSGXX REQUIRED libnnxx)
+  
+  ```
+
+Both cases allow to use the following variables for including and linking:
+
+```cmake
+  # The following lines describe, which variables can be used
+  if (${NANOMSGXX_FOUND})
+  message(STATUS "nanomsgxx (v ${NANOMSGXX_VERSION}) found in '${NANOMSGXX_DIR}' with")
+  message(STATUS "include directories: ${NANOMSGXX_INCLUDE_DIRS}")
+  message(STATUS "libraries to link against: ${NANOMSGXX_LIBRARIES}")
+  message(STATUS "----------------------------------------")
+  endif(${NANOMSGXX_FOUND})
+```
+
 Getting started
 ---------------
 
