@@ -15,7 +15,6 @@ IF(!nanomsg_FOUND)
     ENDIF()
 ENDIF()
 
-
 set(NANOMSG_SRCS ./nanomsg/ext/nnxx_ext.c)
 
 set(NNXX_SRCS   ./nnxx/error.cpp
@@ -60,6 +59,10 @@ set(NNXX_HDRS   ./nanomsg/ext/nnxx_ext.h
 
 add_library(${PROJECT_NAME} ${NANOMSG_SRCS} ${NNXX_SRCS})
 add_library(lib::nnxx ALIAS ${PROJECT_NAME})
+
+# set preprocessor variable NDEBUG for 
+target_compile_definitions(${PROJECT_NAME} PUBLIC $<$<NOT:$<CONFIG:Debug>>:NDEBUG=1>)
+
 target_include_directories(${PROJECT_NAME} PUBLIC "." ${NANOMSG_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME} PUBLIC nanomsg)
 

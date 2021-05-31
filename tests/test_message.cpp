@@ -29,23 +29,26 @@
 
 int main() {
   nnxx::message m1;
-  nnxx::message m2 { 12 };
+  const nnxx::message::size_type size_m2 = 12;
+  nnxx::message m2 { size_m2 };
 
   nnxx_check(!m1);
   nnxx_check(m2);
 
   nnxx_check(m1.data() == nullptr);
-  nnxx_check(m1.size() == 0);
+  nnxx_check(m1.empty());
 
   nnxx_check(m2.data() != nullptr);
-  nnxx_check(m2.size() == 12);
+  nnxx_check(m2.size() == size_m2);
 
   m1 = std::move(m2);
   nnxx_check(m1);
   nnxx_check(!m2);
 
-  std::strcpy(reinterpret_cast<char *>(m1.data()), "Hello World!");
+  std::string string_to_send = "Hello World!";
+  std::copy(string_to_send.begin(), string_to_send.end(), reinterpret_cast<char *>(m1.data()));
   m2 = copy(m1);
-  nnxx_check(to_string(m2) == "Hello World!");
+
+  nnxx_check(to_string(m2) == string_to_send);
   return nnxx::unittest::result;
 }
