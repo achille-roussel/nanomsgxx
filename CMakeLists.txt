@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.5)
 
-set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/bin)
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
-set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
+option (NNXX_STATIC_LIB "Build static library instead of shared library." OFF)
+option (NNXX_TESTS "Build and run tests for nanomsgxx." ON)
+
 
 set(VERSION_MAJOR    0)
 set(VERSION_MINOR    1)
@@ -16,8 +16,15 @@ set (CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-enable_testing()
+set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/bin)
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
+set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
+
+
 
 add_subdirectory(src)
-add_subdirectory(tests)
+if(NNXX_TESTS)
+    enable_testing()
+    add_subdirectory(tests)
+endif(NNXX_TESTS)
 
